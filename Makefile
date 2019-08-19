@@ -16,10 +16,7 @@ FLAGS =  -Wall -O3 -flto -Ofast -pipe -Wextra #-g -fsanitize=address #-Werror
 
 NAME = RTv1
 
-SRC =	main.c init.c math.c output.c parser.c\
-		plane.c sphere.c render.c function.c check_line.c\
-		pov.c user_events.c lights.c cylin.c cone.c\
-		parser_routine.c changes.c editor.c
+SRC =	main.c init_cl.c init_sdl.c output.c parser.c
 
 INC = includes/rt.h
 
@@ -35,19 +32,20 @@ FT = ./libft/
 
 FT_LIB	= $(addprefix $(FT),libft.a)
 
-LINKS = -L$(FT) -l ft -lm -lSDL2
+LINKS = -L$(FT) -l ft -lm
 
 SDL_PATH = ./framework
 
 INCLUDES = 		-I$(FT) -I$(INC_DIR) \
-# 				-I./frameworks/SDL2.framework/Headers \
-# 				-I./frameworks/SDL2_image.framework/Headers \
-# 				-F./frameworks
+				-I./frameworks/SDL2.framework/Headers \
+				-I./frameworks/SDL2_image.framework/Headers \
+				-F./frameworks
 
-# FRAMEWORKS = 	-F./frameworks \
-# 				-rpath ./frameworks \
-# 				-framework AppKit -framework OpenGL \
-# 				-framework SDL2 -framework SDL2_image \
+FRAMEWORKS = 	-F./frameworks \
+				-rpath ./frameworks \
+				-framework AppKit -framework OpenGL \
+				-framework SDL2 -framework SDL2_image \
+				-framework OpenCL \
 
 all: obj_dir $(FT_LIB) $(NAME)
 	echo 'Compilated!'
