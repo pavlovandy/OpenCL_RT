@@ -41,21 +41,49 @@ int			init_cl(t_cl *cl)
 int			create_program_and_kernels(t_cl *cl)
 {
 	char	*source_str;
-	size_t	source_size;
 	cl_int	ret;
 
-	if (read_file("src/cl/test.cl", &source_str, &source_size))
+	ret = 0;
+	if (read_file("src/cl/test.cl", &source_str))
 		return (error_message(RED"read_file problem"COLOR_OFF));
 	cl->program = clCreateProgramWithSource(cl->context, 1, \
-		(const char **)&source_str, (const size_t *)&source_size, &ret);
-	free(source_str);
+		(const char **)&source_str, 0, &ret);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateProgramWithSource exception"COLOR_OFF));
-	ret = clBuildProgram(cl->program, 1, &cl->device_id, NULL, NULL, NULL);
+	ret = clBuildProgram(cl->program, 1, &cl->device_id, "-I includes", NULL, NULL);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clBuildProgram exception"COLOR_OFF));
 	cl->kernel = clCreateKernel(cl->program, "test_kernel", &ret);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateKernel exception"COLOR_OFF));
+	return (0);
+}
+
+int			set_up_memory(t_rt rt, t_cl *cl)
+{
+	cl_int	ret;
+
+	cl->scene_mem = clCreateBuffer(cl->context, CL_MEM_COPY_HOST_PTR | CL_MEM_READ_ONLY, sizeof(t_scene), &rt.scene, &ret);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clCreateBuffer(scene_mem) exception"COLOR_OFF));
+	cl->screen_mem = clCreateBuffer(cl->context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_WRITE, sizeof(cl_uint) * WIN_HEIGHT * WIN_WIDTH, rt.sdl.win_sur->pixels, &ret);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clCreateBuffer(screen_mem) exception"COLOR_OFF));
+	ret = clSetKernelArg(cl->kernel, 0, sizeof(t_scene), &rt.scene);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clSetKernelArg(0) exception"COLOR_OFF));
+	return (0);
+}
+
+int			freed_up_memory(t_cl *cl)
+{
+	cl_int	ret;
+
+	ret = clReleaseMemObject(cl->scene_mem);
+	if (ret != CL_SUCCESS)
+		error_message(RED"clReleaseMemObject(scene_mem) exception but whatever"COLOR_OFF);
+	ret = clReleaseMemObject(cl->screen_mem);
+	if (ret != CL_SUCCESS)
+		error_message(RED"clReleaseMemObject(screen_mem) exception but whatever"COLOR_OFF);
 	return (0);
 }

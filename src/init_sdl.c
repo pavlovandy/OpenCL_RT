@@ -23,3 +23,13 @@ int			init_sdl(t_sdl *sdl)
 		return (error_message((char *)SDL_GetError()));
 	return (0);
 }
+
+int			close_sdl(t_sdl *sdl)
+{
+	SDL_FreeSurface(sdl->win_sur);
+	sdl->win_sur = 0;
+	SDL_DestroyWindow(sdl->win);
+	sdl->win = 0;
+	SDL_Quit();
+	return (0);
+}

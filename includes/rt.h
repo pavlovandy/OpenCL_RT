@@ -65,16 +65,12 @@ typedef struct	s_sphere_data
 {
 	cl_float3	cent;
 	double		radius;
-	cl_float3	color;
-	int			specular;
 }				t_sphere_data;
 
 typedef struct	s_plane_data
 {
 	cl_float3	normal;
 	cl_float3	dot;
-	cl_float3	color;
-	int			specular;
 }				t_plane_data;
 
 typedef struct	s_cone_data
@@ -82,8 +78,6 @@ typedef struct	s_cone_data
 	cl_float3	vertex;
 	cl_float3	dir;
 	double		tangent;
-	cl_float3	color;
-	int			specular;
 }				t_cone_data;
 
 typedef struct	s_cylin_data
@@ -92,13 +86,23 @@ typedef struct	s_cylin_data
 	cl_float3	dot;
 	cl_float3	color;
 	double		radius;
-	int			specular;
 }				t_cylin_data;
+
+typedef union	u_shape
+{
+	t_sphere_data	sphere;
+	t_cone_data		cone;
+	t_plane_data	plane;
+	t_cylin_data	cylin;
+}				t_shape;
 
 struct	s_fig
 {
-	int		fig_type;
-	void	*data;
+	int			fig_type;
+	t_shape		shape;
+
+	cl_float3	color;
+	int			specular;
 };
 
 struct	s_sdl
@@ -143,6 +147,9 @@ typedef struct	s_cl
 	cl_command_queue	command_queue;
 	cl_program			program;
 	cl_kernel			kernel;
+
+	cl_mem				scene_mem;
+	cl_mem				screen_mem;
 }				t_cl;
 
 struct	s_rt
@@ -154,16 +161,19 @@ struct	s_rt
 };
 
 /*
-**	CL_init
+**	CL		stuff
 */
 int			init_cl(t_cl *cl);
 int			create_program_and_kernels(t_cl *cl);
-int			read_file(char *file_name, char **file_text, size_t *size); //in file parser
+int			read_file(char *file_name, char **file_text); //in file parser
+int			set_up_memory(t_rt rt, t_cl *cl);
+int			freed_up_memory(t_cl *cl);
 
 /*
-**	SDL_init
+**	SDL		stuff
 */
 int			init_sdl(t_sdl *sdl);
+int			close_sdl(t_sdl *sdl);
 
 /*
 **	Friendly user stuff

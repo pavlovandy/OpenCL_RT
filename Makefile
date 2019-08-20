@@ -12,7 +12,7 @@
 
 CC = gcc
 
-FLAGS =  -Wall -O3 -flto -Ofast -pipe -Wextra #-g -fsanitize=address #-Werror
+FLAGS =  -Wall -Wextra #-g -fsanitize=address #-Werror
 
 NAME = RTv1
 

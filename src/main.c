@@ -25,23 +25,17 @@ void	make_little_default_scene(t_scene *scene)
 	scene->light[1].type = ft_strdup("ambient");
 	scene->light[1].intensity = 0.3;
 
-	t_sphere_data	*data;
-
-	data = malloc(sizeof(t_sphere_data));
 	scene->obj[0].fig_type = SPHERE;
-	data->cent = (cl_float3){{0, 0, 0, 0}};
-	data->color = (cl_float3){{0, 0, 0, 0}};
-	data->radius = (cl_float)5;
-	data->specular = (cl_int)5;
-	scene->obj[0].data = data;
+	scene->obj[0].shape.sphere.cent = (cl_float3){{0, 0, 0, 0}};
+	scene->obj[0].color = (cl_float3){{0, 0, 0, 0}};
+	scene->obj[0].shape.sphere.radius = (cl_float)5;
+	scene->obj[0].specular = (cl_int)5;
 
-	data = malloc(sizeof(t_sphere_data));
 	scene->obj[1].fig_type = SPHERE;
-	data->cent = (cl_float3){{0, 0, 0}};
-	data->color = (cl_float3){{0, 0, 0}};
-	data->radius = (cl_float)5;
-	data->specular = (cl_int)5;
-	scene->obj[1].data = data;
+	scene->obj[1].shape.sphere.cent = (cl_float3){{0, 0, 0}};
+	scene->obj[1].color = (cl_float3){{0, 0, 0}};
+	scene->obj[1].shape.sphere.radius = (cl_float)5;
+	scene->obj[1].specular = (cl_int)5;
 }
 
 int		main(int argc, char **argv)
@@ -53,7 +47,11 @@ int		main(int argc, char **argv)
 	if (create_program_and_kernels(&rt.cl))
 		return (1);
 	make_little_default_scene(&rt.scene);
+	if (set_up_memory(rt, &rt.cl))
+		return (1);
 	if (init_sdl(&rt.sdl))
 		return (1);
+	close_sdl(&rt.sdl);
+	freed_up_memory(&rt.cl);
 	return (0);
 }
