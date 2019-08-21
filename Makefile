@@ -16,7 +16,7 @@ FLAGS =  -Wall -Wextra #-g -fsanitize=address #-Werror
 
 NAME = RTv1
 
-SRC =	main.c init_cl.c init_sdl.c output.c parser.c
+SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c
 
 INC = includes/rt.h
 

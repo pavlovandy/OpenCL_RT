@@ -76,12 +76,15 @@ typedef struct	s_fig
 
 typedef struct	s_pov
 {
-	float3	coord;
-	float3	dir;
+	float3		coord;
+	float3		dir;
 	double		cx;
 	double		cy;
 	double		sx;
 	double		sy;
+	double		d;
+	double		vh;
+	double		vw;
 }				t_pov;
 
 typedef struct	s_light
@@ -89,7 +92,7 @@ typedef struct	s_light
 	char		*type;
 	int			type_num;
 	double		intensity;
-	float3	v;
+	float3		v;
 }				t_light;
 
 typedef struct	s_scene

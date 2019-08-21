@@ -119,6 +119,9 @@ struct	s_pov
 	double		cy;
 	double		sx;
 	double		sy;
+	double		d;
+	double		vh;
+	double		vw;
 };
 
 typedef struct	s_light
@@ -150,6 +153,10 @@ typedef struct	s_cl
 
 	cl_mem				scene_mem;
 	cl_mem				screen_mem;
+	cl_mem				pixel_ptr;
+
+	size_t				global_size;
+	size_t				local_size;
 }				t_cl;
 
 struct	s_rt
@@ -180,5 +187,15 @@ int			close_sdl(t_sdl *sdl);
 */
 int			error_message(char *mess);
 
+
+/*
+**	Render
+*/
+int			render_scene(t_rt *rt);
+
+/*
+**	User
+*/
+int			there_will_be_loop(t_rt *rt);
 
 #endif
