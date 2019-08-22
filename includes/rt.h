@@ -84,7 +84,6 @@ typedef struct	s_cylin_data
 {
 	cl_float3	dir;
 	cl_float3	dot;
-	cl_float3	color;
 	double		radius;
 }				t_cylin_data;
 
@@ -102,7 +101,7 @@ struct	s_fig
 	t_shape		shape;
 
 	cl_float3	color;
-	int			specular;
+	cl_int		specular;
 };
 
 struct	s_sdl
@@ -152,11 +151,12 @@ typedef struct	s_cl
 	cl_kernel			kernel;
 
 	cl_mem				scene_mem;
-	cl_mem				screen_mem;
 	cl_mem				pixel_ptr;
 
 	size_t				global_size;
 	size_t				local_size;
+
+	cl_uint				*pixels_to_read_into;
 }				t_cl;
 
 struct	s_rt

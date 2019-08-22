@@ -30,6 +30,14 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].color = (cl_float3){{0, 255, 0}};
 	scene->obj[0].shape.sphere.radius = (cl_float)1;
 	scene->obj[0].specular = (cl_int)5;
+	
+	/*
+	**для того щоб звернутися окремо до якогось елемента вектора юзай
+	** cl_float3	a;
+	** a.v4[0] = 1; для x
+	** a.v4[1] = 1; для у
+	** a.v4[2] = 1; для z
+	*/
 
 	scene->obj[1].fig_type = SPHERE;
 	scene->obj[1].shape.sphere.cent = (cl_float3){{0, 0, 5}};

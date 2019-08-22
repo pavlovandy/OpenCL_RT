@@ -89,45 +89,40 @@ int			set_global_and_local_item_size(t_cl *cl)
 		cl->local_size--;
 	return (0);
 }
-
+//
 int			set_up_memory(t_rt rt, t_cl *cl) //how to use buffer to direct change rt.sdl.win_sur->pixels
 {
 	cl_int	ret;
 
+	cl->pixels_to_read_into = (cl_uint*)malloc(sizeof(cl_uint) * WIN_HEIGHT * WIN_WIDTH);
 	cl->scene_mem = clCreateBuffer(cl->context, CL_MEM_READ_ONLY | CL_MEM_HOST_WRITE_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(t_scene), &rt.scene, &ret);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateBuffer(scene_mem) exception"COLOR_OFF));
-	cl->screen_mem = clCreateBuffer(cl->context, CL_MEM_WRITE_ONLY | CL_MEM_HOST_READ_ONLY, sizeof(cl_float3) * WIN_HEIGHT * WIN_WIDTH, 0, &ret);
+	cl->pixel_ptr = clCreateBuffer(cl->context, CL_MEM_WRITE_ONLY | CL_MEM_HOST_READ_ONLY, sizeof(cl_uint) * WIN_HEIGHT * WIN_WIDTH, 0, &ret);
 	if (ret != CL_SUCCESS)
-		return (error_message(RED"clCreateBuffer(screen_mem) exception"COLOR_OFF));
-	cl->pixel_ptr = clCreateBuffer(cl->context, CL_MEM_USE_HOST_PTR, sizeof(cl_uint) * WIN_HEIGHT * WIN_WIDTH, rt.sdl.win_sur->pixels, &ret);
+		return (error_message(RED"clCreateBuffer(pixel_ptr) exception"COLOR_OFF));
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateBuffer(pixel_ptr) exception"COLOR_OFF));
 
-
 	ret = set_global_and_local_item_size(cl);
-
 
 	if (ret != CL_SUCCESS)
 		return (1);
 	ret = clSetKernelArg(cl->kernel, 0, sizeof(cl->scene_mem), &cl->scene_mem);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(0) exception"COLOR_OFF));
-	ret = clSetKernelArg(cl->kernel, 1, sizeof(cl->screen_mem), &cl->screen_mem);
+	ret = clSetKernelArg(cl->kernel, 1, sizeof(cl->pixel_ptr), &cl->pixel_ptr);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(1) exception"COLOR_OFF));
-	ret = clSetKernelArg(cl->kernel, 2, sizeof(cl->pixel_ptr), &cl->pixel_ptr);
+	ret = clSetKernelArg(cl->kernel, 2, sizeof(rt.sdl.win_sur->w), &rt.sdl.win_sur->w);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(2) exception"COLOR_OFF));
-	ret = clSetKernelArg(cl->kernel, 3, sizeof(rt.sdl.win_sur->w), &rt.sdl.win_sur->w);
+	ret = clSetKernelArg(cl->kernel, 3, sizeof(rt.sdl.win_sur->h), &rt.sdl.win_sur->h);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(3) exception"COLOR_OFF));
-	ret = clSetKernelArg(cl->kernel, 4, sizeof(rt.sdl.win_sur->h), &rt.sdl.win_sur->h);
+	ret = clSetKernelArg(cl->kernel, 4, sizeof(rt.pov), &rt.pov);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(4) exception"COLOR_OFF));
-	ret = clSetKernelArg(cl->kernel, 5, sizeof(rt.pov), &rt.pov);
-	if (ret != CL_SUCCESS)
-		return (error_message(RED"clSetKernelArg(5) exception"COLOR_OFF));
 	return (0);
 }
 
@@ -138,11 +133,9 @@ int			freed_up_memory(t_cl *cl)
 	ret = clReleaseMemObject(cl->scene_mem);
 	if (ret != CL_SUCCESS)
 		error_message(RED"clReleaseMemObject(scene_mem) exception but whatever"COLOR_OFF);
-	ret = clReleaseMemObject(cl->screen_mem);
-	if (ret != CL_SUCCESS)
-		error_message(RED"clReleaseMemObject(screen_mem) exception but whatever"COLOR_OFF);
 	ret = clReleaseMemObject(cl->pixel_ptr);
 	if (ret != CL_SUCCESS)
 		error_message(RED"clReleaseMemObject(pixel_ptr) exception but whatever"COLOR_OFF);
+	free(cl->pixels_to_read_into);
 	return (0);
 }

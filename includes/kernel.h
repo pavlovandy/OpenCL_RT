@@ -71,7 +71,7 @@ typedef struct	s_fig
 	t_shape		shape;
 
 	float3	color;
-	int			specular;
+	int		specular;
 }				t_fig;
 
 typedef struct	s_pov

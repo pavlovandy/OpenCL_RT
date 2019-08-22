@@ -59,7 +59,7 @@ float3	ray_trace(float3 eye, float3 dir, __global t_scene *scene, float mini, fl
 		printf("hehe\n");
 		return (scene->obj[closest_obj].color);
 	}
-	return ((float3){255.f, 0.f, 255.f});
+	return ((float3){0.f, 0.f, 0.f});
 }
 
 
@@ -92,8 +92,7 @@ float3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov)
 								-(float)y * pov.vh / h, (float)pov.d});
 }
 
-__kernel void	test_kernel(__global t_scene *scene, 
-							__global float3 *pixels, 
+__kernel void	test_kernel(__global t_scene *scene,
 							__global uint *canvas,
 							int w,
 							int h,
@@ -107,12 +106,6 @@ __kernel void	test_kernel(__global t_scene *scene,
 	
 	direction = canvas_to_viewport(x, y, w, h, pov);
 	color = ray_trace(pov.coord, direction, scene, 1, 9e9);
-	
 	color = trim_color(color);
-	if (x == 1 && y == 1)
-	{
-		printf("%p\n", canvas);
-		printf("%p\n", pixels);
-	}
 	canvas[y * w + x] = color_to_canvas(color);
 }
