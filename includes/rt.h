@@ -64,7 +64,7 @@ enum	e_light
 typedef struct	s_sphere_data
 {
 	cl_float3	cent;
-	double		radius;
+	cl_float	radius;
 }				t_sphere_data;
 
 typedef struct	s_plane_data
@@ -77,14 +77,14 @@ typedef struct	s_cone_data
 {
 	cl_float3	vertex;
 	cl_float3	dir;
-	double		tangent;
+	cl_float	tangent;
 }				t_cone_data;
 
 typedef struct	s_cylin_data
 {
 	cl_float3	dir;
 	cl_float3	dot;
-	double		radius;
+	cl_float	radius;
 }				t_cylin_data;
 
 typedef union	u_shape
@@ -97,7 +97,7 @@ typedef union	u_shape
 
 struct	s_fig
 {
-	int			fig_type;
+	cl_int		fig_type;
 	t_shape		shape;
 
 	cl_float3	color;
@@ -118,24 +118,23 @@ struct	s_pov
 	double		cy;
 	double		sx;
 	double		sy;
-	double		d;
-	double		vh;
-	double		vw;
+	cl_float	d;
+	cl_float	vh;
+	cl_float	vw;
 };
 
 typedef struct	s_light
 {
-	char		*type;
-	int			type_num;
-	double		intensity;
+	cl_int		type_num;
+	cl_float	intensity;
 	cl_float3	v;
 }				t_light;
 
 struct	s_scene
 {
-	int			count_obj;
+	cl_int		count_obj;
 	t_fig		obj[MAX_OBJ_COUNT];
-	int			count_light;
+	cl_int		count_light;
 	t_light		light[MAX_LIGHTING_COUNT];
 };
 

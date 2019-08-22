@@ -21,6 +21,8 @@
 
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
+# define BIG_VALUE 9e9
+# define EPSILON 1e-10
 
 enum	e_fig
 {
@@ -34,7 +36,7 @@ enum	e_light
 typedef struct	s_sphere_data
 {
 	float3	cent;
-	double		radius;
+	float	radius;
 }				t_sphere_data;
 
 typedef struct	s_plane_data
@@ -47,14 +49,14 @@ typedef struct	s_cone_data
 {
 	float3	vertex;
 	float3	dir;
-	double		tangent;
+	float	tangent;
 }				t_cone_data;
 
 typedef struct	s_cylin_data
 {
 	float3	dir;
 	float3	dot;
-	double		radius;
+	float	radius;
 }				t_cylin_data;
 
 typedef union	u_shape
@@ -70,8 +72,8 @@ typedef struct	s_fig
 	int			fig_type;
 	t_shape		shape;
 
-	float3	color;
-	int		specular;
+	float3		color;
+	int			specular;
 }				t_fig;
 
 typedef struct	s_pov
@@ -82,16 +84,21 @@ typedef struct	s_pov
 	double		cy;
 	double		sx;
 	double		sy;
-	double		d;
-	double		vh;
-	double		vw;
+	float		d;
+	float		vh;
+	float		vw;
 }				t_pov;
+
+typedef struct	s_obj_and_dist
+{
+	int		obj;
+	float	dist;
+}				t_obj_and_dist;
 
 typedef struct	s_light
 {
-	char		*type;
 	int			type_num;
-	double		intensity;
+	float		intensity;
 	float3		v;
 }				t_light;
 
