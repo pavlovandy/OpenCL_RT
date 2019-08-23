@@ -1,26 +1,37 @@
 #include "kernel.h"
 
-float2	intersect_sphere(float3 eye, float3 dir, t_sphere_data sphere);
-float3	ray_trace(float3 eye, float3 dir, __global t_scene *scene, float mini, float maxi);
-float3	trim_color(float3 color);
-uint	color_to_canvas(float3 color);
-float3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
-t_obj_and_dist		check_closest_inter(float3 eye, float3 dir, \
+double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
+double3	ray_trace(double3 eye, double3 dir, __global t_scene *scene, double mini, double maxi);
+double3	trim_color(double3 color);
+uint	color_to_canvas(double3 color);
+double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
+t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 										__global t_scene *scene, \
-										float mini, float max);
-float	calculate_light(__global t_scene *scene, float3 eye, \
-						float3 dir, float3 normal, float3 intersect_point, \
+										double mini, double max);
+double	calculate_light(__global t_scene *scene, double3 eye, \
+						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj);
+double3	reflected_ray(double3 normal, double3 prim_ray);
 
 
-float2	intersect_sphere(float3 eye, float3 dir, t_sphere_data sphere)
+__constant double EPSILON = 0.00001;
+__constant double BIG_VALUE = 9e9;
+__constant int MAX_DEPTH = 10;
+__constant double3 BACKGROUND_COLOR =  ((double3)(0.f, 0.f, 0.f));
+
+double3	reflected_ray(double3 normal, double3 prim_ray)
 {
-	float3	oc = eye - sphere.cent;
-	float	a;
-	float	b;
-	float	c;
-	float	d;
-	float2	roots;
+	return (2 * normal * dot(normal, prim_ray) - prim_ray);
+}
+
+double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
+{
+	double3	oc = eye - sphere.cent;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+	double2	roots;
 	
 	a = dot(dir, dir);
 	b = dot(oc, dir);
@@ -30,22 +41,22 @@ float2	intersect_sphere(float3 eye, float3 dir, t_sphere_data sphere)
 	if (d < 0)
 		return (BIG_VALUE);
 	d = sqrt(d);
-	roots = (float2)((-b + d) / a, (-b - d) / a);
+	roots = (double2)((-b + d) / a, (-b - d) / a);
 	return (roots);
 }
 
-float	calculate_light(__global t_scene *scene, float3 eye, \
-						float3 dir, float3 normal, float3 intersect_point, \
+double	calculate_light(__global t_scene *scene, double3 eye, \
+						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj)
 {
 	int		i;
 	__global t_light	*light;
-	float	t_max;
-	float	intensity = 0;
-	float3	light_dir;
+	double	t_max;
+	double	intensity = 0;
+	double3	light_dir;
 	t_obj_and_dist	obj_and_dist;
-	float	scalar;
-	float3	reflected_ray;
+	double	scalar;
+	double3	reflect_ray;
 
 	i = -1;
 	while (++i < scene->count_light)
@@ -73,24 +84,24 @@ float	calculate_light(__global t_scene *scene, float3 eye, \
 				intensity += (light->intensity * scalar / (length(light_dir) * length(normal)));
 			/*blicks*/
 			if (scene->obj[closest_obj].specular != -1)
-			{
-				reflected_ray = normal * 2 * dot(normal, light_dir) - light_dir;
-				scalar = dot(reflected_ray, -dir);
+			{						
+				reflect_ray = reflected_ray(normal, light_dir);
+				scalar = dot(reflect_ray, -dir);
 				if (scalar > 0)
 					intensity += light->intensity * \
-pow(scalar / (length(-dir) * length(reflected_ray)), scene->obj[closest_obj].specular);
+pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
 			}
 		}
 	}
 	return (intensity);
 }
 
-t_obj_and_dist		check_closest_inter(float3 eye, float3 dir, \
+t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 										__global t_scene *scene, \
-										float mini, float max)
+										double mini, double max)
 {
-	float2	res;
-	float	closest_dist = BIG_VALUE;
+	double2	res;
+	double	closest_dist = BIG_VALUE;
 	int		closest_obj = -1;
 	int		i;
 
@@ -112,51 +123,71 @@ t_obj_and_dist		check_closest_inter(float3 eye, float3 dir, \
 	return ((t_obj_and_dist){closest_obj, closest_dist});
 }
 
-float3	ray_trace(float3 eye, float3 dir, __global t_scene *scene, float mini, float maxi)
+double3	ray_trace(double3 eye, double3 dir, __global t_scene *scene, double mini, double maxi)
 {
-	float3	normal;
-	float3	intersect_point;
+	double3		normal;
+	double3		intersect_point;
 	t_obj_and_dist obj_and_dist;
+	double3		local_color;
+	double3		color = 0;
+	int			depth = -1;
+	double		reflective_var = 1.f;
 
-	obj_and_dist = check_closest_inter(eye, dir, scene, mini, maxi);
-	if (obj_and_dist.obj != -1)
+	
+	while (++depth < MAX_DEPTH && reflective_var > 0.1f)
 	{
-		intersect_point = eye + dir * obj_and_dist.dist;
-		normal = intersect_point - scene->obj[obj_and_dist.obj].shape.sphere.cent;
-		normal = normalize(normal);
-		return (scene->obj[obj_and_dist.obj].color * calculate_light(scene, eye, dir, normal, intersect_point, obj_and_dist.obj));
+		obj_and_dist = check_closest_inter(eye, dir, scene, mini, maxi);
+		if (obj_and_dist.obj != -1)
+		{
+			intersect_point = eye + dir * obj_and_dist.dist;
+			normal = intersect_point - scene->obj[obj_and_dist.obj].shape.sphere.cent;
+			normal = normalize(normal);
+			local_color = scene->obj[obj_and_dist.obj].color * calculate_light(scene, eye, dir, normal, intersect_point, obj_and_dist.obj);
+			
+			color += local_color * (1 - scene->obj[obj_and_dist.obj].reflective);
+			color *= reflective_var;
+			reflective_var *= scene->obj[obj_and_dist.obj].reflective;
+			eye = intersect_point;
+			dir = reflected_ray(normal, -dir);
+			mini = EPSILON;
+			maxi = BIG_VALUE;
+		}
+		else
+		{
+			color += BACKGROUND_COLOR * reflective_var;
+			break ;
+		}
 	}
-	return ((float3)(0.f, 0.f, 0.f));
-}
-
-
-float3	trim_color(float3 color)
-{
-	if (color[0] > (float)255)
-		color[0] = (float)255;
-	if (color[1] > (float)255)
-		color[1] = (float)255;
-	if (color[2] > (float)255)
-		color[2] = (float)255;
-
-	if (color[0] < (float)0)
-		color[0] = (float)0;
-	if (color[1] < (float)0)
-		color[1] = (float)0;
-	if (color[2] < (float)0)
-		color[2] = (float)0;
 	return (color);
 }
 
-uint	color_to_canvas(float3 color)
+double3	trim_color(double3 color)
+{
+	if (color[0] > (double)255)
+		color[0] = (double)255;
+	if (color[1] > (double)255)
+		color[1] = (double)255;
+	if (color[2] > (double)255)
+		color[2] = (double)255;
+
+	if (color[0] < (double)0)
+		color[0] = (double)0;
+	if (color[1] < (double)0)
+		color[1] = (double)0;
+	if (color[2] < (double)0)
+		color[2] = (double)0;
+	return (color);
+}
+
+uint	color_to_canvas(double3 color)
 {
 	return (((uint)color[0] << 16) + ((uint)color[1] << 8) + (uint)color[2]);
 }
 
-float3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov)
+double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov)
 {
-	return ((float3){(float)x * pov.vw / w, \
-								-(float)y * pov.vh / h, (float)pov.d});
+	return ((double3){(double)x * pov.vw / w, \
+								-(double)y * pov.vh / h, (double)pov.d});
 }
 
 __kernel void	test_kernel(__global t_scene *scene,
@@ -168,11 +199,11 @@ __kernel void	test_kernel(__global t_scene *scene,
 	int	id = get_global_id(0);
 	int	x = id % w;
 	int	y = id / w;
-	float3	direction;
-	float3	color;
+	double3	direction;
+	double3	color;
 
 	direction = canvas_to_viewport(x - w /2 , y - h / 2, w, h, pov);
 	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE);
 	color = trim_color(color);
-	canvas[y * w + x] = color_to_canvas(color);
+	canvas[id] = color_to_canvas(color);
 }

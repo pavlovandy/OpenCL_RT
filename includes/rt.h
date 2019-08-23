@@ -63,28 +63,28 @@ enum	e_light
 
 typedef struct	s_sphere_data
 {
-	cl_float3	cent;
-	cl_float	radius;
+	cl_double3	cent;
+	cl_double	radius;
 }				t_sphere_data;
 
 typedef struct	s_plane_data
 {
-	cl_float3	normal;
-	cl_float3	dot;
+	cl_double3	normal;
+	cl_double3	dot;
 }				t_plane_data;
 
 typedef struct	s_cone_data
 {
-	cl_float3	vertex;
-	cl_float3	dir;
-	cl_float	tangent;
+	cl_double3	vertex;
+	cl_double3	dir;
+	cl_double	tangent;
 }				t_cone_data;
 
 typedef struct	s_cylin_data
 {
-	cl_float3	dir;
-	cl_float3	dot;
-	cl_float	radius;
+	cl_double3	dir;
+	cl_double3	dot;
+	cl_double	radius;
 }				t_cylin_data;
 
 typedef union	u_shape
@@ -100,8 +100,9 @@ struct	s_fig
 	cl_int		fig_type;
 	t_shape		shape;
 
-	cl_float3	color;
+	cl_double3	color;
 	cl_int		specular;
+	cl_double	reflective;
 };
 
 struct	s_sdl
@@ -112,22 +113,22 @@ struct	s_sdl
 
 struct	s_pov
 {
-	cl_float3	coord;
-	cl_float3	dir;
+	cl_double3	coord;
+	cl_double3	dir;
 	double		cx;
 	double		cy;
 	double		sx;
 	double		sy;
-	cl_float	d;
-	cl_float	vh;
-	cl_float	vw;
+	cl_double	d;
+	cl_double	vh;
+	cl_double	vw;
 };
 
 typedef struct	s_light
 {
 	cl_int		type_num;
-	cl_float	intensity;
-	cl_float3	v;
+	cl_double	intensity;
+	cl_double3	v;
 }				t_light;
 
 struct	s_scene
