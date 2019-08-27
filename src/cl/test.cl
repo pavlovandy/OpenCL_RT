@@ -1,7 +1,7 @@
 #include "kernel.h"
 
 double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
-double3	ray_trace(double3 eye, double3 dir, __global t_scene *scene, double mini, double maxi);
+double3	ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range);
 double3	trim_color(double3 color);
 uint	color_to_canvas(double3 color);
 double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
@@ -16,12 +16,13 @@ double3	reflected_ray(double3 normal, double3 prim_ray);
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
-__constant int MAX_DEPTH = 10;
 __constant double3 BACKGROUND_COLOR =  ((double3)(0.f, 0.f, 0.f));
+__constant double	MINIMUM_INTENSITY = 0.01;
+__constant int tree_nodes =	31;		
 
 double3	reflected_ray(double3 normal, double3 prim_ray)
 {
-	return (2 * normal * dot(normal, prim_ray) - prim_ray);
+	return (2 * dot(normal, prim_ray) * normal - prim_ray);
 }
 
 double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
@@ -123,39 +124,80 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 	return ((t_obj_and_dist){closest_obj, closest_dist});
 }
 
-double3	ray_trace(double3 eye, double3 dir, __global t_scene *scene, double mini, double maxi)
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range)
 {
 	double3		normal;
-	double3		intersect_point;
-	t_obj_and_dist obj_and_dist;
 	double3		local_color;
-	double3		color = 0;
-	int			depth = -1;
-	double		reflective_var = 1.f;
 
+	int			count = 1;
+	int			curr = 0;
+	double3		color = 0;
+
+	double3		intersect_point;
+	t_obj_and_dist	obj_and_dist;
+
+	t_fig				fig;
+	t_raytrace_tree		curr_node;
+
+	t_raytrace_tree		tree[tree_nodes];
 	
-	while (++depth < MAX_DEPTH && reflective_var > 0.1f)
+	tree[0].part_of_primary_ray = 1;
+	tree[0].start = eye;
+	tree[0].dir = dir;
+	tree[0].min_range = min_range;
+	tree[0].max_range = max_range;
+
+	while (curr < count)
 	{
-		obj_and_dist = check_closest_inter(eye, dir, scene, mini, maxi);
+		curr_node = tree[curr];
+		obj_and_dist = check_closest_inter(curr_node.start, curr_node.dir, scene, curr_node.min_range, curr_node.max_range);
 		if (obj_and_dist.obj != -1)
 		{
-			intersect_point = eye + dir * obj_and_dist.dist;
-			normal = intersect_point - scene->obj[obj_and_dist.obj].shape.sphere.cent;
+			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
+			fig = scene->obj[obj_and_dist.obj];
+			normal = intersect_point - fig.shape.sphere.cent;
 			normal = normalize(normal);
-			local_color = scene->obj[obj_and_dist.obj].color * calculate_light(scene, eye, dir, normal, intersect_point, obj_and_dist.obj);
-			
-			color += local_color * (1 - scene->obj[obj_and_dist.obj].reflective);
-			color *= reflective_var;
-			reflective_var *= scene->obj[obj_and_dist.obj].reflective;
-			eye = intersect_point;
-			dir = reflected_ray(normal, -dir);
-			mini = EPSILON;
-			maxi = BIG_VALUE;
+
+			local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+			local_color *= tree[curr].part_of_primary_ray;
+
+			color += local_color; 
+			color += local_color * (1 - fig.trans - fig.reflective);
+
+			if (fig.trans > 0 && count < tree_nodes)
+			{
+				tree[count].part_of_primary_ray = tree[curr].part_of_primary_ray * fig.trans;
+				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
+				{
+					color -= local_color * fig.trans;
+					tree[count].start = intersect_point;
+					tree[count].dir = tree[curr].dir;
+					tree[count].min_range = EPSILON;
+					tree[count].max_range = BIG_VALUE;
+					count++;
+				}
+			}
+
+			if (fig.reflective > 0 && count < tree_nodes)
+			{
+				tree[count].part_of_primary_ray = tree[curr].part_of_primary_ray * fig.reflective;
+				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
+				{
+					color -= local_color * fig.reflective;
+					tree[count].start = intersect_point;
+					tree[count].dir = reflected_ray(normal, -tree[curr].dir);
+					tree[count].min_range = EPSILON;
+					tree[count].max_range = BIG_VALUE;
+					count++;
+				}
+			}
+			curr++;
 		}
 		else
 		{
-			color += BACKGROUND_COLOR * reflective_var;
-			break ;
+			color += BACKGROUND_COLOR * tree[curr].part_of_primary_ray;
+			curr++;
+			continue ;
 		}
 	}
 	return (color);

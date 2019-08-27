@@ -13,22 +13,16 @@
 #ifndef KERNEL_H
 # define KERNEL_H
 
-// # ifdef __APPLE__
-// #  include <OpenCL/opencl.h>
-// # else
-// #  include <CL/cl.h>
-// # endif
-
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 
 enum	e_fig
 {
-	SPHERE = 0, PLANE, CONE, CYLIN
+	SPHERE = 1, PLANE, CONE, CYLIN
 };
 enum	e_light
 {
-	AMBIENT = 0, DIRECT, POINT
+	AMBIENT = 1, DIRECT, POINT
 };
 
 typedef struct	s_sphere_data
@@ -73,6 +67,7 @@ typedef struct	s_fig
 	double3		color;
 	int			specular;
 	double		reflective;
+	double		trans;
 }				t_fig;
 
 typedef struct	s_pov
@@ -87,6 +82,15 @@ typedef struct	s_pov
 	double		vh;
 	double		vw;
 }				t_pov;
+
+typedef struct	s_raytrace_tree
+{
+	double		part_of_primary_ray;
+	double3		start;
+	double3		dir;
+	double		min_range;
+	double		max_range;
+}				t_raytrace_tree;
 
 typedef struct	s_obj_and_dist
 {

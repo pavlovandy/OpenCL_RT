@@ -21,8 +21,12 @@ int			there_will_be_loop(t_rt *rt)
 		while (SDL_PollEvent(&ev))
 		{
 			if (ev.type == SDL_KEYDOWN)
+			{
 				if (ev.key.keysym.sym == SDLK_ESCAPE)
-					exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
+					return (error_message(GREEN"Bye bye"COLOR_OFF) - 1);
+			}
+			else if (ev.type == SDL_QUIT)
+				return (error_message(GREEN"Bye bye"COLOR_OFF) - 1);
 		}
 	}
 	return (0);

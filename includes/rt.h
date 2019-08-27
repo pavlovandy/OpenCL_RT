@@ -31,8 +31,8 @@
 
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 
-# define WIN_WIDTH	800
-# define WIN_HEIGHT	600
+# define WIN_WIDTH	1000
+# define WIN_HEIGHT	1000
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])
@@ -54,11 +54,11 @@ typedef	struct s_pov	t_pov;
 
 enum	e_fig
 {
-	SPHERE = 0, PLANE, CONE, CYLIN
+	SPHERE = 1, PLANE, CONE, CYLIN
 };
 enum	e_light
 {
-	AMBIENT = 0, DIRECT, POINT
+	AMBIENT = 1, DIRECT, POINT
 };
 
 typedef struct	s_sphere_data
@@ -103,6 +103,7 @@ struct	s_fig
 	cl_double3	color;
 	cl_int		specular;
 	cl_double	reflective;
+	cl_double	trans;
 };
 
 struct	s_sdl
