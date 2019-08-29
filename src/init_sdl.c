@@ -21,6 +21,8 @@ int			init_sdl(t_sdl *sdl)
 		return (error_message((char *)SDL_GetError()));
 	if (!(sdl->win_sur = SDL_GetWindowSurface(sdl->win)))
 		return (error_message((char *)SDL_GetError()));
+	if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) != (IMG_INIT_PNG | IMG_INIT_JPG))
+		return (error_message((char *)SDL_GetError()));
 	return (0);
 }
 

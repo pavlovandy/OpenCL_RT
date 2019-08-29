@@ -19,6 +19,7 @@ int			render_scene(t_rt *rt)
 	int		i;
 
 	pixels = (cl_uint*)rt->sdl.win_sur->pixels;
+	
 	ret = clEnqueueNDRangeKernel(rt->cl.command_queue, rt->cl.kernel, 1, NULL, \
 					&rt->cl.global_size, &rt->cl.local_size, 0, NULL, NULL);
 	ret = clEnqueueReadBuffer(rt->cl.command_queue, rt->cl.pixel_ptr, CL_FALSE, 0,

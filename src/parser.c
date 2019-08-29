@@ -37,3 +37,52 @@ int			read_file(char *file_name, char **file_text)
 	}
 	return (ret < 0 ? 1 : 0);
 }
+
+SDL_Surface	*load_tex(char *path, Uint32 format)
+{
+	SDL_Surface		*temp;
+	SDL_Surface		*texture;
+
+	temp = IMG_Load(path);
+	if (temp == NULL)
+	{
+		SDL_FreeSurface(temp);
+		error_message(RED"Texture load error\n"COLOR_OFF);
+		exit(1);
+	}
+	texture = SDL_ConvertSurfaceFormat(temp, format, 0);
+	if (texture == NULL)
+	{
+		SDL_FreeSurface(temp);
+		error_message(RED"Texture load error\n"COLOR_OFF);
+		exit(1);
+	}
+	SDL_FreeSurface(temp);
+	return (texture);
+}
+
+cl_double3	*read_texture(char	*file_name, t_txt_params *params)
+{
+	SDL_Surface	*surr;
+	cl_double3	*res;
+	Uint8		*pixels;
+	int			i;
+
+	surr = load_tex(file_name, SDL_PIXELFORMAT_ARGB8888);
+	res = 0;
+	params->w = surr->w;
+	params->h = surr->h;
+	res = ft_memalloc(params->w * params->h * sizeof(cl_double3));
+	if (res == 0)
+		return (0);
+	i = -1;
+	pixels = (Uint8*)surr->pixels;
+	while (++i < surr->w * surr->h)
+	{
+		res[i].s[0] = (double)pixels[i * 4 + 1];
+		res[i].s[1] = (double)pixels[i * 4 + 2];
+		res[i].s[2] = (double)pixels[i * 4 + 3];
+	}
+	SDL_FreeSurface(surr);
+	return (res);
+}

@@ -1,7 +1,7 @@
 #include "kernel.h"
 
 double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
-double3	ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range);
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global double3 *texture);
 double3	trim_color(double3 color);
 uint	color_to_canvas(double3 color);
 double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
@@ -12,18 +12,46 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj);
 double3	reflected_ray(double3 normal, double3 prim_ray);
+double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
+										__global t_scene *scene, double min_range, \
+										double max_range, __global t_light *light);
 
+double3		get_texture_pixel(double3 intersect_point, t_sphere_data data, __global double3 *texture);
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
 __constant double3 BACKGROUND_COLOR =  ((double3)(0.f, 0.f, 0.f));
 __constant double	MINIMUM_INTENSITY = 0.01;
-__constant int tree_nodes =	31;		
+__constant int tree_nodes =	31;
+__constant double	PI = 3.14159265359;
 
 double3	reflected_ray(double3 normal, double3 prim_ray)
 {
 	return (2 * dot(normal, prim_ray) * normal - prim_ray);
 }
+
+double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
+										__global t_scene *scene, double min_range, \
+										double max_range, __global t_light *light)
+{
+	double			local_intensity;
+	t_obj_and_dist	obj_and_dist;
+
+	local_intensity = light->intensity;
+	while (local_intensity > MINIMUM_INTENSITY)
+	{
+		obj_and_dist = check_closest_inter(intersect_point, light_dir, scene, min_range, max_range);
+		if (obj_and_dist.obj != -1)
+		{
+			local_intensity *= scene->obj[obj_and_dist.obj].trans;
+			intersect_point = intersect_point + light_dir * obj_and_dist.dist;
+		}
+		else
+			break ;
+	}
+	return (local_intensity);
+}
+
 
 double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 {
@@ -58,6 +86,7 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 	t_obj_and_dist	obj_and_dist;
 	double	scalar;
 	double3	reflect_ray;
+	double	local_intensity;
 
 	i = -1;
 	while (++i < scene->count_light)
@@ -75,22 +104,19 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 				light_dir = light->v;
 			t_max = (light->type_num == POINT) ? 1 : BIG_VALUE;
 			/*shadow ray*/
-			obj_and_dist = check_closest_inter(intersect_point, light_dir, scene, EPSILON, t_max);
-			if (obj_and_dist.obj != -1)
-				continue ;
+			local_intensity = get_intersity_after_shadow_rays(intersect_point, light_dir, scene, EPSILON, t_max, light);
 			
 			/*brightness*/
 			scalar = dot(normal, light_dir);
 			if (scalar > 0)
-				intensity += (light->intensity * scalar / (length(light_dir) * length(normal)));
+				intensity += (local_intensity * scalar / (length(light_dir) * length(normal)));
 			/*blicks*/
 			if (scene->obj[closest_obj].specular != -1)
 			{						
 				reflect_ray = reflected_ray(normal, light_dir);
 				scalar = dot(reflect_ray, -dir);
 				if (scalar > 0)
-					intensity += light->intensity * \
-pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
+					intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
 			}
 		}
 	}
@@ -124,7 +150,40 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 	return ((t_obj_and_dist){closest_obj, closest_dist});
 }
 
-double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range)
+/*
+void	texture_sphere(t_obj *sphere, float3 hitpoint, float2 *coord)
+{
+	hitpoint /= sphere->primitive.sphere.r;
+	float	theta = acos(hitpoint.y) / PI;
+	float2	tmp = (float2)(hitpoint.x, hitpoint.z);
+	tmp = normalize(tmp);
+	float	phi = acos(tmp.x) / PI_2;
+	phi = hitpoint.z > 0 ? 1.f - phi : phi;
+	coord->x = phi;
+	coord->y = theta;
+*/
+
+double		line_point(double start, double end, double p)
+{
+	return ((start + (end - start) * p));
+}
+
+double3		get_texture_pixel(double3 intersect_point, t_sphere_data data, __global double3 *texture)
+{
+	double		s;
+	double		t;
+	int			is;
+	int			it;
+
+	double3		point = intersect_point - data.cent;
+	s = acos(point[2] / data.radius) / PI;
+	t = acos(point[0] / (data.radius * sin(s * PI))) / (2 * PI);
+	is = s * 4096;
+	it = t * 8192;
+	return (texture[is * 8192 + it]);
+}
+
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global double3 *texture)
 {
 	double3		normal;
 	double3		local_color;
@@ -158,7 +217,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			normal = intersect_point - fig.shape.sphere.cent;
 			normal = normalize(normal);
 
-			local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+			local_color = get_texture_pixel(intersect_point, fig.shape.sphere, texture) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
 			local_color *= tree[curr].part_of_primary_ray;
 
 			color += local_color; 
@@ -221,6 +280,23 @@ double3	trim_color(double3 color)
 	return (color);
 }
 
+// double3	ft_rotate_camera(double3 direction, t_pov pov)
+// {
+// 	double new_x;
+// 	double new_y;
+// 	double new_z;
+
+// 	new_x = direction[0] * pov.cy + direction[2] * pov.sy;
+// 	new_z = -direction[0] * pov.sy + direction[2] * pov.cy;
+// 	direction[0] = new_x;
+// 	direction[2] = new_z;
+// 	new_y = direction[1] * pov.cx + direction[2] * pov.sx;
+// 	new_z = -direction[1] * pov.sx + direction[2] * pov.cx;
+// 	direction[1] = new_y;
+// 	direction[2] = new_z;
+// 	return (direction);
+// }
+
 uint	color_to_canvas(double3 color)
 {
 	return (((uint)color[0] << 16) + ((uint)color[1] << 8) + (uint)color[2]);
@@ -236,7 +312,8 @@ __kernel void	test_kernel(__global t_scene *scene,
 							__global uint *canvas,
 							int w,
 							int h,
-							t_pov pov)
+							t_pov pov,
+							__global double3 *texture)
 {
 	int	id = get_global_id(0);
 	int	x = id % w;
@@ -245,7 +322,7 @@ __kernel void	test_kernel(__global t_scene *scene,
 	double3	color;
 
 	direction = canvas_to_viewport(x - w /2 , y - h / 2, w, h, pov);
-	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE);
+	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE, texture);
 	color = trim_color(color);
 	canvas[id] = color_to_canvas(color);
 }

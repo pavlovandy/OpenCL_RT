@@ -18,21 +18,26 @@
 # define RT_H
 
 # include <fcntl.h>
+
 # include "../libft/libft.h"
 # ifdef __APPLE__
 #  include "../frameworks/SDL2.framework/Headers/SDL.h"
+#  include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
 #  include <OpenCL/opencl.h>
 # else
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
+//#  include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
 # endif
 # include <stdio.h>
 # include "terminal_colors.h"
 
+
+
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 
-# define WIN_WIDTH	1000
-# define WIN_HEIGHT	1000
+# define WIN_WIDTH	1600
+# define WIN_HEIGHT	1200
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])
@@ -101,6 +106,7 @@ struct	s_fig
 	t_shape		shape;
 
 	cl_double3	color;
+	//cl_int		text_no;
 	cl_int		specular;
 	cl_double	reflective;
 	cl_double	trans;
@@ -154,11 +160,26 @@ typedef struct	s_cl
 	cl_mem				scene_mem;
 	cl_mem				pixel_ptr;
 
+	cl_mem				texture_mem;
+
 	size_t				global_size;
 	size_t				local_size;
 
 	cl_uint				*pixels_to_read_into;
 }				t_cl;
+
+typedef struct	s_txt_params
+{
+	cl_int		w;
+	cl_int		h;
+}				t_txt_params;
+
+typedef struct	s_envi
+{
+	cl_int			txt_count;
+	cl_double3		*txt;
+	t_txt_params	txt_par;
+}				t_envi;
 
 struct	s_rt
 {
@@ -166,6 +187,7 @@ struct	s_rt
 	t_scene	scene;
 	t_pov	pov;
 	t_cl	cl;
+	t_envi	envi;
 };
 
 /*
@@ -173,8 +195,7 @@ struct	s_rt
 */
 int			init_cl(t_cl *cl);
 int			create_program_and_kernels(t_cl *cl);
-int			read_file(char *file_name, char **file_text); //in file parser
-int			set_up_memory(t_rt rt, t_cl *cl);
+int			set_up_memory(t_rt *rt, t_cl *cl);
 int			freed_up_memory(t_cl *cl);
 
 /*
@@ -198,5 +219,11 @@ int			render_scene(t_rt *rt);
 **	User
 */
 int			there_will_be_loop(t_rt *rt);
+
+/*
+**	Parse
+*/
+
+# include "parse.h"
 
 #endif
