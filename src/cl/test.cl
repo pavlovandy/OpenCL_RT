@@ -176,10 +176,22 @@ double3		get_texture_pixel(double3 intersect_point, t_sphere_data data, __global
 	int			it;
 
 	double3		point = intersect_point - data.cent;
-	s = acos(point[2] / data.radius) / PI;
-	t = acos(point[0] / (data.radius * sin(s * PI))) / (2 * PI);
-	is = s * 4096;
-	it = t * 8192;
+	point = normalize(point);
+	s = acos(point[2]) / PI;
+	if (fabs(point[0]) < fabs(sin(s * PI))) //this is for arcos(x) where x < -1 or x > 1. \
+												Could be optimized with 1 time caculus of sin
+		t = acos(point[0] / sin(s * PI)) / (2 * PI);
+	else
+		t = point[0] < 0 ? 0.5 : 0;
+	if (point[1] < 0)
+		t = 1 - t;
+	is = s * 4095;
+	it = t * 8191;
+	if (!(s >= 0 && s < 1) || !(t >= 0 && t < 1))
+	{
+		printf("%f\tteta %f\tphi %f\n", acos(point[0] / sin(s * PI)), point[0], sin(s * PI));
+	}
+	
 	return (texture[is * 8192 + it]);
 }
 
