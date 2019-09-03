@@ -150,19 +150,6 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 	return ((t_obj_and_dist){closest_obj, closest_dist});
 }
 
-/*
-void	texture_sphere(t_obj *sphere, float3 hitpoint, float2 *coord)
-{
-	hitpoint /= sphere->primitive.sphere.r;
-	float	theta = acos(hitpoint.y) / PI;
-	float2	tmp = (float2)(hitpoint.x, hitpoint.z);
-	tmp = normalize(tmp);
-	float	phi = acos(tmp.x) / PI_2;
-	phi = hitpoint.z > 0 ? 1.f - phi : phi;
-	coord->x = phi;
-	coord->y = theta;
-*/
-
 double		line_point(double start, double end, double p)
 {
 	return ((start + (end - start) * p));
@@ -187,11 +174,6 @@ double3		get_texture_pixel(double3 intersect_point, t_sphere_data data, __global
 		t = 1 - t;
 	is = s * 4095;
 	it = t * 8191;
-	if (!(s >= 0 && s < 1) || !(t >= 0 && t < 1))
-	{
-		printf("%f\tteta %f\tphi %f\n", acos(point[0] / sin(s * PI)), point[0], sin(s * PI));
-	}
-	
 	return (texture[is * 8192 + it]);
 }
 
@@ -224,12 +206,15 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 		obj_and_dist = check_closest_inter(curr_node.start, curr_node.dir, scene, curr_node.min_range, curr_node.max_range);
 		if (obj_and_dist.obj != -1)
 		{
+			//normal calculations
 			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
 			fig = scene->obj[obj_and_dist.obj];
 			normal = intersect_point - fig.shape.sphere.cent;
 			normal = normalize(normal);
+			//--------------------
 
-			local_color = get_texture_pixel(intersect_point, fig.shape.sphere, texture) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+			//get_texture_pixel(intersect_point, fig.shape.sphere, texture)
+			local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
 			local_color *= tree[curr].part_of_primary_ray;
 
 			color += local_color; 

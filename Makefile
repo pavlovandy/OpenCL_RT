@@ -14,7 +14,7 @@ CC = gcc
 
 FLAGS =  -Wall -Wextra #-g -fsanitize=address #-Werror
 
-NAME = RTv1
+NAME = RT
 
 SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c
 
@@ -39,7 +39,7 @@ SDL_PATH = ./framework
 INCLUDES = 		-I$(FT) -I$(INC_DIR) \
 				-I./frameworks/SDL2.framework/Headers \
 				-I./frameworks/SDL2_image.framework/Headers \
-				-F./frameworks
+				-F./frameworks \
 
 FRAMEWORKS = 	-F./frameworks \
 				-rpath ./frameworks \

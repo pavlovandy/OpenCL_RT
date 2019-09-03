@@ -16,7 +16,7 @@ int			init_sdl(t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		return (error_message((char *)SDL_GetError()));
-	if (!(sdl->win = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_CENTERED, \
+	if (!(sdl->win = SDL_CreateWindow("RT", SDL_WINDOWPOS_CENTERED, \
 		SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN)))
 		return (error_message((char *)SDL_GetError()));
 	if (!(sdl->win_sur = SDL_GetWindowSurface(sdl->win)))
