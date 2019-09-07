@@ -111,6 +111,7 @@ struct	s_fig
 	cl_double	reflective;
 	cl_double	trans;
 	cl_double3	rotation;
+	cl_double	ior;
 };
 
 struct	s_sdl

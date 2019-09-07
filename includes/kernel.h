@@ -69,7 +69,8 @@ typedef struct	s_fig
 	double		reflective;
 	double		trans;
 	double3		rotation;
-	
+	double		ior;
+
 }				t_fig;
 
 typedef struct	s_pov
