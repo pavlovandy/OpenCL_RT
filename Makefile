@@ -33,19 +33,31 @@ FT = ./libft/
 FT_LIB	= $(addprefix $(FT),libft.a)
 
 LINKS = -L$(FT) -l ft -lm
+UNAME_S := $(shell uname -s)
 
+ifeq ($(UNAME_S),Linux)
+	LINKS += -lSDL2 -SDL2_image -lOpenCL
+endif
 SDL_PATH = ./framework
 
-INCLUDES = 		-I$(FT) -I$(INC_DIR) \
-				-I./frameworks/SDL2.framework/Headers \
-				-I./frameworks/SDL2_image.framework/Headers \
-				-F./frameworks \
+INCLUDES = 		-I$(FT) -I$(INC_DIR) 
 
-FRAMEWORKS = 	-F./frameworks \
+ifeq ($(UNAME_S),Darwin)
+INCLUDES += -I./frameworks/SDL2.framework/Headers \
+			-I./frameworks/SDL2_image.framework/Headers \
+			-F./frameworks
+endif
+
+				
+
+FRAMEWORKS :=
+ifeq ($(UNAME_S),Darwin)
+FRAMEWORKS += 	-F./frameworks \
 				-rpath ./frameworks \
 				-framework AppKit -framework OpenGL \
 				-framework SDL2 -framework SDL2_image \
-				-framework OpenCL \
+				-framework OpenCL
+endif
 
 all: obj_dir $(FT_LIB) $(NAME)
 	echo 'Compilated!'
