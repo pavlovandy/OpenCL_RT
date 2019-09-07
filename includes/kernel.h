@@ -68,6 +68,8 @@ typedef struct	s_fig
 	int			specular;
 	double		reflective;
 	double		trans;
+	double3		rotation;
+	
 }				t_fig;
 
 typedef struct	s_pov

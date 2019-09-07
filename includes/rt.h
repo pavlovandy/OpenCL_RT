@@ -27,7 +27,7 @@
 # else
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
-//#  include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#  include <SDL2_image/SDL_image.h>
 # endif
 # include <stdio.h>
 # include "terminal_colors.h"
@@ -110,6 +110,7 @@ struct	s_fig
 	cl_int		specular;
 	cl_double	reflective;
 	cl_double	trans;
+	cl_double3	rotation;
 };
 
 struct	s_sdl

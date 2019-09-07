@@ -16,7 +16,7 @@ double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_di
 										__global t_scene *scene, double min_range, \
 										double max_range, __global t_light *light);
 
-double3		get_texture_pixel(double3 intersect_point, t_sphere_data data, __global double3 *texture);
+double3		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global double3 *texture);
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
@@ -83,7 +83,6 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 	double	t_max;
 	double	intensity = 0;
 	double3	light_dir;
-	t_obj_and_dist	obj_and_dist;
 	double	scalar;
 	double3	reflect_ray;
 	double	local_intensity;
@@ -105,7 +104,8 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 			t_max = (light->type_num == POINT) ? 1 : BIG_VALUE;
 			/*shadow ray*/
 			local_intensity = get_intersity_after_shadow_rays(intersect_point, light_dir, scene, EPSILON, t_max, light);
-			
+			if (local_intensity < MINIMUM_INTENSITY)
+				continue ;
 			/*brightness*/
 			scalar = dot(normal, light_dir);
 			if (scalar > 0)
@@ -155,14 +155,49 @@ double		line_point(double start, double end, double p)
 	return ((start + (end - start) * p));
 }
 
-double3		get_texture_pixel(double3 intersect_point, t_sphere_data data, __global double3 *texture)
+double3		rotate_x(double3 v, double angle)
+{
+	double y = v[1];
+	double c = cos(angle);
+	double s = sin(angle);
+
+	v[1] = y * c - s * v[2];
+	v[2] = y * s + c * v[2];
+	return (v);
+}
+
+double3		rotate_y(double3 v, double angle)
+{
+	double x = v[0];
+	double c = cos(angle);
+	double s = sin(angle);
+
+	v[0] = x * c + s * v[2];
+	v[2] = -x * s + c * v[2];
+	return (v);
+}
+
+double3		rotate_z(double3 v, double angle)
+{
+	double x = v[0];
+	double c = cos(angle);
+	double s = sin(angle);
+
+	v[0] = x * c - s * v[1];
+	v[1] = x * s + c * v[1];
+	return (v);
+}
+
+double3		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global double3 *texture)
 {
 	double		s;
 	double		t;
 	int			is;
 	int			it;
 
-	double3		point = intersect_point - data.cent;
+	double3		point = intersect_point - data.shape.sphere.cent;
+	if (length(data.rotation) > 0)
+		point = rotate_z(rotate_y(rotate_x(point, data.rotation[0]), data.rotation[1]), data.rotation[2]);
 	point = normalize(point);
 	s = acos(point[2]) / PI;
 	if (fabs(point[0]) < fabs(sin(s * PI))) //this is for arcos(x) where x < -1 or x > 1. \
@@ -213,8 +248,8 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			normal = normalize(normal);
 			//--------------------
 
-			//get_texture_pixel(intersect_point, fig.shape.sphere, texture)
-			local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+			//
+			local_color = get_texture_pixel_sphere(intersect_point, fig, texture) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
 			local_color *= tree[curr].part_of_primary_ray;
 
 			color += local_color; 

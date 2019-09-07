@@ -68,7 +68,7 @@ cl_double3	*read_texture(char	*file_name, t_txt_params *params)
 	Uint8		*pixels;
 	int			i;
 
-	surr = load_tex(file_name, SDL_PIXELFORMAT_ARGB8888);
+	surr = load_tex(file_name, SDL_PIXELFORMAT_ARGB32);
 	res = 0;
 	params->w = surr->w;
 	params->h = surr->h;
