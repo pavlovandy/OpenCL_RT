@@ -10,7 +10,7 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 										double mini, double max);
 double	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
-						int	closest_obj);
+						int	closest_obj, __global uint *bump_map);
 double3	reflected_ray(double3 normal, double3 prim_ray);
 double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
 										__global t_scene *scene, double min_range, \
@@ -21,6 +21,10 @@ uint		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uin
 void		swap(double* a, double*b);
 double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
 double3		uint_to_double3(uint a);
+double3		rotate_x(double3 v, double angle);
+double3		rotate_y(double3 v, double angle);
+double3		rotate_z(double3 v, double angle);
+double2		cartesian_to_sperical_coords(double3 intersect_point, t_fig data);
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
@@ -128,6 +132,25 @@ double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_di
 	return (local_intensity);
 }
 
+double2	cartesian_to_sperical_coords(double3 intersect_point, t_fig data)
+{
+	double		s;
+	double		t;
+
+	double3		point = intersect_point - data.shape.sphere.cent;
+	if (length(data.rotation) > 0)
+		point = rotate_z(rotate_y(rotate_x(point, data.rotation[0]), data.rotation[1]), data.rotation[2]);
+	point = normalize(point);
+	s = acos(point[2]) / PI;
+	if (fabs(point[0]) < fabs(sin(s * PI))) //this is for arcos(x) where x < -1 or x > 1. \
+												Could be optimized with 1 time caculus of sin
+		t = acos(point[0] / sin(s * PI)) / (2 * PI);
+	else
+		t = point[0] < 0 ? 0.5 : 0;
+	if (point[1] < 0)
+		t = 1 - t;
+	return ((double2)(s, t));
+}
 
 double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 {
@@ -152,7 +175,7 @@ double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 
 double	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
-						int	closest_obj)
+						int	closest_obj, __global uint *bump_map)
 {
 	int		i;
 	__global t_light	*light;
@@ -162,6 +185,30 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 	double	scalar;
 	double3	reflect_ray;
 	double	local_intensity;
+	double2	texture_space_coords;
+
+	texture_space_coords = cartesian_to_sperical_coords(intersect_point, scene->obj[closest_obj]);
+
+	double3	n = normalize(intersect_point - scene->obj[closest_obj].shape.sphere.cent);
+	double3	A = (double3)(1, 0, 0);
+	double3	t = normalize(cross(A, n));
+	double3 b = normalize(cross(n, t));
+	int		is = texture_space_coords[0] * 4095;
+	int		it = texture_space_coords[1] * 8191;
+	double	du;
+	double	dv;
+
+	if (is < 4095)
+		du = bump_map[is * 8192 + it];
+	else
+		du = bump_map[is * 8192 + it] - bump_map[it];
+
+	if (it < 8191)
+		dv = bump_map[is * 8192 + it] - bump_map[is * 8192 + it + 1];
+	else
+		dv = bump_map[is * 8192 + it] - bump_map[is * 8192];
+
+	double3 new_normal = n + dv * cross(n, t) + du * cross(b, n);
 
 	i = -1;
 	while (++i < scene->count_light)
@@ -182,18 +229,21 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 			local_intensity = get_intersity_after_shadow_rays(intersect_point, light_dir, scene, EPSILON, t_max, light);
 			if (local_intensity < MINIMUM_INTENSITY)
 				continue ;
+			
+			double3 light_dir_tangent_space = (double3)(dot(light_dir, t), dot(light_dir, b), dot(light_dir, n));
+
 			/*blicks*/
-			if (scene->obj[closest_obj].specular > 0)
-			{						
-				reflect_ray = reflected_ray(normal, light_dir);
-				scalar = dot(reflect_ray, -dir);
-				if (scalar > 0)
-					intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
-			}
+			// if (scene->obj[closest_obj].specular > 0)
+			// {						
+			// 	reflect_ray = reflected_ray(normal, light_dir);
+			// 	scalar = dot(reflect_ray, -dir);
+			// 	if (scalar > 0)
+			// 		intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
+			// }
 			/*brightness*/
-			scalar = dot(normal, light_dir);
+			scalar = dot(new_normal, light_dir);
 			if (scalar > 0)
-				intensity += (local_intensity * scalar / (length(light_dir) * length(normal)));
+				intensity += (local_intensity * scalar / (length(light_dir) * length(new_normal)));
 			
 		}
 	}
@@ -286,7 +336,7 @@ uint	get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint
 		t = 1 - t;
 	is = s * 4095;
 	it = t * 8191;
-	return (texture[is * 8191 + it]);
+	return (texture[is * 8192 + it]);
 }
 
 double3		uint_to_double3(uint a)
@@ -338,9 +388,9 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 			//get_texture_pixel_sphere(intersect_point, fig, texture)
 			if (fig.text_no > -1)
-				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture)) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture)) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
 			else
-				local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+				local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
 			local_color *= curr_node.part_of_primary_ray;
 
 			kr = fresnel(curr_node.dir, normal, fig.ior, fig.reflective);

@@ -14,7 +14,7 @@
 
 void	make_little_default_scene(t_scene *scene)
 {
-	scene->count_obj = (cl_int)2;
+	scene->count_obj = (cl_int)1;
 	scene->count_light = (cl_int)3;
 	
 	scene->light[0].type_num = (cl_int)DIRECT;
@@ -29,36 +29,37 @@ void	make_little_default_scene(t_scene *scene)
 	scene->light[2].intensity = (cl_double)0.7;
 	scene->light[2].v = (cl_double3){{2, 1, 0}};
 
-	// scene->obj[0].fig_type = (cl_int)SPHERE;
-	// scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 4}};
-	// scene->obj[0].color = (cl_double3){{0, 0, 0}};
-	// scene->obj[0].shape.sphere.radius = (cl_double)1;
-	// scene->obj[0].specular = (cl_int)-1;
-
-	// scene->obj[0].reflective = (cl_double)0;
-	// scene->obj[0].trans = (cl_double)0.5;
-	// scene->obj[0].rotation = (cl_double3){{80.0 * M_PI / 180.0, 10.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
-
 	scene->obj[0].fig_type = (cl_int)SPHERE;
-	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 10}};
-	scene->obj[0].color = (cl_double3){{255, 255, 255}};
-	scene->obj[0].shape.sphere.radius = (cl_double)0.5;
-	scene->obj[0].specular = (cl_int)5;
-	scene->obj[0].reflective = (cl_double)0.5;
-	scene->obj[0].trans = (cl_double)0.5;
-	scene->obj[0].ior = (cl_double)1.8;
-	scene->obj[0].text_no = -1;
+	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 4}};
+	scene->obj[0].color = (cl_double3){{0, 0, 0}};
+	scene->obj[0].shape.sphere.radius = (cl_double)1;
+	scene->obj[0].specular = (cl_int)-1;
 
-	scene->obj[1].fig_type = (cl_int)SPHERE;
-	scene->obj[1].shape.sphere.cent = (cl_double3){{0, 0, 5}};
-	scene->obj[1].rotation = (cl_double3){{80.0 * M_PI / 180.0, 30.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
-	scene->obj[1].color = (cl_double3){{255, 0, 0}};
-	scene->obj[1].shape.sphere.radius = (cl_double)1;
-	scene->obj[1].specular = (cl_int)-1;
-	scene->obj[1].reflective = (cl_double)0;
-	scene->obj[1].trans = (cl_double)0;
-	scene->obj[1].ior = (cl_double)1;
-	scene->obj[1].text_no = 0;
+	scene->obj[0].reflective = (cl_double)0;
+	scene->obj[0].trans = (cl_double)0;
+	scene->obj[0].rotation = (cl_double3){{80.0 * M_PI / 180.0, 10.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
+	scene->obj[0].text_no = 0;
+
+	// scene->obj[0].fig_type = (cl_int)SPHERE;
+	// scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 10}};
+	// scene->obj[0].color = (cl_double3){{255, 255, 255}};
+	// scene->obj[0].shape.sphere.radius = (cl_double)0.5;
+	// scene->obj[0].specular = (cl_int)5;
+	// scene->obj[0].reflective = (cl_double)0.5;
+	// scene->obj[0].trans = (cl_double)0.5;
+	// scene->obj[0].ior = (cl_double)1.8;
+	// scene->obj[0].text_no = -1;
+
+	// scene->obj[1].fig_type = (cl_int)SPHERE;
+	// scene->obj[1].shape.sphere.cent = (cl_double3){{0, 0, 5}};
+	// scene->obj[1].rotation = (cl_double3){{150.0 * M_PI / 180.0, 120.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
+	// scene->obj[1].color = (cl_double3){{255, 0, 0}};
+	// scene->obj[1].shape.sphere.radius = (cl_double)1;
+	// scene->obj[1].specular = (cl_int)-1;
+	// scene->obj[1].reflective = (cl_double)0;
+	// scene->obj[1].trans = (cl_double)0;
+	// scene->obj[1].ior = (cl_double)1;
+	// scene->obj[1].text_no = 0;
 }
 
 void	init_pov(t_pov *pov)

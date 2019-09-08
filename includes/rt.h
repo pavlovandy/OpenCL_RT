@@ -181,9 +181,9 @@ typedef struct	s_txt_params
 typedef struct	s_envi
 {
 	cl_int			txt_count;
-	cl_uint			*txt;
+	cl_uint			*txt; //could be uint16 : rgb565. to save more space for kernel
 	t_txt_params	txt_par; // must be an array for all textures
-	cl_uint			*bump;
+	cl_uint			*bump; //could be uint16 : blue value isnt needed. to save more space for kernel
 	t_txt_params	bump_par; // must be an array for all textures
 }				t_envi;
 
