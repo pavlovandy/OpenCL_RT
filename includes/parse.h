@@ -16,7 +16,7 @@
 # include "rt.h" 
 
 int			read_file(char *file_name, char **file_text);
-cl_double3	*read_texture(char	*file_name, t_txt_params *params);
+cl_uint		*read_texture(char	*file_name, t_txt_params *params);
 SDL_Surface	*load_tex(char *path, Uint32 format);
 
 #endif

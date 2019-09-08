@@ -40,7 +40,7 @@ void	make_little_default_scene(t_scene *scene)
 	// scene->obj[0].rotation = (cl_double3){{80.0 * M_PI / 180.0, 10.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
 
 	scene->obj[0].fig_type = (cl_int)SPHERE;
-	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 3}};
+	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 10}};
 	scene->obj[0].color = (cl_double3){{255, 255, 255}};
 	scene->obj[0].shape.sphere.radius = (cl_double)0.5;
 	scene->obj[0].specular = (cl_int)5;
@@ -50,10 +50,10 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].text_no = -1;
 
 	scene->obj[1].fig_type = (cl_int)SPHERE;
-	scene->obj[1].shape.sphere.cent = (cl_double3){{0, -10.4, 5}};
+	scene->obj[1].shape.sphere.cent = (cl_double3){{0, 0, 5}};
 	scene->obj[1].rotation = (cl_double3){{80.0 * M_PI / 180.0, 30.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
 	scene->obj[1].color = (cl_double3){{255, 0, 0}};
-	scene->obj[1].shape.sphere.radius = (cl_double)10;
+	scene->obj[1].shape.sphere.radius = (cl_double)1;
 	scene->obj[1].specular = (cl_int)-1;
 	scene->obj[1].reflective = (cl_double)0;
 	scene->obj[1].trans = (cl_double)0;
@@ -84,9 +84,13 @@ int		main(int argc, char **argv)
 
 	rt.envi.txt_count = 1;
 	rt.envi.txt = read_texture("envi/8k_earth_daymap.jpg", &rt.envi.txt_par);
-
+	rt.envi.bump = read_texture("envi/8k_earth_normal_map.tiff", &rt.envi.bump_par);
+	printf("%i %i\n", rt.envi.txt_par.w, rt.envi.txt_par.h);
 	if (rt.envi.txt == 0)
 		return (error_message(RED"texture failure"COLOR_OFF));
+	if (rt.envi.bump == 0)
+		return (error_message(RED"texture failure"COLOR_OFF));
+	
 	if (init_cl(&rt.cl))
 		return (1);
 	if (create_program_and_kernels(&rt.cl))

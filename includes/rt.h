@@ -164,6 +164,7 @@ typedef struct	s_cl
 	cl_mem				pixel_ptr;
 
 	cl_mem				texture_mem;
+	cl_mem				bump_mem;
 
 	size_t				global_size;
 	size_t				local_size;
@@ -180,8 +181,10 @@ typedef struct	s_txt_params
 typedef struct	s_envi
 {
 	cl_int			txt_count;
-	cl_double3		*txt;
-	t_txt_params	txt_par;
+	cl_uint			*txt;
+	t_txt_params	txt_par; // must be an array for all textures
+	cl_uint			*bump;
+	t_txt_params	bump_par; // must be an array for all textures
 }				t_envi;
 
 struct	s_rt

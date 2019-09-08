@@ -1,7 +1,7 @@
 #include "kernel.h"
 
 double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
-double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global double3 *texture);
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump);
 double3	trim_color(double3 color);
 uint	color_to_canvas(double3 color);
 double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
@@ -17,9 +17,10 @@ double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_di
 										double max_range, __global t_light *light);
 double3	refract_ray(double3 prim_ray, double3 normal, double ior2_new);
 
-double3		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global double3 *texture);
-void	swap(double* a, double*b);
-double	fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
+uint		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture);
+void		swap(double* a, double*b);
+double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
+double3		uint_to_double3(uint a);
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
@@ -264,7 +265,7 @@ double3		rotate_z(double3 v, double angle)
 	return (v);
 }
 
-double3		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global double3 *texture)
+uint	get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture)
 {
 	double		s;
 	double		t;
@@ -285,10 +286,20 @@ double3		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global 
 		t = 1 - t;
 	is = s * 4095;
 	it = t * 8191;
-	return (texture[is * 8192 + it]);
+	return (texture[is * 8191 + it]);
 }
 
-double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global double3 *texture)
+double3		uint_to_double3(uint a)
+{
+	double3	d;
+
+	d[0] = (a >> 16) & 0xff;
+	d[1] = (a >> 8) & 0xff;
+	d[2] = a & 0xff;
+	return (d);
+}
+
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump)
 {
 	double3		normal;
 	double3		local_color;
@@ -327,7 +338,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 			//get_texture_pixel_sphere(intersect_point, fig, texture)
 			if (fig.text_no > -1)
-				local_color = get_texture_pixel_sphere(intersect_point, fig, texture) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture)) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
 			else
 				local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
 			local_color *= curr_node.part_of_primary_ray;
@@ -392,23 +403,6 @@ double3	trim_color(double3 color)
 	return (color);
 }
 
-// double3	ft_rotate_camera(double3 direction, t_pov pov)
-// {
-// 	double new_x;
-// 	double new_y;
-// 	double new_z;
-
-// 	new_x = direction[0] * pov.cy + direction[2] * pov.sy;
-// 	new_z = -direction[0] * pov.sy + direction[2] * pov.cy;
-// 	direction[0] = new_x;
-// 	direction[2] = new_z;
-// 	new_y = direction[1] * pov.cx + direction[2] * pov.sx;
-// 	new_z = -direction[1] * pov.sx + direction[2] * pov.cx;
-// 	direction[1] = new_y;
-// 	direction[2] = new_z;
-// 	return (direction);
-// }
-
 uint	color_to_canvas(double3 color)
 {
 	return (((uint)color[0] << 16) + ((uint)color[1] << 8) + (uint)color[2]);
@@ -425,7 +419,8 @@ __kernel void	test_kernel(__global t_scene *scene,
 							int w,
 							int h,
 							t_pov pov,
-							__global double3 *texture)
+							__global uint *texture,
+							__global uint *bump_map)
 {
 	int	id = get_global_id(0);
 	int	x = id % w;
@@ -434,7 +429,7 @@ __kernel void	test_kernel(__global t_scene *scene,
 	double3	color;
 
 	direction = normalize(canvas_to_viewport(x - w /2 , y - h / 2, w, h, pov));
-	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE, texture);
+	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE, texture, bump_map);
 	color = trim_color(color);
 	
 	canvas[id] = color_to_canvas(color);

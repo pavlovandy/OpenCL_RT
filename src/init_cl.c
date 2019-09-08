@@ -102,14 +102,19 @@ int			set_up_memory(t_rt *rt, t_cl *cl) //how to use buffer to direct change rt.
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateBuffer(pixel_ptr) exception"COLOR_OFF));
 	cl->texture_mem = clCreateBuffer(cl->context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, \
-							sizeof(cl_double3) * rt->envi.txt_par.w * rt->envi.txt_par.h, rt->envi.txt, &ret);
+							sizeof(cl_uint) * rt->envi.txt_par.w * rt->envi.txt_par.h, rt->envi.txt, &ret);
+	printf("%i\n", ret);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateBuffer(texture_mem) exception"COLOR_OFF));
+	cl->bump_mem = clCreateBuffer(cl->context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, \
+							sizeof(cl_uint) * rt->envi.bump_par.w * rt->envi.bump_par.h, rt->envi.bump, &ret);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clCreateBuffer(bump_mem) exception"COLOR_OFF));
 
 	ret = set_global_and_local_item_size(cl);
-
 	if (ret != CL_SUCCESS)
 		return (1);
+
 	ret = clSetKernelArg(cl->kernel, 0, sizeof(cl->scene_mem), &cl->scene_mem);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(0) exception"COLOR_OFF));
@@ -128,6 +133,9 @@ int			set_up_memory(t_rt *rt, t_cl *cl) //how to use buffer to direct change rt.
 	ret = clSetKernelArg(cl->kernel, 5, sizeof(cl->texture_mem), &cl->texture_mem);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(5) exception"COLOR_OFF));
+	ret = clSetKernelArg(cl->kernel, 6, sizeof(cl->bump_mem), &cl->bump_mem);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clSetKernelArg(6) exception"COLOR_OFF));
 	return (0);
 }
 
