@@ -19,7 +19,7 @@ double3	refract_ray(double3 prim_ray, double3 normal, double ior2_new);
 
 double3		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global double3 *texture);
 void	swap(double* a, double*b);
-double	fresnel(double3 prim_ray, double3 normal, double ior_new);
+double	fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
@@ -42,32 +42,53 @@ void	swap(double* a, double*b)
 	*b = c;
 }
 
-double	fresnel(double3 prim_ray, double3 normal, double ior_new) //return the reflected value
+double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
 {
-	float cosi = clamp(-1.0, 1.0, dot(prim_ray, normal));
-	float ior_prev = 1;
-
-	if (cosi > 0)
-		swap(&ior_prev, &ior_new);
-	float sint = ior_prev / ior_new * sqrt(1 - cosi * cosi);
-	if (sint >= 1)
-		return (1);
-	else
+	double n2 = 1.00029;
+	double r0 = (n1 - n2) / (n1 + n2);
+	r0 *= r0;
+	double cosX = -dot(normal, prim_ray);
+	if (n1 > n2)
 	{
-		float cost = sqrt(1 - sint * sint);
-		float Rs = ((ior_new * cosi) - (ior_prev * cost)) / ((ior_new * cosi) + (ior_prev * cost)); 
-		float Rp = ((ior_prev * cosi) - (ior_new * cost)) / ((ior_prev * cosi) + (ior_new * cost)); 
-		return ((Rs * Rs + Rp * Rp) / 2); 
+		double n = n1 / n2;
+		double sinT2 = n * n * (1.0 - cosX * cosX);
+		// Total internal reflection
+		if (sinT2 > 1.0)
+			return 1.0;
+		cosX = sqrt(1.0 - sinT2);
 	}
-	return (1);
+	double x = 1.0 - cosX;
+	double ret = r0 + (1.0 - r0) * x * x * x * x * x;
+ 
+	ret = (reflective + (1.0 - reflective) * ret);
+	return ret;
 }
+
+// double	fresnel(double3 prim_ray, double3 normal, double etat, double reflective) //return the reflected value
+// {
+// 	double cosi = dot(prim_ray, normal);
+// 	double etai = 1.00029;
+
+// 	if (cosi > 0)
+// 		swap(&etai, &etat);
+//  	double sint = etai / etat * sqrt(1 - cosi * cosi);
+// 	if (sint >= 1)
+// 		return (1);
+// 	else
+// 	{
+// 		double cost = sqrt(1 - sint * sint);
+// 		cosi = fabs(cosi);
+// 		double Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost)); 
+// 		double Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost)); 
+// 		return ((Rs * Rs + Rp * Rp) / 2); 
+// 	}
+// 	return (1);
+// }
 
 double3	refract_ray(double3 prim_ray, double3 normal, double ior_new)
 {
-	prim_ray = normalize(prim_ray);
-	normal = normalize(normal);
-	double		cosi = clamp(-1.0, 1.0, dot(normal, prim_ray));
-	double		ior_prev = 1;
+	double		cosi = dot(normal, prim_ray);
+	double		ior_prev = 1.00029;
 	double		k;
 
 	if (cosi < 0)
@@ -305,41 +326,35 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			//--------------------
 
 			//get_texture_pixel_sphere(intersect_point, fig, texture)
-			local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
-						local_color *= tree[curr].part_of_primary_ray;
+			if (fig.text_no > -1)
+				local_color = get_texture_pixel_sphere(intersect_point, fig, texture) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+			else
+				local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj);
+			local_color *= curr_node.part_of_primary_ray;
 
-			kr = 1;
-			if (fig.trans > 0 && fig.reflective > 0)
-				kr = fresnel(curr_node.dir, normal, fig.ior);
-			else if (fig.reflective == 0)
-				kr = 0;
+			kr = fresnel(curr_node.dir, normal, fig.ior, fig.reflective);
 
 			if (fig.trans > 0 && count < tree_nodes && kr < 1)
 			{
-				tree[count].part_of_primary_ray = tree[curr].part_of_primary_ray * fig.trans * (1 - kr);
-				printf("cmon\n"); //never pass here
+				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - kr);
 				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
 				{
-					
-					local_color *= (1 - fig.trans);
-					color -= local_color * fig.trans;
+					// local_color *= (1 - fig.trans);
 					tree[count].start = intersect_point;
-					tree[count].dir = refract_ray(tree[curr].dir, normal, fig.ior);
+					tree[count].dir = normalize(refract_ray(curr_node.dir, normal, fig.ior));
 					tree[count].min_range = EPSILON;
 					tree[count].max_range = BIG_VALUE;
 					count++;	
 				}
 			}
-
 			if (fig.reflective > 0 && count < tree_nodes)
 			{
-				tree[count].part_of_primary_ray = tree[curr].part_of_primary_ray * fig.reflective * kr;
+				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * kr;
 				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
 				{
-					local_color *= (1 - fig.reflective);
-					color -= local_color * fig.reflective;
+					//local_color *= (1 - fig.reflective);
 					tree[count].start = intersect_point;
-					tree[count].dir = reflected_ray(normal, -tree[curr].dir);
+					tree[count].dir = normalize(reflected_ray(normal, -curr_node.dir));
 					tree[count].min_range = EPSILON;
 					tree[count].max_range = BIG_VALUE;
 					count++;
@@ -351,7 +366,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 		}
 		else
 		{
-			color += BACKGROUND_COLOR * tree[curr].part_of_primary_ray;
+			color += BACKGROUND_COLOR * curr_node.part_of_primary_ray;
 			curr++;
 			continue ;
 		}
@@ -418,8 +433,9 @@ __kernel void	test_kernel(__global t_scene *scene,
 	double3	direction;
 	double3	color;
 
-	direction = canvas_to_viewport(x - w /2 , y - h / 2, w, h, pov);
+	direction = normalize(canvas_to_viewport(x - w /2 , y - h / 2, w, h, pov));
 	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE, texture);
 	color = trim_color(color);
+	
 	canvas[id] = color_to_canvas(color);
 }

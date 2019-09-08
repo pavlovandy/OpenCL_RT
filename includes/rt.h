@@ -112,6 +112,7 @@ struct	s_fig
 	cl_double	trans;
 	cl_double3	rotation;
 	cl_double	ior;
+	cl_int		text_no;
 };
 
 struct	s_sdl

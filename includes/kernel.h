@@ -70,7 +70,7 @@ typedef struct	s_fig
 	double		trans;
 	double3		rotation;
 	double		ior;
-
+	int			text_no;
 }				t_fig;
 
 typedef struct	s_pov
