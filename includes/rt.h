@@ -27,7 +27,7 @@
 # else
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
-#  include <SDL2_image/SDL_image.h>
+#  include <SDL2/SDL_image.h>
 # endif
 # include <stdio.h>
 # include "terminal_colors.h"
@@ -35,9 +35,13 @@
 
 
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
-
+# ifdef __APPLE__
 # define WIN_WIDTH	1600
 # define WIN_HEIGHT	1200
+# else
+# define WIN_WIDTH	1200
+# define WIN_HEIGHT	800
+#endif
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])

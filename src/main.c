@@ -37,7 +37,7 @@ void	make_little_default_scene(t_scene *scene)
 
 	scene->obj[0].reflective = (cl_double)0;
 	scene->obj[0].trans = (cl_double)0;
-	scene->obj[0].rotation = (cl_double3){{80.0 * M_PI / 180.0, 10.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
+	scene->obj[0].rotation = (cl_double3){{150.0 * M_PI / 180.0, 0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
 	scene->obj[0].text_no = 0;
 
 	// scene->obj[0].fig_type = (cl_int)SPHERE;

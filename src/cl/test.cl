@@ -198,17 +198,22 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 	double	du;
 	double	dv;
 
-	if (is < 4095)
-		du = bump_map[is * 8192 + it];
-	else
-		du = bump_map[is * 8192 + it] - bump_map[it];
+	// if (is < 4095)
+	// 	du = bump_map[is * 8192 + it] - bump_map[(is + 1) * 8192 + it];
+	// else
+	// 	du = bump_map[is * 8192 + it] - bump_map[it];
 
-	if (it < 8191)
-		dv = bump_map[is * 8192 + it] - bump_map[is * 8192 + it + 1];
-	else
-		dv = bump_map[is * 8192 + it] - bump_map[is * 8192];
+	// if (it < 8191)
+	// 	dv = bump_map[is * 8192 + it] - bump_map[is * 8192 + it + 1];
+	// else
+	// 	dv = bump_map[is * 8192 + it] - bump_map[is * 8192];
+	double3	d = uint_to_double3(bump_map[is * 8192 + it]);
+	d = normalize(d * 2 - 1);
+	du = d[0];
+	dv = d[1];
 
 	double3 new_normal = n + dv * cross(n, t) + du * cross(b, n);
+	new_normal = normalize(new_normal);
 
 	i = -1;
 	while (++i < scene->count_light)
@@ -317,8 +322,8 @@ double3		rotate_z(double3 v, double angle)
 
 uint	get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture)
 {
-	double		s;
-	double		t;
+	double		s = 0;
+	double		t = 0;
 	int			is;
 	int			it;
 
@@ -388,39 +393,41 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 			//get_texture_pixel_sphere(intersect_point, fig, texture)
 			if (fig.text_no > -1)
-				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture)) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
+			{
+				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture));// * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
+			}
 			else
 				local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
 			local_color *= curr_node.part_of_primary_ray;
 
 			kr = fresnel(curr_node.dir, normal, fig.ior, fig.reflective);
 
-			if (fig.trans > 0 && count < tree_nodes && kr < 1)
-			{
-				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - kr);
-				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
-				{
-					// local_color *= (1 - fig.trans);
-					tree[count].start = intersect_point;
-					tree[count].dir = normalize(refract_ray(curr_node.dir, normal, fig.ior));
-					tree[count].min_range = EPSILON;
-					tree[count].max_range = BIG_VALUE;
-					count++;	
-				}
-			}
-			if (fig.reflective > 0 && count < tree_nodes)
-			{
-				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * kr;
-				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
-				{
-					//local_color *= (1 - fig.reflective);
-					tree[count].start = intersect_point;
-					tree[count].dir = normalize(reflected_ray(normal, -curr_node.dir));
-					tree[count].min_range = EPSILON;
-					tree[count].max_range = BIG_VALUE;
-					count++;
-				}
-			}
+			// if (fig.trans > 0 && count < tree_nodes && kr < 1)
+			// {
+			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - kr);
+			// 	if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
+			// 	{
+			// 		// local_color *= (1 - fig.trans);
+			// 		tree[count].start = intersect_point;
+			// 		tree[count].dir = normalize(refract_ray(curr_node.dir, normal, fig.ior));
+			// 		tree[count].min_range = EPSILON;
+			// 		tree[count].max_range = BIG_VALUE;
+			// 		count++;	
+			// 	}
+			// }
+			// if (fig.reflective > 0 && count < tree_nodes)
+			// {
+			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * kr;
+			// 	if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
+			// 	{
+			// 		//local_color *= (1 - fig.reflective);
+			// 		tree[count].start = intersect_point;
+			// 		tree[count].dir = normalize(reflected_ray(normal, -curr_node.dir));
+			// 		tree[count].min_range = EPSILON;
+			// 		tree[count].max_range = BIG_VALUE;
+			// 		count++;
+			// 	}
+			// }
 
 			color += local_color;
 			curr++;
