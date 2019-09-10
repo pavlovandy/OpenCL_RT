@@ -15,6 +15,9 @@
 
 # include "rt.h" 
 
+# define BUFFER_SIZE 200
+# define COUNT_CL_FILES 2
+
 int			read_file(char *file_name, char **file_text);
 cl_uint		*read_texture(char	*file_name, t_txt_params *params);
 SDL_Surface	*load_tex(char *path, Uint32 format);

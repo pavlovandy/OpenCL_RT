@@ -16,15 +16,19 @@ FLAGS =  -Wall -Wextra #-g -fsanitize=address #-Werror
 
 NAME = RT
 
-SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c
+SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c math.c
 
-INC = includes/rt.h
+HEADERS = rt.h parse.h terminal_colors.h mymath.h
+
+INC_DIR = ./includes/
+
+INC = $(addprefix $(INC_DIR), $(HEADERS))
 
 SRC_DIR = ./src/
 
 OBJ_DIR = ./obj/
 
-INC_DIR = ./includes/
+
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

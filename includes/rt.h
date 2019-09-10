@@ -48,7 +48,7 @@
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
-# define BUFFER_SIZE 200
+
 # define D	0.1
 # define VW	(1.155 * D)
 # define VH	(VW * WIN_HEIGHT / WIN_WIDTH)
@@ -162,7 +162,8 @@ typedef struct	s_cl
 	cl_context			context;
 	cl_command_queue	command_queue;
 	cl_program			program;
-	cl_kernel			kernel;
+	cl_kernel			rt_kernel;
+	cl_kernel			click_kernel;
 
 	cl_mem				scene_mem;
 	cl_mem				pixel_ptr;
@@ -191,6 +192,12 @@ typedef struct	s_envi
 	t_txt_params	bump_par; // must be an array for all textures
 }				t_envi;
 
+typedef struct	s_edi
+{
+	int		chosen_obj;
+}				t_edi;
+
+
 struct	s_rt
 {
 	t_sdl	sdl;
@@ -198,6 +205,7 @@ struct	s_rt
 	t_pov	pov;
 	t_cl	cl;
 	t_envi	envi;
+	t_edi	edi;
 };
 
 /*
@@ -235,5 +243,6 @@ int			there_will_be_loop(t_rt *rt);
 */
 
 # include "parse.h"
+# include "mymath.h"
 
 #endif

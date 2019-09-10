@@ -1,37 +1,6 @@
 #include "kernel.h"
 
-double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
-double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump);
-double3	trim_color(double3 color);
-uint	color_to_canvas(double3 color);
-double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
-t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
-										__global t_scene *scene, \
-										double mini, double max);
-double	calculate_light(__global t_scene *scene, double3 eye, \
-						double3 dir, double3 normal, double3 intersect_point, \
-						int	closest_obj, __global uint *bump_map);
-double3	reflected_ray(double3 normal, double3 prim_ray);
-double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
-										__global t_scene *scene, double min_range, \
-										double max_range, __global t_light *light);
-double3	refract_ray(double3 prim_ray, double3 normal, double ior2_new);
 
-uint		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture);
-void		swap(double* a, double*b);
-double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
-double3		uint_to_double3(uint a);
-double3		rotate_x(double3 v, double angle);
-double3		rotate_y(double3 v, double angle);
-double3		rotate_z(double3 v, double angle);
-double2		cartesian_to_sperical_coords(double3 intersect_point, t_fig data);
-
-__constant double EPSILON = 0.00001;
-__constant double BIG_VALUE = 9e9;
-__constant double3 BACKGROUND_COLOR =  ((double3)(0.f, 0.f, 0.f));
-__constant double	MINIMUM_INTENSITY = 0.01;
-__constant int tree_nodes =	31;
-__constant double	PI = 3.14159265359;
 
 double3	reflected_ray(double3 normal, double3 prim_ray)
 {
@@ -198,21 +167,9 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 	double	du;
 	double	dv;
 
-	// if (is < 4095)
-	// 	du = bump_map[is * 8192 + it] - bump_map[(is + 1) * 8192 + it];
-	// else
-	// 	du = bump_map[is * 8192 + it] - bump_map[it];
-
-	// if (it < 8191)
-	// 	dv = bump_map[is * 8192 + it] - bump_map[is * 8192 + it + 1];
-	// else
-	// 	dv = bump_map[is * 8192 + it] - bump_map[is * 8192];
-	double3	d = uint_to_double3(bump_map[is * 8192 + it]);
-	d = normalize(d * 2 - 1);
-	du = d[0];
-	dv = d[1];
-
-	double3 new_normal = n + dv * cross(n, t) + du * cross(b, n);
+	double3	new_normal = uint_to_double3(bump_map[is * 8191 + it]);
+	new_normal = normalize(new_normal * 2 - 1);
+	new_normal = (double3)(dot(new_normal, t), dot(new_normal, b), dot(new_normal, n));
 	new_normal = normalize(new_normal);
 
 	i = -1;
@@ -228,7 +185,7 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 			if (light->type_num == POINT)
 				light_dir = light->v - intersect_point;
 			else
-				light_dir = -light->v;
+				light_dir = light->v;
 			t_max = (light->type_num == POINT) ? 1 : BIG_VALUE;
 			/*shadow ray*/
 			local_intensity = get_intersity_after_shadow_rays(intersect_point, light_dir, scene, EPSILON, t_max, light);
@@ -236,6 +193,7 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 				continue ;
 			
 			double3 light_dir_tangent_space = (double3)(dot(light_dir, t), dot(light_dir, b), dot(light_dir, n));
+			light_dir_tangent_space = normalize(light_dir_tangent_space);
 
 			/*blicks*/
 			// if (scene->obj[closest_obj].specular > 0)
@@ -246,9 +204,9 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 			// 		intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
 			// }
 			/*brightness*/
-			scalar = dot(new_normal, light_dir);
+			scalar = dot(normal, light_dir);
 			if (scalar > 0)
-				intensity += (local_intensity * scalar / (length(light_dir) * length(new_normal)));
+				intensity += (local_intensity * scalar / (length(light_dir) * length(normal)));
 			
 		}
 	}
@@ -348,9 +306,9 @@ double3		uint_to_double3(uint a)
 {
 	double3	d;
 
-	d[0] = (a >> 16) & 0xff;
-	d[1] = (a >> 8) & 0xff;
-	d[2] = a & 0xff;
+	d[0] = (a >> 8) & 0xff; //cmon????? red become blue 
+	d[1] = (a >> 16) & 0xff; //cmon????? green become red
+	d[2] = (a >> 24) & 0xff; //cmon????? blue become alpha
 	return (d);
 }
 
@@ -394,7 +352,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			//get_texture_pixel_sphere(intersect_point, fig, texture)
 			if (fig.text_no > -1)
 			{
-				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture));// * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
+				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture)) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
 			}
 			else
 				local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
@@ -471,6 +429,23 @@ double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov)
 								-(double)y * pov.vh / h, (double)pov.d});
 }
 
+double3	rotate_camera(double3 direction, t_pov pov)
+{
+	double new_x;
+	double new_y;
+	double new_z;
+
+	new_x = direction[0] * pov.cy + direction[2] * pov.sy;
+	new_z = -direction[0] * pov.sy + direction[2] * pov.cy;
+	direction[0] = new_x;
+	direction[2] = new_z;
+	new_y = direction[1] * pov.cx + direction[2] * pov.sx;
+	new_z = -direction[1] * pov.sx + direction[2] * pov.cx;
+	direction[1] = new_y;
+	direction[2] = new_z;
+	return (direction);
+}
+
 __kernel void	test_kernel(__global t_scene *scene,
 							__global uint *canvas,
 							int w,
@@ -486,6 +461,7 @@ __kernel void	test_kernel(__global t_scene *scene,
 	double3	color;
 
 	direction = normalize(canvas_to_viewport(x - w /2 , y - h / 2, w, h, pov));
+	direction = rotate_camera(direction, pov);
 	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE, texture, bump_map);
 	color = trim_color(color);
 	

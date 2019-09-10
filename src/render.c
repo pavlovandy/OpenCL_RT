@@ -20,7 +20,7 @@ int			render_scene(t_rt *rt)
 
 	pixels = (cl_uint*)rt->sdl.win_sur->pixels;
 	
-	ret = clEnqueueNDRangeKernel(rt->cl.command_queue, rt->cl.kernel, 1, NULL, \
+	ret = clEnqueueNDRangeKernel(rt->cl.command_queue, rt->cl.rt_kernel, 1, NULL, \
 					&rt->cl.global_size, &rt->cl.local_size, 0, NULL, NULL);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"Oops"COLOR_OFF));
