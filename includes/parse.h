@@ -16,7 +16,7 @@
 # include "rt.h" 
 
 # define BUFFER_SIZE 200
-# define COUNT_CL_FILES 2
+# define COUNT_CL_FILES 6
 
 int			read_file(char *file_name, char **file_text);
 cl_uint		*read_texture(char	*file_name, t_txt_params *params);

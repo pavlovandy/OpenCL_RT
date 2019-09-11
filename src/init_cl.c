@@ -65,8 +65,16 @@ int			create_program_and_kernels(t_cl *cl)
 		return (error_message(RED"test.cl problem"COLOR_OFF));
 	if (read_file("./src/cl/editor_click_intersection.cl", source_str + 1))
 		return (error_message(RED"editor_click_intersection.cl problem"COLOR_OFF));
+	if (read_file("./src/cl/intersection_with_figures_and_normals.cl", source_str + 2))
+		return (error_message(RED"intersection_with_figures_and_normals.cl problem"COLOR_OFF));
+	if (read_file("./src/cl/color_managment.cl", source_str + 3))
+		return (error_message(RED"color_managment.cl problem"COLOR_OFF));
+	if (read_file("./src/cl/other_function.cl", source_str + 4))
+		return (error_message(RED"color_managment.cl problem"COLOR_OFF));
+		if (read_file("./src/cl/textures_and_bump.cl", source_str + 5))
+		return (error_message(RED"color_managment.cl problem"COLOR_OFF));
 
-	cl->program = clCreateProgramWithSource(cl->context, 2, \
+	cl->program = clCreateProgramWithSource(cl->context, 6, \
 		(const char **)source_str, 0, &ret);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateProgramWithSource exception"COLOR_OFF));

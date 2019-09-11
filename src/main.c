@@ -21,13 +21,13 @@ void	make_little_default_scene(t_scene *scene)
 	scene->light[0].intensity = (cl_double3){{0.8, 0.8, 0.8}};
 	scene->light[0].v = (cl_double3){{1, 4, 7}};
 
-	// scene->light[1].type_num = (cl_int)POINT;
-	// scene->light[1].intensity = (cl_double3){{0.8, 0.8, 0.8}};
-	// scene->light[1].v = (cl_double3){{0, -5, 4}};
+	scene->light[1].type_num = (cl_int)POINT;
+	scene->light[1].intensity = (cl_double3){{0.8, 0.8, 0.8}};
+	scene->light[1].v = (cl_double3){{0, -5, 4}};
 
-	// scene->light[2].type_num = (cl_int)POINT;
-	// scene->light[2].intensity = (cl_double3){{0.8, 0.8, 0.8}};
-	// scene->light[2].v = (cl_double3){{2, 1, 0}};
+	scene->light[2].type_num = (cl_int)POINT;
+	scene->light[2].intensity = (cl_double3){{0.8, 0.8, 0.8}};
+	scene->light[2].v = (cl_double3){{2, 1, 0}};
 
 	// scene->obj[0].fig_type = (cl_int)SPHERE;
 	// scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 4}};
@@ -58,7 +58,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[1].shape.sphere.radius = (cl_double)1;
 	scene->obj[1].specular = (cl_int)-1;
 	scene->obj[1].reflective = (cl_double)0;
-	scene->obj[1].trans = (cl_double)0.8;
+	scene->obj[1].trans = (cl_double)0.1;
 	scene->obj[1].ior = (cl_double)1;
 	scene->obj[1].text_no = 0;
 }
@@ -98,10 +98,10 @@ int		main(int argc, char **argv)
 	if (create_program_and_kernels(&rt.cl))
 		return (1);
 	init_pov(&rt.pov);
-	// make_little_default_scene(&rt.scene);
+	make_little_default_scene(&rt.scene);
 
-	if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
-		return (1);
+	// if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
+	// 	return (1);
 
 
 	if (set_up_memory(&rt, &rt.cl))
