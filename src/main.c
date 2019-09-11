@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/08/19 13:40:05 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/11 15:55:53 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->light[2].v = (cl_double3){{2, 1, 0}};
 
 	scene->obj[0].fig_type = (cl_int)SPHERE;
-	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 4}};
+	scene->obj[0].shape.sphere.cent = (cl_double3){{1 , 0, 4}};
 	scene->obj[0].color = (cl_double3){{0, 0, 0}};
 	scene->obj[0].shape.sphere.radius = (cl_double)1;
 	scene->obj[0].specular = (cl_int)-1;
@@ -96,14 +96,18 @@ int		main(int argc, char **argv)
 		return (1);
 	if (create_program_and_kernels(&rt.cl))
 		return (1);
-	init_pov(&rt.pov);
-	make_little_default_scene(&rt.scene);
+	// init_pov(&rt.pov);
+	// make_little_default_scene(&rt.scene);
+
+	if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
+		return (1);
+
 
 	if (set_up_memory(&rt, &rt.cl))
 		return (1);
 	render_scene(&rt);
 	there_will_be_loop(&rt);
-
+	// ft_xml_save("sss.xml", &rt.scene, &rt.pov);
 	close_sdl(&rt.sdl);
 	freed_up_memory(&rt.cl);
 	return (0);

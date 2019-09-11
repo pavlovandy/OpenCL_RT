@@ -1,0 +1,36 @@
+<RT>
+	<spher>
+		<centre> 1 1 0 </centre>
+		<RGB> 255 0 0 </RGB>
+		<radius> 1 </radius>
+		<reflective> 0 </reflective>
+		<transparency> 0.9 </transparency>
+	</spher>
+		<spher>
+		<centre> -1 1 0 </centre>
+		<RGB> 255 0 0 </RGB>
+		<radius> 1 </radius>
+		<reflective> 0 </reflective>
+		<transparency> 0.9 </transparency>
+	</spher>
+	<plane> 
+		<dot>10 0 0 </dot>
+		<RGB>83 83 83</RGB>
+		<reflective> 0 </reflective>
+		<normal>0 -1 0</normal>
+		<transparency> 0.5</transparency>
+	</plane>
+	
+		<light>
+		<type> point </type>
+		<dot> 0 1 -4 </dot>
+		<intensity> 0.6 </intensity>
+	</light>
+	<light>
+        <type> ambient </type>
+        <intensity> 0.2 </intensity>
+    </light>
+	<cam>
+		<postion> 0 1 -9 </postion>
+	</cam>
+</RT>

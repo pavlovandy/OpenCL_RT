@@ -1,30 +1,35 @@
 #include "kernel.h"
 
-double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
-double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump);
-double3	trim_color(double3 color);
-uint	color_to_canvas(double3 color);
-double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
-t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
+double2			intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
+double2			intersect_plane(double3 eye, double3 dir, t_plane_data plane);
+double2			intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin);
+double2			intersect_cone(double3 eye, double3 dir, t_cone_data cone);
+double3			calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node);
+
+double3			ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump);
+double3			trim_color(double3 color);
+uint			color_to_canvas(double3 color);
+double3			canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
+t_obj_and_dist	check_closest_inter(double3 eye, double3 dir, \
 										__global t_scene *scene, \
 										double mini, double max);
-double	calculate_light(__global t_scene *scene, double3 eye, \
+double			calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj, __global uint *bump_map);
-double3	reflected_ray(double3 normal, double3 prim_ray);
-double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
+double3			reflected_ray(double3 normal, double3 prim_ray);
+double			get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
 										__global t_scene *scene, double min_range, \
 										double max_range, __global t_light *light);
-double3	refract_ray(double3 prim_ray, double3 normal, double ior2_new);
+double3			refract_ray(double3 prim_ray, double3 normal, double ior2_new);
 
-uint		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture);
-void		swap(double* a, double*b);
-double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
-double3		uint_to_double3(uint a);
-double3		rotate_x(double3 v, double angle);
-double3		rotate_y(double3 v, double angle);
-double3		rotate_z(double3 v, double angle);
-double2		cartesian_to_sperical_coords(double3 intersect_point, t_fig data);
+uint			get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture);
+void			swap(double* a, double*b);
+double			fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
+double3			uint_to_double3(uint a);
+double3			rotate_x(double3 v, double angle);
+double3			rotate_y(double3 v, double angle);
+double3			rotate_z(double3 v, double angle);
+double2			cartesian_to_sperical_coords(double3 intersect_point, t_fig data);
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
@@ -173,6 +178,68 @@ double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 	return (roots);
 }
 
+double2	intersect_plane(double3 eye, double3 dir, t_plane_data plane)
+{
+	double3	oc = eye - plane.dot;
+	double	a;
+	double	b;
+	double	c;
+	double2	roots;
+
+	plane.normal = normalize(plane.normal);
+	oc = oc * -1;
+	a = dot(oc, plane.normal);
+	b = dot(dir, plane.normal);
+	if (b == 0)
+		return (BIG_VALUE);
+	c = a / b;
+	roots = (double2)(c, c);
+	return(roots);
+}
+
+double2	intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin)
+{
+	double3	oc = eye - cylin.dot;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+	double2	roots;
+
+	cylin.dir = normalize(cylin.dir);
+	a = dot(dir, dir) - pow(dot(dir, cylin.dir), 2);
+	b = 2 * (dot(dir, oc) - (dot(dir, cylin.dir) * dot(oc, cylin.dir)));
+	c = dot(oc, oc) - pow(dot(oc, cylin.dir), 2) - pow(cylin.radius, 2);
+	if ((d = pow(b, 2) - 4 * a * c) < 0)
+		return (BIG_VALUE);
+	d = sqrt(d);
+	a = a * 2;
+	roots = (double2)((-b + d) / a,(-b - d) / a);
+	return(roots);
+}
+
+double2	intersect_cone(double3 eye, double3 dir, t_cone_data cone)
+{
+	double3	oc = eye - cone.vertex;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+	double2	roots;
+
+	cone.dir = normalize(cone.dir);
+	a = dot(dir, dir) - (1.0 + pow(cone.tangent, 2)) * pow(dot(dir, cone.dir), 2);
+	b = 2 * (dot(dir, oc) - (1.0 + pow(cone.tangent, 2)) * (dot(dir, cone.dir) * dot(oc, cone.dir)));
+	c = dot(oc, oc) - (1.0 + pow(cone.tangent, 2)) * pow(dot(oc, cone.dir), 2);
+	if ((d = pow(b, 2) - 4 * a * c) < 0)
+		return (BIG_VALUE);
+	d = sqrt(d);
+	a = a * 2;
+	roots = (double2)((-b + d) / a,(-b - d) / a);
+	return(roots);
+}
+
+
 double	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj, __global uint *bump_map)
@@ -241,9 +308,12 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 			// 		intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
 			// }
 			/*brightness*/
-			scalar = dot(new_normal, light_dir);
+			// scalar = dot(new_normal, light_dir);
+			// if (scalar > 0)
+			// 	intensity += (local_intensity * scalar / (length(light_dir) * length(new_normal)));
+			scalar = dot(normal, light_dir);
 			if (scalar > 0)
-				intensity += (local_intensity * scalar / (length(light_dir) * length(new_normal)));
+				intensity += (local_intensity * scalar / (length(light_dir) * length(normal)));
 			
 		}
 	}
@@ -262,7 +332,14 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 	i = -1;
 	while (++i < scene->count_obj)
 	{
-		res = intersect_sphere(eye, dir, scene->obj[i].shape.sphere);
+		if (scene->obj[i].fig_type == SPHERE)
+			res = intersect_sphere(eye, dir, scene->obj[i].shape.sphere);
+		else if (scene->obj[i].fig_type == PLANE)
+			res = intersect_plane(eye, dir, scene->obj[i].shape.plane);
+		else if (scene->obj[i].fig_type == CYLIN)
+			res = intersect_cylin(eye, dir, scene->obj[i].shape.cylin);
+		else if (scene->obj[i].fig_type == CONE)
+			res = intersect_cone(eye, dir, scene->obj[i].shape.cone);
 		if (res[0] > mini && res[0] < max && res[0] < closest_dist)
 		{
 			closest_dist = res[0];
@@ -349,6 +426,34 @@ double3		uint_to_double3(uint a)
 	return (d);
 }
 
+double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node)
+{
+	double3		tmp;//dot - intersect.point
+	double3		normal;
+
+	if (fig.fig_type == SPHERE)
+	{
+		normal = intersect_point - fig.shape.sphere.cent;
+		normal = normalize(normal);
+	}else if (fig.fig_type == PLANE)
+	{
+		if (dot(curr_node.dir , fig.shape.plane.normal) >= 0)
+			fig.shape.plane.normal = fig.shape.plane.normal * -1;
+		normal = normalize(fig.shape.plane.normal);
+	}else if (fig.fig_type == CYLIN)
+	{
+		tmp = fig.shape.cylin.dot - intersect_point;
+		fig.shape.cylin.dir = normalize(fig.shape.cylin.dir);
+		normal = normalize((dot(tmp, fig.shape.cylin.dir) * fig.shape.cylin.dir) - tmp);
+	}else if (fig.fig_type == CONE)
+	{
+		tmp = fig.shape.cone.vertex - intersect_point;
+		fig.shape.cone.dir = normalize(fig.shape.cone.dir);
+		normal = normalize(((dot(tmp, tmp) / dot(tmp, fig.shape.cone.dir)) * fig.shape.cone.dir) - tmp);
+	}
+	return (normal);
+}
+
 double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump)
 {
 	double3		normal;
@@ -361,7 +466,6 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 	double3		intersect_point;
 	t_obj_and_dist	obj_and_dist;
 	double		kr; //prart of refracted ray
-
 	t_fig				fig;
 	t_raytrace_tree		curr_node;
 
@@ -379,11 +483,10 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 		obj_and_dist = check_closest_inter(curr_node.start, curr_node.dir, scene, curr_node.min_range, curr_node.max_range);
 		if (obj_and_dist.obj != -1)
 		{
-			//normal calculations
-			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
 			fig = scene->obj[obj_and_dist.obj];
-			normal = intersect_point - fig.shape.sphere.cent;
-			normal = normalize(normal);
+			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
+			//normal calculations
+			normal = calculate_normal(fig, intersect_point, curr_node);
 			//--------------------
 
 			//get_texture_pixel_sphere(intersect_point, fig, texture)
