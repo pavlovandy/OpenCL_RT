@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/01 16:58:05 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:07:06 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int	ft_is_light(mxml_node_t *node, t_scene *scene, int l, int what_is)
 	if (ft_strequ(name, "type"))
 		return (ft_add_type_light(scene, l, (char *)mxmlGetOpaque(node)));
 	else if (ft_strequ(name, "intensity") && \
-			ft_get_3param(1, mxmlGetOpaque(node), NULL, &one_dot))
-		if (one_dot >= 0 && one_dot <= 1)
-			scene->light[l].intensity = (cl_double)one_dot;
-		else
-			return (error_message(RED"XML : 0 <= intensity <= 1"COLOR_OFF));
+			ft_get_3param(3, mxmlGetOpaque(node), &dot, NULL))
+		// if (one_dot >= 0 && one_dot <= 1)
+			scene->light[l].intensity = (cl_double3)dot;
+		// else
+		// 	return (error_message(RED"XML : 0 <= intensity <= 1"COLOR_OFF));
 	else if (ft_strequ(name, "dot") && \
 		ft_get_3param(3, mxmlGetOpaque(node), &dot, NULL))
 		scene->light[l].v = (cl_double3)dot;

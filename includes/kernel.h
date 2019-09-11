@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kernel.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/08/20 15:41:33 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/11 17:01:38 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
+
+__constant double EPSILON = 0.00001;
+__constant double BIG_VALUE = 9e9;
+__constant double3 BACKGROUND_COLOR =  ((double3)(0.f, 0.f, 0.f));
+__constant double	MINIMUM_INTENSITY = 0.01;
+__constant int tree_nodes =	31;
+__constant double	PI = 3.14159265359;
 
 enum	e_fig
 {
@@ -71,6 +78,7 @@ typedef struct	s_fig
 	double3		rotation;
 	double		ior;
 	int			text_no;
+	int			normal_map_no;
 }				t_fig;
 
 typedef struct	s_pov
@@ -104,7 +112,7 @@ typedef struct	s_obj_and_dist
 typedef struct	s_light
 {
 	int			type_num;
-	double		intensity;
+	double3		intensity;
 	double3		v;
 }				t_light;
 
@@ -115,5 +123,37 @@ typedef struct	s_scene
 	int			count_light;
 	t_light		light[MAX_LIGHTING_COUNT];
 }				t_scene;
+
+double2		intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump);
+double3		trim_color(double3 color);
+uint		color_to_canvas(double3 color);
+double3		canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
+t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
+										__global t_scene *scene, \
+										double mini, double max);
+double3		calculate_light(__global t_scene *scene, double3 eye, \
+						double3 dir, double3 normal, double3 intersect_point, \
+						int	closest_obj, __global uint *bump_map);
+double3		reflected_ray(double3 normal, double3 prim_ray);
+double3		get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
+										__global t_scene *scene, double min_range, \
+										double max_range, __global t_light *light);
+double3		refract_ray(double3 prim_ray, double3 normal, double ior2_new);
+double3		rotate_camera(double3 direction, t_pov pov);
+
+uint		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture);
+void		swap(double* a, double*b);
+double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
+double3		uint_to_double3(uint a);
+double3		rotate_x(double3 v, double angle);
+double3		rotate_y(double3 v, double angle);
+double3		rotate_z(double3 v, double angle);
+double2		cartesian_to_sperical_coords(double3 intersect_point, t_fig data);
+
+double2			intersect_plane(double3 eye, double3 dir, t_plane_data plane);
+double2			intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin);
+double2			intersect_cone(double3 eye, double3 dir, t_cone_data cone);
+double3			calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/10 14:08:34 by ozhyhadl         ###   ########.fr        #
+#    Updated: 2019/09/11 17:00:38 by ozhyhadl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,19 @@ NAME = RT
 SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
 		xml/xml_read.c xml/xml_create_obj.c xml/xml_add_param.c \
 		xml/xml_add_param_help.c xml/xml_add_light.c xml/xml_create_cam.c xml/xml_it_is.c \
-		xml/xml_save.c
+		xml/xml_save.c math.c
 
-INC = includes/rt.h
+HEADERS = rt.h parse.h terminal_colors.h mymath.h
+
+INC_DIR = ./includes/
+
+INC = $(addprefix $(INC_DIR), $(HEADERS))
 
 SRC_DIR = ./src/
 
 OBJ_DIR = ./obj/
 
-INC_DIR = ./includes/
+
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
@@ -41,7 +45,7 @@ LINKS = -L$(FT) -l ft -lm -L$(MXML) -lmxml #add link mxml ++
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
-	LINKS += -lSDL2 -SDL2_image -lOpenCL
+	LINKS += -lSDL2 -lSDL2_image -lOpenCL
 endif
 SDL_PATH = ./framework
 

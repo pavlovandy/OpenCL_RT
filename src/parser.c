@@ -65,7 +65,8 @@ cl_uint	*read_texture(char	*file_name, t_txt_params *params)
 {
 	SDL_Surface	*surr;
 	cl_uint		*res;
-	Uint32		*pixels;
+	Uint8		*pixels;
+	Uint8		*test;
 	int			i;
 
 	surr = load_tex(file_name, SDL_PIXELFORMAT_ARGB32);
@@ -73,12 +74,14 @@ cl_uint	*read_texture(char	*file_name, t_txt_params *params)
 	params->w = surr->w;
 	params->h = surr->h;
 	res = (cl_uint*)ft_memalloc(params->w * params->h * sizeof(cl_uint));
+	test = (Uint8*)res;
 	if (res == 0)
 		return (0);
 	i = -1;
-	pixels = (Uint32*)surr->pixels;
+	pixels = (Uint8*)surr->pixels;
+
 	while (++i < surr->w * surr->h)
-		res[i] = pixels[i];
+		res[i] = (pixels[i * 4] << 24) + (pixels[i * 4 + 1] << 16) + (pixels[i * 4 + 2] << 8) + pixels[i * 4 + 3];
 	SDL_FreeSurface(surr);
 	return (res);
 }

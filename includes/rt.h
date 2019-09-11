@@ -6,13 +6,13 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/10 14:07:55 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:04:30 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CL_SILENCE_DEPRECATION
+#ifndef CL_SILENCE_DEPRECATION
 #  define CL_SILENCE_DEPRECATION
-# endif
+#endif
 
 #ifndef RT_H
 # define RT_H
@@ -28,7 +28,7 @@
 # else
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
-#  include <SDL2_image/SDL_image.h>
+#  include <SDL2/SDL_image.h>
 # endif
 # include <stdio.h>
 # include "terminal_colors.h"
@@ -36,16 +36,20 @@
 
 
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
-
-# define WIN_WIDTH	1600
-# define WIN_HEIGHT	1200
+# ifdef __APPLE__
+#  define WIN_WIDTH	1600
+#  define WIN_HEIGHT	1200
+# else
+#  define WIN_WIDTH	1200
+#  define WIN_HEIGHT	800
+# endif
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
-# define BUFFER_SIZE 200
+
 # define D	0.1
 # define VW	(1.155 * D)
 # define VH	(VW * WIN_HEIGHT / WIN_WIDTH)
@@ -114,6 +118,7 @@ struct	s_fig
 	cl_double3	rotation;
 	cl_double	ior;
 	cl_int		text_no;
+	cl_int		normal_map_no;
 };
 
 struct	s_sdl
@@ -138,7 +143,7 @@ struct	s_pov
 typedef struct	s_light
 {
 	cl_int		type_num;
-	cl_double	intensity;
+	cl_double3	intensity;
 	cl_double3	v;
 }				t_light;
 
@@ -159,7 +164,8 @@ typedef struct	s_cl
 	cl_context			context;
 	cl_command_queue	command_queue;
 	cl_program			program;
-	cl_kernel			kernel;
+	cl_kernel			rt_kernel;
+	cl_kernel			click_kernel;
 
 	cl_mem				scene_mem;
 	cl_mem				pixel_ptr;
@@ -188,6 +194,12 @@ typedef struct	s_envi
 	t_txt_params	bump_par; // must be an array for all textures
 }				t_envi;
 
+typedef struct	s_edi
+{
+	int		chosen_obj;
+}				t_edi;
+
+
 struct	s_rt
 {
 	t_sdl	sdl;
@@ -195,6 +207,7 @@ struct	s_rt
 	t_pov	pov;
 	t_cl	cl;
 	t_envi	envi;
+	t_edi	edi;
 };
 
 /*
@@ -231,7 +244,6 @@ int			there_will_be_loop(t_rt *rt);
 **	Parse
 */
 
-# include "parse.h"
 
 /*
 **	Add ++ parse xml
@@ -279,4 +291,8 @@ int			ft_add_cam_dot(const char *str, t_pov *pov);
 */
 
 int			ft_xml_save(char *name_file, t_scene *scene, t_pov *pov);
+
+# include "parse.h"
+# include "mymath.h"
+
 #endif

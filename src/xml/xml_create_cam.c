@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 12:22:48 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/01 15:26:56 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:10:37 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_create_cam(t_pov *pov)
 	pov->vw = VW;
 	pov->vh = VH;
 	pov->coord = (cl_double3){{0, 0, 0}};
+	pov->dir = (cl_double3){{0, 0, 0}};
 }
 
 int		ft_add_cam_dot(const char *str, t_pov *pov)

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/01 14:35:19 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:44:54 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ int	ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag)
 	if (!ft_get_3param(3, str, &dot, NULL))
 		return (1);
 	if (ft_strequ(tag, "normal") && scene->obj[i].fig_type == PLANE)
-		scene->obj[i].shape.plane.normal = (cl_double3)dot;
+		scene->obj[i].shape.plane.normal = ft_normalize((cl_double3)dot);
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CYLIN)
 		scene->obj[i].shape.cylin.dir = (cl_double3)dot;
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CONE)
-		scene->obj[i].shape.cone.dir = (cl_double3)dot;
+		scene->obj[i].shape.cone.dir = ft_normalize((cl_double3)dot);
 	else
 	{
 		if (ft_strequ(tag, "normal"))

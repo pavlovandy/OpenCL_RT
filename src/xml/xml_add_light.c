@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 18:56:10 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/01 16:57:15 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:06:29 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_is_space(char c)
 void		ft_creat_light(t_scene *scene, int l)
 {
 	scene->light[l].type_num = POINT;
-	scene->light[l].intensity = 0.1;
+	scene->light[l].intensity = (cl_double3){{0.1, 0.1, 0.1}};
 	scene->light[l].v = (cl_double3){{0, 0, 0}};
 }
 
