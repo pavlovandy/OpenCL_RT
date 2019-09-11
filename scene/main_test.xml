@@ -3,17 +3,19 @@
 	spher : centre, radius, RGB, transparency, reflective, specular, texture.
 	plane : dot, normal, RGB, transparency, reflective, specular, texture.
 	cylin : dot, dir, RGB, transparency, reflective, specular, texture.
-	cone  : dot, dir, angle, RGB, transparency, reflective, specular, texture.
+	cone  : vertex, dir, angle, RGB, transparency, reflective, specular, texture.
 	light : type, position, intensity.
 	cam   : position.
 --
 <RT>
 	<spher>
+		<centre>1 2 3</centre>
 		<texture> -1 </texture>
 	</spher>
 	<cylin>
 		<dot>10 2 0</dot>
 		<dir>0 0 1</dir>
+		<RGB>0 255 0</RGB>
 	</cylin>
 	<cone>
 		<vertex>0 1 5</vertex>
