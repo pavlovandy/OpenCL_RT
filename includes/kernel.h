@@ -111,7 +111,7 @@ typedef struct	s_obj_and_dist
 typedef struct	s_light
 {
 	int			type_num;
-	double		intensity;
+	double3		intensity;
 	double3		v;
 }				t_light;
 
@@ -123,23 +123,23 @@ typedef struct	s_scene
 	t_light		light[MAX_LIGHTING_COUNT];
 }				t_scene;
 
-double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
+double2		intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
 double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump);
-double3	trim_color(double3 color);
-uint	color_to_canvas(double3 color);
-double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
+double3		trim_color(double3 color);
+uint		color_to_canvas(double3 color);
+double3		canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 										__global t_scene *scene, \
 										double mini, double max);
-double	calculate_light(__global t_scene *scene, double3 eye, \
+double3		calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj, __global uint *bump_map);
-double3	reflected_ray(double3 normal, double3 prim_ray);
-double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
+double3		reflected_ray(double3 normal, double3 prim_ray);
+double3		get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
 										__global t_scene *scene, double min_range, \
 										double max_range, __global t_light *light);
-double3	refract_ray(double3 prim_ray, double3 normal, double ior2_new);
-double3	rotate_camera(double3 direction, t_pov pov);
+double3		refract_ray(double3 prim_ray, double3 normal, double ior2_new);
+double3		rotate_camera(double3 direction, t_pov pov);
 
 uint		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture);
 void		swap(double* a, double*b);

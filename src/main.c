@@ -18,15 +18,15 @@ void	make_little_default_scene(t_scene *scene)
 	scene->count_light = (cl_int)3;
 	
 	scene->light[0].type_num = (cl_int)DIRECT;
-	scene->light[0].intensity = (cl_double)0;
+	scene->light[0].intensity = (cl_double3){{0.2, 0.2, 0.2}};
 	scene->light[0].v = (cl_double3){{1, 4, 2}};
 
 	scene->light[1].type_num = (cl_int)AMBIENT;
-	scene->light[1].intensity = (cl_double)0.2;
+	scene->light[1].intensity = (cl_double3){{0.6, 0.6, 0.6}};
 	scene->light[1].v = (cl_double3){{0, 0, 0}};
 
 	scene->light[2].type_num = (cl_int)POINT;
-	scene->light[2].intensity = (cl_double)0.6;
+	scene->light[2].intensity = (cl_double3){{0.6, 0.6, 0.6}};
 	scene->light[2].v = (cl_double3){{2, 1, 0}};
 
 	scene->obj[0].fig_type = (cl_int)SPHERE;

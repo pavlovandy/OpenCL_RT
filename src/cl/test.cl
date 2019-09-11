@@ -1,8 +1,6 @@
 #include "kernel.h"
 
-
-
-double3	reflected_ray(double3 normal, double3 prim_ray)
+double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
 {
 	return (2 * dot(normal, prim_ray) * normal - prim_ray);
 }
@@ -16,7 +14,12 @@ void	swap(double* a, double*b)
 	*b = c;
 }
 
-double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
+double3	beers_law(double distance, double3 obj_absorb) //seems right
+{
+	return (exp(obj_absorb * (-distance)));
+}
+
+double fresnel(double3 prim_ray, double3 normal, double n1, double reflective) //seems right
 {
 	double n2 = 1.00029;
 	double r0 = (n1 - n2) / (n1 + n2);
@@ -38,27 +41,6 @@ double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
 	return ret;
 }
 
-// double	fresnel(double3 prim_ray, double3 normal, double etat, double reflective) //return the reflected value
-// {
-// 	double cosi = dot(prim_ray, normal);
-// 	double etai = 1.00029;
-
-// 	if (cosi > 0)
-// 		swap(&etai, &etat);
-//  	double sint = etai / etat * sqrt(1 - cosi * cosi);
-// 	if (sint >= 1)
-// 		return (1);
-// 	else
-// 	{
-// 		double cost = sqrt(1 - sint * sint);
-// 		cosi = fabs(cosi);
-// 		double Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost)); 
-// 		double Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost)); 
-// 		return ((Rs * Rs + Rp * Rp) / 2); 
-// 	}
-// 	return (1);
-// }
-
 double3	refract_ray(double3 prim_ray, double3 normal, double ior_new)
 {
 	double		cosi = dot(normal, prim_ray);
@@ -78,21 +60,24 @@ double3	refract_ray(double3 prim_ray, double3 normal, double ior_new)
 	return (k < 0 ? 0 : eta * prim_ray + (eta * cosi - sqrt(k)) * normal);
 }
 
-double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
+double3	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
 										__global t_scene *scene, double min_range, \
 										double max_range, __global t_light *light)
 {
-	double			local_intensity;
+	double3			local_intensity;
 	t_obj_and_dist	obj_and_dist;
+	double			intensity_level;
 
 	local_intensity = light->intensity;
-	while (local_intensity > MINIMUM_INTENSITY)
+	intensity_level = length(local_intensity);
+	while (intensity_level > MINIMUM_INTENSITY)
 	{
 		obj_and_dist = check_closest_inter(intersect_point, light_dir, scene, min_range, max_range);
 	
 		if (obj_and_dist.obj != -1)
 		{
 			local_intensity *= scene->obj[obj_and_dist.obj].trans;
+			intensity_level *= scene->obj[obj_and_dist.obj].trans;
 			intersect_point = intersect_point + light_dir * obj_and_dist.dist;
 		}
 		else
@@ -142,35 +127,35 @@ double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 	return (roots);
 }
 
-double	calculate_light(__global t_scene *scene, double3 eye, \
+double3	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj, __global uint *bump_map)
 {
 	int		i;
 	__global t_light	*light;
 	double	t_max;
-	double	intensity = 0;
+	double3	intensity = 0;
 	double3	light_dir;
 	double	scalar;
 	double3	reflect_ray;
-	double	local_intensity;
+	double3	local_intensity;
 	double2	texture_space_coords;
 
-	texture_space_coords = cartesian_to_sperical_coords(intersect_point, scene->obj[closest_obj]);
+	//texture_space_coords = cartesian_to_sperical_coords(intersect_point, scene->obj[closest_obj]);
 
 	double3	n = normalize(intersect_point - scene->obj[closest_obj].shape.sphere.cent);
-	double3	A = (double3)(1, 0, 0);
-	double3	t = normalize(cross(A, n));
-	double3 b = normalize(cross(n, t));
-	int		is = texture_space_coords[0] * 4095;
-	int		it = texture_space_coords[1] * 8191;
-	double	du;
-	double	dv;
+	// double3	A = (double3)(1, 0, 0);
+	// double3	t = normalize(cross(A, n));
+	// double3 b = normalize(cross(n, t));
+	// int		is = texture_space_coords[0] * 4095;
+	// int		it = texture_space_coords[1] * 8191;
+	// double	du;
+	// double	dv;
 
-	double3	new_normal = uint_to_double3(bump_map[is * 8191 + it]);
-	new_normal = normalize(new_normal * 2 - 1);
-	new_normal = (double3)(dot(new_normal, t), dot(new_normal, b), dot(new_normal, n));
-	new_normal = normalize(new_normal);
+	// double3	new_normal = uint_to_double3(bump_map[is * 8191 + it]);
+	// new_normal = normalize(new_normal * 2 - 1);
+	// new_normal = (double3)(dot(new_normal, t), dot(new_normal, b), dot(new_normal, n));
+	// new_normal = normalize(new_normal);
 
 	i = -1;
 	while (++i < scene->count_light)
@@ -189,20 +174,20 @@ double	calculate_light(__global t_scene *scene, double3 eye, \
 			t_max = (light->type_num == POINT) ? 1 : BIG_VALUE;
 			/*shadow ray*/
 			local_intensity = get_intersity_after_shadow_rays(intersect_point, light_dir, scene, EPSILON, t_max, light);
-			if (local_intensity < MINIMUM_INTENSITY)
+			if (length(local_intensity) < MINIMUM_INTENSITY)
 				continue ;
 			
-			double3 light_dir_tangent_space = (double3)(dot(light_dir, t), dot(light_dir, b), dot(light_dir, n));
-			light_dir_tangent_space = normalize(light_dir_tangent_space);
+			//double3 light_dir_tangent_space = (double3)(dot(light_dir, t), dot(light_dir, b), dot(light_dir, n));
+			//light_dir_tangent_space = normalize(light_dir_tangent_space);
 
 			/*blicks*/
-			// if (scene->obj[closest_obj].specular > 0)
-			// {						
-			// 	reflect_ray = reflected_ray(normal, light_dir);
-			// 	scalar = dot(reflect_ray, -dir);
-			// 	if (scalar > 0)
-			// 		intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
-			// }
+			if (scene->obj[closest_obj].specular > 0)
+			{						
+				reflect_ray = reflected_ray(normal, light_dir);
+				scalar = dot(reflect_ray, -dir);
+				if (scalar > 0)
+					intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
+			}
 			/*brightness*/
 			scalar = dot(normal, light_dir);
 			if (scalar > 0)
@@ -323,7 +308,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 	double3		intersect_point;
 	t_obj_and_dist	obj_and_dist;
-	double		kr; //prart of refracted ray
+	
 
 	t_fig				fig;
 	t_raytrace_tree		curr_node;
@@ -351,18 +336,16 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 			//get_texture_pixel_sphere(intersect_point, fig, texture)
 			if (fig.text_no > -1)
-			{
 				local_color = uint_to_double3(get_texture_pixel_sphere(intersect_point, fig, texture)) * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
-			}
 			else
 				local_color = fig.color * calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, obj_and_dist.obj, bump);
 			local_color *= curr_node.part_of_primary_ray;
 
-			kr = fresnel(curr_node.dir, normal, fig.ior, fig.reflective);
+			double fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
 
-			// if (fig.trans > 0 && count < tree_nodes && kr < 1)
+			// if (fig.trans > 0 && count < tree_nodes && fren < 1)
 			// {
-			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - kr);
+			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren);
 			// 	if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
 			// 	{
 			// 		// local_color *= (1 - fig.trans);
@@ -375,7 +358,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			// }
 			// if (fig.reflective > 0 && count < tree_nodes)
 			// {
-			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * kr;
+			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * fren;
 			// 	if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
 			// 	{
 			// 		//local_color *= (1 - fig.reflective);
@@ -462,7 +445,7 @@ __kernel void	test_kernel(__global t_scene *scene,
 
 	direction = normalize(canvas_to_viewport(x - w /2 , y - h / 2, w, h, pov));
 	direction = rotate_camera(direction, pov);
-	color = ray_trace(pov.coord, direction, scene, 1, BIG_VALUE, texture, bump_map);
+	color = ray_trace(pov.coord, direction, scene, 0.1, BIG_VALUE, texture, bump_map);
 	color = trim_color(color);
 	
 	canvas[id] = color_to_canvas(color);

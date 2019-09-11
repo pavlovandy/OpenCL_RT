@@ -54,7 +54,7 @@ int			mouse_events(t_rt *rt, Uint8 button)
 {
 	if (button == SDL_BUTTON_LEFT)
 	{
-		
+		return (1);
 	}
 	else	
 		return (0);

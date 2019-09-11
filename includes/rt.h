@@ -141,7 +141,7 @@ struct	s_pov
 typedef struct	s_light
 {
 	cl_int		type_num;
-	cl_double	intensity;
+	cl_double3	intensity;
 	cl_double3	v;
 }				t_light;
 
