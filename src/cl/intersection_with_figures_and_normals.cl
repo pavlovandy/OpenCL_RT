@@ -65,16 +65,19 @@ double2	intersect_cone(double3 eye, double3 dir, t_cone_data cone)
 	double	c;
 	double	d;
 	double2	roots;
+	double	scalar = dot(dir, cone.dir);
+	double	scalar2 = dot(oc,cone.dir);
+	double	tangent2 = cone.tangent * cone.tangent;
 
-	cone.dir = normalize(cone.dir);
-	a = dot(dir, dir) - (1.0 + pow(cone.tangent, 2)) * pow(dot(dir, cone.dir), 2);
-	b = 2 * (dot(dir, oc) - (1.0 + pow(cone.tangent, 2)) * (dot(dir, cone.dir) * dot(oc, cone.dir)));
-	c = dot(oc, oc) - (1.0 + pow(cone.tangent, 2)) * pow(dot(oc, cone.dir), 2);
-	if ((d = pow(b, 2) - 4 * a * c) < 0)
+
+	a = dot(dir, dir) - (1.0 + tangent2) * (scalar * scalar);
+	b = (dot(dir, oc) - (1.0 + tangent2) * (scalar * scalar2));
+	c = dot(oc, oc) - (1.0 + tangent2) * scalar2 * scalar2 ;
+	d = b * b - a * c;
+	if (d < 0)
 		return (BIG_VALUE);
 	d = sqrt(d);
-	a = a * 2;
-	roots = (double2)((-b + d) / a,(-b - d) / a);
+	roots = ((double2)((-b + d),(-b - d)) / a);
 	return(roots);
 }
 
@@ -95,12 +98,10 @@ double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree cu
 	}else if (fig.fig_type == CYLIN)
 	{
 		tmp = fig.shape.cylin.dot - intersect_point;
-		fig.shape.cylin.dir = normalize(fig.shape.cylin.dir);
 		normal = normalize((dot(tmp, fig.shape.cylin.dir) * fig.shape.cylin.dir) - tmp);
 	}else if (fig.fig_type == CONE)
 	{
 		tmp = fig.shape.cone.vertex - intersect_point;
-		fig.shape.cone.dir = fig.shape.cone.dir;
 		normal = normalize(((dot(tmp, tmp) / dot(tmp, fig.shape.cone.dir)) * fig.shape.cone.dir) - tmp);
 	}
 	return (normal);

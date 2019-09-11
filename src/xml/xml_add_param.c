@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/11 17:44:54 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/11 20:05:31 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	add_for_all_obj(const char *str, t_scene *scene, int i, const char *tag)
 		scene->obj[i].reflective = (cl_double)one_dot;
 	else if (ft_strequ(tag, "transparency"))
 		scene->obj[i].trans = (cl_double)one_dot;
+	else if (ft_strequ(tag, "texture"))
+		scene->obj[i].text_no = (cl_int)ft_atoi(str);
 	else
 		return (1);
 	return (0);
@@ -91,7 +93,7 @@ int	ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag)
 	if (ft_strequ(tag, "normal") && scene->obj[i].fig_type == PLANE)
 		scene->obj[i].shape.plane.normal = ft_normalize((cl_double3)dot);
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CYLIN)
-		scene->obj[i].shape.cylin.dir = (cl_double3)dot;
+		scene->obj[i].shape.cylin.dir = ft_normalize((cl_double3)dot);
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CONE)
 		scene->obj[i].shape.cone.dir = ft_normalize((cl_double3)dot);
 	else
@@ -113,7 +115,7 @@ int	ft_add_tanget(const char *str, t_scene *scene, int i)
 
 	if (scene->obj[i].fig_type == CONE && ft_get_3param(1, str, NULL, &one_dot))
 		if (one_dot >= 0.1 && one_dot < 180)
-			scene->obj[i].shape.cone.tangent = (cl_double)one_dot;
+			scene->obj[i].shape.cone.tangent = (cl_double)one_dot * M_PI / 180.0;
 		else
 			return (error_message(RED"XML : 0.1˚ < angle < 180˚"COLOR_OFF));
 	else
