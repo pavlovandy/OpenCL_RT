@@ -18,27 +18,27 @@ void	make_little_default_scene(t_scene *scene)
 	scene->count_light = (cl_int)3;
 	
 	scene->light[0].type_num = (cl_int)DIRECT;
-	scene->light[0].intensity = (cl_double3){{0.2, 0.2, 0.2}};
+	scene->light[0].intensity = (cl_double3){{0.6, 0.6, 0.1}};
 	scene->light[0].v = (cl_double3){{1, 4, 2}};
 
 	scene->light[1].type_num = (cl_int)AMBIENT;
-	scene->light[1].intensity = (cl_double3){{0.6, 0.6, 0.6}};
+	scene->light[1].intensity = (cl_double3){{0.2, 0.4, 0.3}};
 	scene->light[1].v = (cl_double3){{0, 0, 0}};
 
 	scene->light[2].type_num = (cl_int)POINT;
-	scene->light[2].intensity = (cl_double3){{0.6, 0.6, 0.6}};
+	scene->light[2].intensity = (cl_double3){{0.3, 0.6, 0.4}};
 	scene->light[2].v = (cl_double3){{2, 1, 0}};
 
 	scene->obj[0].fig_type = (cl_int)SPHERE;
 	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 4}};
-	scene->obj[0].color = (cl_double3){{0, 255, 0}};
+	scene->obj[0].color = (cl_double3){{255, 255, 255}};
 	scene->obj[0].shape.sphere.radius = (cl_double)1;
 	scene->obj[0].specular = (cl_int)-1;
 
 	scene->obj[0].reflective = (cl_double)0;
 	scene->obj[0].trans = (cl_double)0;
 	scene->obj[0].rotation = (cl_double3){{80.0 * M_PI / 180.0, 10.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
-	scene->obj[0].text_no = 0;
+	scene->obj[0].text_no = -1;
 
 	// scene->obj[0].fig_type = (cl_int)SPHERE;
 	// scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 10}};
