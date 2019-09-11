@@ -14,12 +14,22 @@ void	swap(double* a, double*b)
 	*b = c;
 }
 
-double3	beers_law(double distance, double3 obj_absorb) //seems right
+/*
+	Seems like i dont know how to insert this feature here.
+	If someones wants to add he will need to calculate the \
+	distance of how much it is in medium and multiply "somewheres" \
+	color by this value.
+	Some usefull links :
+	https://blog.demofox.org/2017/01/09/raytracing-reflection-refraction-fresnel-total-internal-reflection-and-beers-law/
+	https://graphicscompendium.com/raytracing/11-fresnel-beer
+*/
+
+double3	beers_law(double distance, double3 obj_absorb)
 {
 	return (exp(obj_absorb * (-distance)));
 }
 
-double fresnel(double3 prim_ray, double3 normal, double n1, double reflective) //seems right
+double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
 {
 	double n2 = 1.00029;
 	double r0 = (n1 - n2) / (n1 + n2);
@@ -106,6 +116,17 @@ double2	cartesian_to_sperical_coords(double3 intersect_point, t_fig data)
 	return ((double2)(s, t));
 }
 
+
+uint	get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture)
+{
+	int			is;
+	int			it;
+	double2	texture_space_coords = cartesian_to_sperical_coords(intersect_point, data);
+	is = texture_space_coords[0] * 4095;
+	it = texture_space_coords[1] * 8191;
+	return (texture[is * 8192 + it]);
+}
+
 double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 {
 	double3	oc = eye - sphere.cent;
@@ -127,6 +148,16 @@ double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 	return (roots);
 }
 
+double	bump_function_u_deriv(double u, double v)
+{
+	return (0.5 * cos(u * 2 * M_PI * 10) * sin(v * 2 * M_PI * 10));
+}
+
+double	bump_function_v_deriv(double u, double v)
+{
+	return (0.5 * cos(v * 2 * M_PI * 10) * sin(u * 2 * M_PI * 10));
+}
+
 double3	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
 						int	closest_obj, __global uint *bump_map)
@@ -141,21 +172,21 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	double3	local_intensity;
 	double2	texture_space_coords;
 
-	//texture_space_coords = cartesian_to_sperical_coords(intersect_point, scene->obj[closest_obj]);
+	texture_space_coords = cartesian_to_sperical_coords(intersect_point, scene->obj[closest_obj]);
 
 	double3	n = normalize(intersect_point - scene->obj[closest_obj].shape.sphere.cent);
-	// double3	A = (double3)(1, 0, 0);
-	// double3	t = normalize(cross(A, n));
-	// double3 b = normalize(cross(n, t));
-	// int		is = texture_space_coords[0] * 4095;
-	// int		it = texture_space_coords[1] * 8191;
-	// double	du;
-	// double	dv;
+	double3	A = (double3)(1, 0, 0);
+	double3	t = normalize(cross(A, n));
+	double3 b = normalize(cross(n, t));
+	double	du = bump_function_u_deriv(texture_space_coords[0], texture_space_coords[1]);
+	double	dv = bump_function_v_deriv(texture_space_coords[0], texture_space_coords[1]);
+	int		is = texture_space_coords[0] * 1023;
+	int		it = texture_space_coords[1] * 2047;
+	double3	normal_from_map = uint_to_double3(bump_map[is * 2048 + it]);
+	du = normal_from_map[0] / 255 * 2 - 1;
+	dv = normal_from_map[1] / 255 * 2 - 1;
 
-	// double3	new_normal = uint_to_double3(bump_map[is * 8191 + it]);
-	// new_normal = normalize(new_normal * 2 - 1);
-	// new_normal = (double3)(dot(new_normal, t), dot(new_normal, b), dot(new_normal, n));
-	// new_normal = normalize(new_normal);
+	double3	new_normal = normalize(n + du * t + dv * b);
 
 	i = -1;
 	while (++i < scene->count_light)
@@ -189,9 +220,9 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 					intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), scene->obj[closest_obj].specular);
 			}
 			/*brightness*/
-			scalar = dot(normal, light_dir);
+			scalar = dot(new_normal, light_dir);
 			if (scalar > 0)
-				intensity += (local_intensity * scalar / (length(light_dir) * length(normal)));
+				intensity += (local_intensity * scalar / (length(light_dir) * length(new_normal)));
 			
 		}
 	}
@@ -263,37 +294,13 @@ double3		rotate_z(double3 v, double angle)
 	return (v);
 }
 
-uint	get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture)
-{
-	double		s = 0;
-	double		t = 0;
-	int			is;
-	int			it;
-
-	double3		point = intersect_point - data.shape.sphere.cent;
-	if (length(data.rotation) > 0)
-		point = rotate_z(rotate_y(rotate_x(point, data.rotation[0]), data.rotation[1]), data.rotation[2]);
-	point = normalize(point);
-	s = acos(point[2]) / PI;
-	if (fabs(point[0]) < fabs(sin(s * PI))) //this is for arcos(x) where x < -1 or x > 1. \
-												Could be optimized with 1 time caculus of sin
-		t = acos(point[0] / sin(s * PI)) / (2 * PI);
-	else
-		t = point[0] < 0 ? 0.5 : 0;
-	if (point[1] < 0)
-		t = 1 - t;
-	is = s * 4095;
-	it = t * 8191;
-	return (texture[is * 8192 + it]);
-}
-
 double3		uint_to_double3(uint a)
 {
 	double3	d;
 
-	d[0] = (a >> 8) & 0xff; //cmon????? red become blue 
-	d[1] = (a >> 16) & 0xff; //cmon????? green become red
-	d[2] = (a >> 24) & 0xff; //cmon????? blue become alpha
+	d[0] = (a >> 16) & 0xff;
+	d[1] = (a >> 8) & 0xff;
+	d[2] = a & 0xff;
 	return (d);
 }
 
@@ -328,6 +335,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 		if (obj_and_dist.obj != -1)
 		{
 			//normal calculations
+
 			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
 			fig = scene->obj[obj_and_dist.obj];
 			normal = intersect_point - fig.shape.sphere.cent;
@@ -343,32 +351,32 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 			double fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
 
-			// if (fig.trans > 0 && count < tree_nodes && fren < 1)
-			// {
-			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren);
-			// 	if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
-			// 	{
-			// 		// local_color *= (1 - fig.trans);
-			// 		tree[count].start = intersect_point;
-			// 		tree[count].dir = normalize(refract_ray(curr_node.dir, normal, fig.ior));
-			// 		tree[count].min_range = EPSILON;
-			// 		tree[count].max_range = BIG_VALUE;
-			// 		count++;	
-			// 	}
-			// }
-			// if (fig.reflective > 0 && count < tree_nodes)
-			// {
-			// 	tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * fren;
-			// 	if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
-			// 	{
-			// 		//local_color *= (1 - fig.reflective);
-			// 		tree[count].start = intersect_point;
-			// 		tree[count].dir = normalize(reflected_ray(normal, -curr_node.dir));
-			// 		tree[count].min_range = EPSILON;
-			// 		tree[count].max_range = BIG_VALUE;
-			// 		count++;
-			// 	}
-			// }
+			if (fig.trans > 0 && count < tree_nodes && fren < 1)
+			{
+				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren);
+				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
+				{
+					// local_color *= (1 - fig.trans);
+					tree[count].start = intersect_point;
+					tree[count].dir = normalize(refract_ray(curr_node.dir, normal, fig.ior));
+					tree[count].min_range = EPSILON;
+					tree[count].max_range = BIG_VALUE;
+					count++;	
+				}
+			}
+			if (fig.reflective > 0 && count < tree_nodes)
+			{
+				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * fren;
+				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
+				{
+					//local_color *= (1 - fig.reflective);
+					tree[count].start = intersect_point;
+					tree[count].dir = normalize(reflected_ray(normal, -curr_node.dir));
+					tree[count].min_range = EPSILON;
+					tree[count].max_range = BIG_VALUE;
+					count++;
+				}
+			}
 
 			color += local_color;
 			curr++;

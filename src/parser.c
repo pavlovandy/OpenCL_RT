@@ -81,12 +81,7 @@ cl_uint	*read_texture(char	*file_name, t_txt_params *params)
 	pixels = (Uint8*)surr->pixels;
 
 	while (++i < surr->w * surr->h)
-	{
-		test[i * 4] = pixels[i * 4];
-		test[i * 4 + 1] = pixels[i * 4 + 1];
-		test[i * 4 + 2] = pixels[i * 4 + 2];
-		test[i * 4 + 3] = pixels[i * 4 + 3];
-	}
+		res[i] = (pixels[i * 4] << 24) + (pixels[i * 4 + 1] << 16) + (pixels[i * 4 + 2] << 8) + pixels[i * 4 + 3];
 	SDL_FreeSurface(surr);
 	return (res);
 }

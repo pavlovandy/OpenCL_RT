@@ -78,6 +78,7 @@ typedef struct	s_fig
 	double3		rotation;
 	double		ior;
 	int			text_no;
+	int			normal_map_no;
 }				t_fig;
 
 typedef struct	s_pov

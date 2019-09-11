@@ -26,6 +26,10 @@ static int	translate(t_rt *rt)
 		translate_vector.s[2] += TRANSLATE_SPEED;
 	if (keyboard_state[SDL_SCANCODE_S])
 		translate_vector.s[2] -= TRANSLATE_SPEED;
+	if (keyboard_state[SDL_SCANCODE_SPACE])
+		translate_vector.s[1] += TRANSLATE_SPEED;
+	if (keyboard_state[SDL_SCANCODE_LCTRL])
+		translate_vector.s[1] -= TRANSLATE_SPEED;
 	translate_vector = ft_rotate_camera(translate_vector, rt->pov);
 	rt->pov.coord = add_double3(rt->pov.coord, translate_vector);
 	if (vector_len(translate_vector) != 0)
@@ -33,7 +37,7 @@ static int	translate(t_rt *rt)
 	return (0);
 }
 
-int			rotation(t_rt *rt)
+int			rotation(t_rt *rt) //sometimes its must rotate z coordinate also
 {
 	int				x;
 	int				y;
