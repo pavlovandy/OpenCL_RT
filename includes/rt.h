@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 16:10:33 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/12 22:54:05 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 # include "../libft/libft.h"
 # ifdef __APPLE__
-#  include "../frameworks/SDL2.framework/Headers/SDL.h"
-#  include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-#  include "../frameworks/mxml-3.0/include/mxml.h" // Add path mxml header ++
-#  include <OpenCL/opencl.h>
+# include "../frameworks/SDL2.framework/Headers/SDL.h"
+# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+# include "../frameworks/mxml-3.0/include/mxml.h" // Add path mxml header ++
+# include <OpenCL/opencl.h>
 # else
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
@@ -37,8 +37,8 @@
 
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 # ifdef __APPLE__
-#  define WIN_WIDTH	1600
-#  define WIN_HEIGHT	1200
+# define WIN_WIDTH	1600
+# define WIN_HEIGHT	1200
 # else
 #  define WIN_WIDTH	1200
 #  define WIN_HEIGHT	800
@@ -256,55 +256,8 @@ int			there_will_be_loop(t_rt *rt);
 **	Parse
 */
 
-
-/*
-**	Add ++ parse xml
-*/
-int			ft_parse_xml(char *name_file, t_scene *scene, t_pov *pov);
-int			ft_check_child(mxml_node_t *node);
-int			ft_is_cam(mxml_node_t *node, t_pov *pov, int what_is);
-int			ft_is_light(mxml_node_t *node, t_scene *scene, int l, int what_is);
-int			ft_is_param(mxml_node_t *node, t_scene *scene, int i, int what_is);
-int			ft_is_obj(const char *str, t_scene *scene, int *il, t_pov *pov);
-
-/*
-**	Add ++ create define figure and light
-*/
-void		ft_create_cylin(t_scene *scene, int i);
-void		ft_create_cone(t_scene *scene, int i);
-void		ft_create_pale(t_scene *scene, int i);
-void		ft_create_spher(t_scene *scene, int i);
-void		ft_creat_light(t_scene *scene, int l);
-
-/*
-**	Add ++ add_param(position, radius, normal, dir, tang, type) to figure
-*/
-int			add_position(const char *str, t_scene *scene, int i, const char *tag);
-int			ft_add_radius(const char *str, t_scene *scene, int i);
-int			ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag);
-int			ft_add_tanget(const char *str, t_scene *scene, int i);
-int			ft_add_type_light(t_scene *scene, int l, char *str);
-
-/*
-**	Add ++ add_param(color, specular, reflection) to figure
-*/
-int			add_for_all_obj(const char *str, t_scene *scene, int i, const char *tag);
-int			ft_add_rgb(const char *str, t_scene *scene, int i);
-int			ft_get_3param(int i, const char *str, cl_double3 *dot, cl_double *one_dot);
-
-/*
-**	Add ++ add_param to cam
-*/
-void		ft_create_cam(t_pov *pov);
-int			ft_add_cam_dot(const char *str, t_pov *pov);
-
-/*
-**	Add ++ xml save
-*/
-
-int			ft_xml_save(char *name_file, t_scene *scene, t_pov *pov);
-
 # include "parse.h"
 # include "mymath.h"
+# include "xml.h"
 
 #endif
