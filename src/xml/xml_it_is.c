@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/11 17:07:06 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/11 20:35:53 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_is_cam(mxml_node_t *node, t_pov *pov, int what_is)
 {
 	if (what_is != 3)
 		return (1);
-	if (ft_strequ(mxmlGetElement(node), "postion"))
+	if (ft_strequ(mxmlGetElement(node), "position"))
 		return (ft_add_cam_dot(mxmlGetOpaque(node), pov));
 	else
 		return (error_message(RED"XML: invalid tag for cam"COLOR_OFF));
@@ -51,11 +51,12 @@ int	ft_is_light(mxml_node_t *node, t_scene *scene, int l, int what_is)
 		return (ft_add_type_light(scene, l, (char *)mxmlGetOpaque(node)));
 	else if (ft_strequ(name, "intensity") && \
 			ft_get_3param(3, mxmlGetOpaque(node), &dot, NULL))
-		// if (one_dot >= 0 && one_dot <= 1)
+		 if ((dot.s[0] >= 0 && dot.s[0] <= 1) && (dot.s[1] >= 0 && \
+			dot.s[1] <= 1) && (dot.s[2] >= 0 && dot.s[2] <= 1))
 			scene->light[l].intensity = (cl_double3)dot;
-		// else
-		// 	return (error_message(RED"XML : 0 <= intensity <= 1"COLOR_OFF));
-	else if (ft_strequ(name, "dot") && \
+		else
+			return (error_message(RED"XML : 0 <= intensity <= 1"COLOR_OFF));
+	else if (ft_strequ(name, "position") && \
 		ft_get_3param(3, mxmlGetOpaque(node), &dot, NULL))
 		scene->light[l].v = (cl_double3)dot;
 	else
@@ -76,7 +77,7 @@ int	ft_is_param(mxml_node_t *node, t_scene *scene, int i, int what_is)
 	else if (ft_strequ(name, "RGB"))
 		return (ft_add_rgb(mxmlGetOpaque(node), scene, i));
 	else if (ft_strequ(name, "transparency") || ft_strequ(name, "specular") || \
-		ft_strequ(name, "reflective"))
+		ft_strequ(name, "reflective") || ft_strequ(name, "texture"))
 		return (add_for_all_obj(mxmlGetOpaque(node), scene, i, name));
 	else if (ft_strequ(name, "radius"))
 		return (ft_add_radius(mxmlGetOpaque(node), scene, i));
