@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/11 17:04:30 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/12 16:10:33 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define VW	(1.155 * D)
 # define VH	(VW * WIN_HEIGHT / WIN_WIDTH)
 
-# define BIG_VALUE 9e9
+# define MAX_TEXTURE_COUNT 10
 
 typedef	struct s_fig	t_fig;
 typedef	struct s_sdl	t_sdl;
@@ -111,7 +111,6 @@ struct	s_fig
 	t_shape		shape;
 
 	cl_double3	color;
-	//cl_int		text_no;
 	cl_int		specular;
 	cl_double	reflective;
 	cl_double	trans;
@@ -138,6 +137,8 @@ struct	s_pov
 	cl_double	d;
 	cl_double	vh;
 	cl_double	vw;
+	cl_int		w;
+	cl_int		h;
 };
 
 typedef struct	s_light
@@ -164,34 +165,37 @@ typedef struct	s_cl
 	cl_context			context;
 	cl_command_queue	command_queue;
 	cl_program			program;
+
+	/*		kernels		*/
+	
 	cl_kernel			rt_kernel;
 	cl_kernel			click_kernel;
 
+	/*		memory objects		*/
+	
 	cl_mem				scene_mem;
 	cl_mem				pixel_ptr;
-
 	cl_mem				texture_mem;
-	cl_mem				bump_mem;
-
+	cl_mem				txt_param_mem;
+	cl_mem				id_obj;
+	
 	size_t				global_size;
 	size_t				local_size;
-
-	cl_uint				*pixels_to_read_into;
 }				t_cl;
 
 typedef struct	s_txt_params
 {
 	cl_int		w;
 	cl_int		h;
+	cl_int		start_pos;
 }				t_txt_params;
 
 typedef struct	s_envi
 {
-	cl_int			txt_count;
+	cl_int			txt_count; //number of textures
 	cl_uint			*txt; //could be uint16 : rgb565. to save more space for kernel
-	t_txt_params	txt_par; // must be an array for all textures
-	cl_uint			*bump; //could be uint16 : blue value isnt needed. to save more space for kernel
-	t_txt_params	bump_par; // must be an array for all textures
+	int				textures_size; //the sumary size of all textures
+	t_txt_params	txt_par[MAX_TEXTURE_COUNT]; //w, h and start point for each texture in txt array
 }				t_envi;
 
 typedef struct	s_edi
@@ -211,6 +215,13 @@ struct	s_rt
 };
 
 /*
+**	Init
+*/
+
+int		init_start_params(t_rt *rt);
+int		read_textures(t_rt *rt);
+
+/*
 **	CL		stuff
 */
 int			init_cl(t_cl *cl);
@@ -221,7 +232,8 @@ int			freed_up_memory(t_cl *cl);
 /*
 **	SDL		stuff
 */
-int			init_sdl(t_sdl *sdl);
+
+int			init_sdl(t_sdl *sdl, int w, int h);
 int			close_sdl(t_sdl *sdl);
 
 /*
