@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/08/21 13:52:27 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/14 16:25:05 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int			render_scene(t_rt *rt)
 	cl_uint	*pixels;
 	int		i;
 
+	ret = clSetKernelArg(rt->cl.rt_kernel, 0, sizeof(rt->cl.scene_mem), &rt->cl.scene_mem);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clSetKernelArg(0) exception"COLOR_OFF));
+	
 	pixels = (cl_uint*)rt->sdl.win_sur->pixels;
 	
 	ret = clEnqueueNDRangeKernel(rt->cl.command_queue, rt->cl.rt_kernel, 1, NULL, \
@@ -28,7 +32,8 @@ int			render_scene(t_rt *rt)
 		sizeof(cl_uint) * WIN_WIDTH * WIN_HEIGHT, pixels, 0, 0, 0);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"Oops"COLOR_OFF));
-		
+
+
 	clFinish(rt->cl.command_queue);
 
 	SDL_UpdateWindowSurface(rt->sdl.win);

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 23:00:07 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/14 16:17:00 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int		main(int argc, char **argv)
 		return (1);
 	if (create_program_and_kernels(&rt.cl))
 		return (1);
-	make_little_default_scene(&rt.scene);
+	// make_little_default_scene(&rt.scene);
 
-	// if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
-		// return (1);
+	if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
+		return (1);
 
 
 	if (set_up_memory(&rt, &rt.cl))

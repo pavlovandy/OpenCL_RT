@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:51 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 13:49:52 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/14 16:08:28 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,27 @@ cl_double3	ft_normalize(cl_double3 a)
 	lenght = vector_len(a);
 
 	return ((cl_double3){{a.s[0] / lenght, a.s[1] / lenght, a.s[2] / lenght}});
+}
+
+
+
+
+cl_double3	ft_rotate_minus_camera(cl_double3 direction, t_pov pov)
+{
+	double new_x;
+	double new_y;
+	double new_z;
+
+	
+	new_y = direction.s[1] * pov.cx - direction.s[2] * pov.sx;
+	new_z = direction.s[1] * pov.sx + direction.s[2] * pov.cx;
+	direction.s[1] = new_y;
+	direction.s[2] = new_z;
+
+	new_x = direction.s[0] * pov.cy - direction.s[2] * pov.sy;
+	new_z = direction.s[0] * pov.sy + direction.s[2] * pov.cy;
+	direction.s[0] = new_x;
+	direction.s[2] = new_z;
+
+	return (direction);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 16:38:05 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/14 18:22:45 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,29 @@ int			rotation(t_rt *rt) //sometimes its must rotate z coordinate also
 	return (1);
 }
 
+int		move_fig(t_rt *rt)
+{
+	int	x;
+	int	y;
+	cl_int	ret;
+	
+	if (rt->edi.chosen_obj != -1)
+	{
+		SDL_GetRelativeMouseState(&x, &y);
+		if (x == 0 && y == 0)
+			return(0);
+
+		cl_double3	dir = (cl_double3){{x / 100.0, y / 100.0, 0}};
+		dir = ft_rotate_minus_camera(dir, rt->pov);
+		rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent = add_double3(rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent, dir);
+
+
+		printf("i = %d x = %d cent = %f\n", rt->edi.chosen_obj, x, rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent.s[0]);
+
+		return (1);
+	}
+	return (0);
+}
 int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 {
 	cl_int	ret;
@@ -78,9 +101,11 @@ int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 		ret = clEnqueueReadBuffer(rt->cl.command_queue, rt->cl.id_obj, CL_FALSE, 0, sizeof(cl_int), &id_obj, 0, 0, 0);
 		if (ret != CL_SUCCESS)
 			return (error_message(RED"Oops"COLOR_OFF));
-
-		clFinish(rt->cl.command_queue);
 		
+		clFinish(rt->cl.command_queue);
+		rt->edi.chosen_obj = id_obj;
+		rt->scene.obj[id_obj].color = (cl_double3){{0, 0, 255}};
+		SDL_GetRelativeMouseState(NULL, NULL);
 		printf("%i\n", id_obj);
 		return (1);
 	}
@@ -93,11 +118,14 @@ int			user_events(t_rt *rt)
 	SDL_Event	ev;
 	int			changes;
 	static int	rotations = 0;
+	static int			move = 0;
 
 	changes = 0;
 	changes += translate(rt);
 	if (rotations)
 		changes += rotation(rt);
+	else if (move)
+		changes += move_fig(rt);
 	while (SDL_PollEvent(&ev))
 	{
 		if (ev.type == SDL_KEYDOWN)
@@ -114,7 +142,9 @@ int			user_events(t_rt *rt)
 		else if (ev.type == SDL_QUIT)
 			exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
 		else if (ev.type == SDL_MOUSEBUTTONDOWN)
-			mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
+			move = mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
+		else if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT)
+			move = 0;
 	}
 	return (changes);
 }
@@ -128,8 +158,6 @@ int			there_will_be_loop(t_rt *rt)
 	{
 		if (user_events(rt))
 		{
-
-			
 			/*There should be relinkage to OpenCL*/
 			ret = clSetKernelArg(rt->cl.rt_kernel, 2, sizeof(rt->pov), &rt->pov);
 			if (ret != CL_SUCCESS)
