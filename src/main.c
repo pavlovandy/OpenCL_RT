@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/14 18:09:07 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/14 18:20:08 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		main(int argc, char **argv)
 	if (set_up_memory(&rt, &rt.cl))
 		return (1);
 	there_will_be_loop(&rt);
-	// ft_xml_save("sss.xml", &rt.scene, &rt.pov);
+	// ft_xml_save("sss.xml", &rt.scene, rt.pov);
 	close_sdl(&rt.sdl);
 	freed_up_memory(&rt.cl);
 	return (0);
