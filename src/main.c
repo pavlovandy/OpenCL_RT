@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 16:40:57 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/14 18:09:07 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[1].text_no = 0;
 	scene->obj[1].normal_map_no = -1;	
 }
-
 
 int		main(int argc, char **argv)
 {

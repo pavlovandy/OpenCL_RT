@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 16:38:05 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/14 18:18:05 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,34 +54,16 @@ int			rotation(t_rt *rt) //sometimes its must rotate z coordinate also
 	return (1);
 }
 
+
+
 int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 {
-	cl_int	ret;
-	cl_int	id_obj;
-
 	if (button == SDL_BUTTON_LEFT)
 	{
-
-		ret = clSetKernelArg(rt->cl.click_kernel, 1, sizeof(int), &x);
-		if (ret != CL_SUCCESS)
-			return (error_message(RED"clSetKernelArg(1) exception"COLOR_OFF));
-		ret = clSetKernelArg(rt->cl.click_kernel, 2, sizeof(int), &y);
-		if (ret != CL_SUCCESS)
-			return (error_message(RED"clSetKernelArg(2) exception"COLOR_OFF));
-		ret = clSetKernelArg(rt->cl.click_kernel, 3, sizeof(rt->pov), &rt->pov);
-		if (ret != CL_SUCCESS)
-			return (error_message(RED"clSetKernelArg(3) exception"COLOR_OFF));
-
-		ret = clEnqueueTask (rt->cl.command_queue, rt->cl.click_kernel, 0, NULL, NULL);
-		if (ret != CL_SUCCESS)
-			return (error_message(RED"Oops"COLOR_OFF));
-		ret = clEnqueueReadBuffer(rt->cl.command_queue, rt->cl.id_obj, CL_FALSE, 0, sizeof(cl_int), &id_obj, 0, 0, 0);
-		if (ret != CL_SUCCESS)
-			return (error_message(RED"Oops"COLOR_OFF));
-
-		clFinish(rt->cl.command_queue);
-		
-		printf("%i\n", id_obj);
+		rt->edi.chosen_obj = get_object_intersection(rt, x, y);
+		if (rt->edi.chosen_obj > -1)
+			rt->scene.obj[rt->edi.chosen_obj].color = (cl_double3){{0, 0, 255}};
+		clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 		return (1);
 	}
 	else	
