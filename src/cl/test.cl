@@ -101,10 +101,11 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	double	scalar;
 	double3	reflect_ray;
 	double3	local_intensity;
-
-	double2 texture_space_coords = cartesian_to_sperical_coords(intersect_point, fig); //get no of texture coordinates for sphere
 	double3	new_normal = normal;
-
+	double2 texture_space_coords;
+	if (fig.normal_map_no > -1 || fig.text_no > -1)
+		texture_space_coords = get_texture_space_coords(intersect_point, fig);
+	
 	if (fig.normal_map_no > -1) //bump mapping for sphere
 	{
 		double3	A = (double3)(1, 0, 0);
@@ -115,7 +116,7 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 		double3 dv = normal_from_map[1] / 255 * 2 - 1;
 		new_normal = normalize(normal - du * t + dv * b); //could be changes from + to -
 	}
-
+	
 	double3	pix_color;
 	if (fig.text_no > -1)
 	 	pix_color = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.text_no], fig.text_no));
@@ -148,12 +149,12 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 				reflect_ray = reflected_ray(new_normal, light_dir);
 				scalar = dot(reflect_ray, -dir);
 				if (scalar > 0)
-					intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), fig.specular);
+					intensity += local_intensity * pow(scalar / (length(-dir) * length(reflect_ray)), fig.specular); //d^2 where d is distance from light to dot
 			}
 			/*brightness*/
 			scalar = dot(new_normal, light_dir);
 			if (scalar > 0)
-				intensity += (local_intensity * scalar / (length(light_dir) * length(new_normal)));
+				intensity += (local_intensity * scalar / (length(light_dir) * length(new_normal))); //d^2 where d is distance from light to dot
 			
 		}
 	}

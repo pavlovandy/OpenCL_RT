@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 16:05:45 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 14:19:33 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ int			read_textures(t_rt *rt)
 	if (read_texture("envi/8k_earth_daymap.jpg", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
 	if (read_texture("envi/earth_bump_map.jpg", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/123.png", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/waffles.jpg", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
 	return (0);	
 }

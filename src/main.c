@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/14 18:20:08 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 15:10:41 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,36 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].ior = (cl_double)1.4;
 	scene->obj[0].text_no = 0;
 	scene->obj[0].normal_map_no = 1;
+	scene->obj[0].txt_offset = (cl_double2){{0, 0}};
+	scene->obj[0].txt_scale = (cl_double2){{1, 1}};
 
-	scene->obj[1].fig_type = (cl_int)SPHERE;
-	scene->obj[1].shape.sphere.cent = (cl_double3){{0, 0, 5}};
-	scene->obj[1].rotation = (cl_double3){{150.0 * M_PI / 180.0, 120.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
+	// scene->obj[1].fig_type = (cl_int)SPHERE;
+	// scene->obj[1].shape.sphere.cent = (cl_double3){{0, 0, 5}};
+	// scene->obj[1].shape.sphere.radius = (cl_double)1;
+
+	// scene->obj[1].fig_type = (cl_int)PLANE; //hasnt draw from one side
+	// scene->obj[1].shape.plane.dot = (cl_double3){{0, -1, 0}};
+	// scene->obj[1].shape.plane.normal = (cl_double3){{0, 0, 1}};
+
+	// scene->obj[1].fig_type = (cl_int)CYLIN;
+	// scene->obj[1].shape.cylin.dot = (cl_double3){{0, -1, 0}};
+	// scene->obj[1].shape.cylin.dir = (cl_double3){{0, 0, 1}};
+	// scene->obj[1].shape.cylin.radius = (cl_int)1.5;
+
+	scene->obj[1].fig_type = (cl_int)CONE;
+	scene->obj[1].shape.cone.vertex = (cl_double3){{0, -1, 0}};
+	scene->obj[1].shape.cone.dir = (cl_double3){{0, 0, 1}};
+	scene->obj[1].shape.cone.tangent = (cl_double)0.3;
+	//scene->obj[1].rotation = (cl_double3){{150.0 * M_PI / 180.0, 120.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
 	scene->obj[1].color = (cl_double3){{255, 0, 0}};
-	scene->obj[1].shape.sphere.radius = (cl_double)1;
 	scene->obj[1].specular = (cl_int)-1;
 	scene->obj[1].reflective = (cl_double)0;
 	scene->obj[1].trans = (cl_double)0.1;
 	scene->obj[1].ior = (cl_double)1;
-	scene->obj[1].text_no = 0;
-	scene->obj[1].normal_map_no = -1;	
+	scene->obj[1].text_no = 2;
+	scene->obj[1].normal_map_no = 2;
+	scene->obj[1].txt_offset = (cl_double2){{0, 0}};
+	scene->obj[1].txt_scale = (cl_double2){{1, 1}};
 }
 
 int		main(int argc, char **argv)
@@ -82,7 +100,7 @@ int		main(int argc, char **argv)
 	make_little_default_scene(&rt.scene);
 
 	// if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
-		// return (1);
+	// 	return (1);
 
 
 	if (set_up_memory(&rt, &rt.cl))

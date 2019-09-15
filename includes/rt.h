@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/14 18:21:29 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 12:31:59 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ struct	s_fig
 	cl_double	ior;
 	cl_int		text_no;
 	cl_int		normal_map_no;
+	cl_double2	txt_offset;
+	cl_double2	txt_scale;
 };
 
 struct	s_sdl

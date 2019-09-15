@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 16:06:06 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 12:32:03 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct	s_fig
 	double		ior;
 	int			text_no;
 	int			normal_map_no;
+	double2		txt_offset;
+	double2		txt_scale;
 }				t_fig;
 
 typedef struct	s_pov
@@ -175,8 +177,13 @@ uint		color_to_canvas(double3 color);
 
 
 //texture staff
-double2		cartesian_to_sperical_coords(double3 intersect_point, t_fig data);
-uint	get_texture_pixel(double2 coord, __global uint *texture, t_txt_params params, int no);
+double2		get_sperical_coords(double3 intersect_point, t_fig data);
+double2		get_plane_coords(double3 intersect_point, t_fig data);
+double2		get_cylin_coords(double3 intersect_point, t_fig data);
+double2		get_cone_coords(double3 intersect_point, t_fig data);
+
+double2		get_texture_space_coords(double3 intersect_point, t_fig data);
+uint		get_texture_pixel(double2 coord, __global uint *texture, t_txt_params params, int no);
 
 //other functions
 void		swap(double* a, double*b);
