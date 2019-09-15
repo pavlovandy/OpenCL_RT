@@ -4,9 +4,9 @@ double3	new_basis(double3 point, t_rotation_matrix m)
 {
 	double3		res;
 
-	res[0] = m.e1[0] * point[0] + m.e2[0] * point[1] + m.e2[0] * point[2];
-	res[1] = m.e1[1] * point[0] + m.e2[1] * point[1] + m.e2[1] * point[2];
-	res[2] = m.e1[2] * point[0] + m.e2[2] * point[1] + m.e2[2] * point[2];
+	res[0] = m.e1[0] * point[0] + m.e2[0] * point[1] + m.e3[0] * point[2];
+	res[1] = m.e1[1] * point[0] + m.e2[1] * point[1] + m.e3[1] * point[2];
+	res[2] = m.e1[2] * point[0] + m.e2[2] * point[1] + m.e3[2] * point[2];
 	return (res);
 }
 

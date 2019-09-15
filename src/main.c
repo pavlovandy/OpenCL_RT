@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/15 15:37:57 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 15:57:26 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	make_little_default_scene(t_scene *scene)
 {
-	scene->count_obj = (cl_int)2;
+	scene->count_obj = (cl_int)1;
 	scene->count_light = (cl_int)1;
 	
 	scene->light[0].type_num = (cl_int)DIRECT;
@@ -44,8 +44,8 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 10}};
 	scene->obj[0].color = (cl_double3){{255, 255, 255}};
 	scene->obj[0].shape.sphere.radius = (cl_double)0.5;
-	scene->obj[0].rotation = (cl_double3){{150.0 * M_PI / 180.0, 120.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
-	scene->obj[0].rotation_martix = build_rotation_matrix_form_angles(scene->obj[1].rotation);
+	scene->obj[0].rotation = (cl_double3){{100 * M_PI / 180.0, 100 * M_PI / 180.0, 100 * M_PI / 180.0}};
+	scene->obj[0].rotation_martix = build_rotation_matrix_form_angles(scene->obj[0].rotation);
 	scene->obj[0].specular = (cl_int)-1;
 	scene->obj[0].reflective = (cl_double)0;
 	scene->obj[0].trans = (cl_double)0;
