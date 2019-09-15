@@ -1,5 +1,15 @@
 #include "kernel.h"
 
+double3	new_basis(double3 point, t_rotation_matrix m)
+{
+	double3		res;
+
+	res[0] = m.e1[0] * point[0] + m.e2[0] * point[1] + m.e2[0] * point[2];
+	res[1] = m.e1[1] * point[0] + m.e2[1] * point[1] + m.e2[1] * point[2];
+	res[2] = m.e1[2] * point[0] + m.e2[2] * point[1] + m.e2[2] * point[2];
+	return (res);
+}
+
 double2	get_sperical_coords(double3 intersect_point, t_fig data)
 {
 	double2		st;
@@ -7,7 +17,7 @@ double2	get_sperical_coords(double3 intersect_point, t_fig data)
 
 	double3		point = intersect_point - data.shape.sphere.cent;
 	if (length(data.rotation) > 0)
-		point = rotate_z(rotate_y(rotate_x(point, data.rotation[0]), data.rotation[1]), data.rotation[2]); //need to make it real basis
+		point = new_basis(point, data.rotation_martix);
 	point = normalize(point);
 	st[0] = acos(point[2]) / PI;
 	tmp = sin(st[0] * PI);
@@ -26,7 +36,7 @@ double2	get_plane_coords(double3 intersect_point, t_fig data)
 
 	double3		point = intersect_point - data.shape.plane.dot;
 	if (length(data.rotation) > 0)
-		point = rotate_z(rotate_y(rotate_x(point, data.rotation[0]), data.rotation[1]), data.rotation[2]); //need to make it real basis
+		point = new_basis(point, data.rotation_martix);
 	st = (double2)(point[0], point[1]);
 	st *= data.txt_scale;
 	return (st);
@@ -39,7 +49,7 @@ double2	get_cylin_coords(double3 intersect_point, t_fig data)
 
 	double3		point = intersect_point - data.shape.cone.vertex;
 	if (length(data.rotation) > 0)
-		point = rotate_z(rotate_y(rotate_x(point, data.rotation[0]), data.rotation[1]), data.rotation[2]); //need to make it real basis
+		point = new_basis(point, data.rotation_martix);
 	st[1] = 0.5 + atan2(point[1], point[0]) / (PI); //what should be first what second?
 	if (st[1] < 1)
 		st[1] = 1 + st[1];
@@ -54,7 +64,7 @@ double2	get_cone_coords(double3 intersect_point, t_fig data)
 
 	double3		point = intersect_point - data.shape.sphere.cent;
 	if (length(data.rotation) > 0)
-		point = rotate_z(rotate_y(rotate_x(point, data.rotation[0]), data.rotation[1]), data.rotation[2]); //need to make it real basis
+		point = new_basis(point, data.rotation_martix);
 	st[1] = atan2(point[1], point[0]) / (PI * 2); //what should be first what second?
 	if (st[1] < 1)
 		st[1] = 1 + st[1];

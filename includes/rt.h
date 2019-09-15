@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/15 12:31:59 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 15:19:37 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,13 @@ typedef union	u_shape
 	t_cylin_data	cylin;
 }				t_shape;
 
+typedef struct	s_rotation_matrix
+{
+	cl_double3		e1;
+	cl_double3		e2;
+	cl_double3		e3;
+}				t_rotation_matrix;
+
 struct	s_fig
 {
 	cl_int		fig_type;
@@ -115,6 +122,7 @@ struct	s_fig
 	cl_double	reflective;
 	cl_double	trans;
 	cl_double3	rotation;
+	t_rotation_matrix	rotation_martix;
 	cl_double	ior;
 	cl_int		text_no;
 	cl_int		normal_map_no;

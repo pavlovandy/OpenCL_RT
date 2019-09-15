@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/15 12:32:03 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 15:34:52 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ typedef union	u_shape
 	t_cylin_data	cylin;
 }				t_shape;
 
+typedef struct	s_rotation_matrix
+{
+	double3		e1;
+	double3		e2;
+	double3		e3;
+}				t_rotation_matrix;
+
 typedef struct	s_fig
 {
 	int			fig_type;
@@ -76,6 +83,7 @@ typedef struct	s_fig
 	double		reflective;
 	double		trans;
 	double3		rotation;
+	t_rotation_matrix	rotation_martix;
 	double		ior;
 	int			text_no;
 	int			normal_map_no;
@@ -181,7 +189,7 @@ double2		get_sperical_coords(double3 intersect_point, t_fig data);
 double2		get_plane_coords(double3 intersect_point, t_fig data);
 double2		get_cylin_coords(double3 intersect_point, t_fig data);
 double2		get_cone_coords(double3 intersect_point, t_fig data);
-
+double3		new_basis(double3 point, t_rotation_matrix m);
 double2		get_texture_space_coords(double3 intersect_point, t_fig data);
 uint		get_texture_pixel(double2 coord, __global uint *texture, t_txt_params params, int no);
 
