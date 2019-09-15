@@ -6,13 +6,13 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:51 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/15 15:36:40 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/15 15:40:45 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rt.h"
 
-cl_double3	ft_rotate_camera(cl_double3 direction, t_pov pov)
+cl_double3	ft_rotate_camera(cl_double3 direction, t_pov pov) //should be replaced with rotate_xyz() declarated below
 {
 	double new_x;
 	double new_y;
