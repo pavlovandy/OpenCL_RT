@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/08/19 13:39:55 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/16 18:51:07 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CL_SILENCE_DEPRECATION
+#ifndef CL_SILENCE_DEPRECATION
 #  define CL_SILENCE_DEPRECATION
-# endif
+#endif
 
 #ifndef RT_H
 # define RT_H
@@ -21,9 +21,10 @@
 
 # include "../libft/libft.h"
 # ifdef __APPLE__
-#  include "../frameworks/SDL2.framework/Headers/SDL.h"
-#  include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-#  include <OpenCL/opencl.h>
+# include "../frameworks/SDL2.framework/Headers/SDL.h"
+# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+# include "../frameworks/mxml-3.0/include/mxml.h" // Add path mxml header ++
+# include <OpenCL/opencl.h>
 # else
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
@@ -36,12 +37,12 @@
 
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 # ifdef __APPLE__
-# define WIN_WIDTH	1600
-# define WIN_HEIGHT	1200
+# define WIN_WIDTH	800
+# define WIN_HEIGHT	600
 # else
-# define WIN_WIDTH	1200
-# define WIN_HEIGHT	800
-#endif
+#  define WIN_WIDTH	1200
+#  define WIN_HEIGHT	800
+# endif
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])
@@ -53,7 +54,7 @@
 # define VW	(1.155 * D)
 # define VH	(VW * WIN_HEIGHT / WIN_WIDTH)
 
-# define BIG_VALUE 9e9
+# define MAX_TEXTURE_COUNT 10
 
 typedef	struct s_fig	t_fig;
 typedef	struct s_sdl	t_sdl;
@@ -104,19 +105,29 @@ typedef union	u_shape
 	t_cylin_data	cylin;
 }				t_shape;
 
+typedef struct	s_rotation_matrix
+{
+	cl_double3		e1;
+	cl_double3		e2;
+	cl_double3		e3;
+}				t_rotation_matrix;
+
 struct	s_fig
 {
 	cl_int		fig_type;
 	t_shape		shape;
 
 	cl_double3	color;
-	//cl_int		text_no;
 	cl_int		specular;
 	cl_double	reflective;
 	cl_double	trans;
 	cl_double3	rotation;
+	t_rotation_matrix	rotation_martix;
 	cl_double	ior;
 	cl_int		text_no;
+	cl_int		normal_map_no;
+	cl_double2	txt_offset;
+	cl_double2	txt_scale;
 };
 
 struct	s_sdl
@@ -136,12 +147,14 @@ struct	s_pov
 	cl_double	d;
 	cl_double	vh;
 	cl_double	vw;
+	cl_int		w;
+	cl_int		h;
 };
 
 typedef struct	s_light
 {
 	cl_int		type_num;
-	cl_double	intensity;
+	cl_double3	intensity;
 	cl_double3	v;
 }				t_light;
 
@@ -162,34 +175,37 @@ typedef struct	s_cl
 	cl_context			context;
 	cl_command_queue	command_queue;
 	cl_program			program;
+
+	/*		kernels		*/
+	
 	cl_kernel			rt_kernel;
 	cl_kernel			click_kernel;
 
+	/*		memory objects		*/
+	
 	cl_mem				scene_mem;
 	cl_mem				pixel_ptr;
-
 	cl_mem				texture_mem;
-	cl_mem				bump_mem;
-
+	cl_mem				txt_param_mem;
+	cl_mem				id_obj;
+	
 	size_t				global_size;
 	size_t				local_size;
-
-	cl_uint				*pixels_to_read_into;
 }				t_cl;
 
 typedef struct	s_txt_params
 {
 	cl_int		w;
 	cl_int		h;
+	cl_int		start_pos;
 }				t_txt_params;
 
 typedef struct	s_envi
 {
-	cl_int			txt_count;
+	cl_int			txt_count; //number of textures
 	cl_uint			*txt; //could be uint16 : rgb565. to save more space for kernel
-	t_txt_params	txt_par; // must be an array for all textures
-	cl_uint			*bump; //could be uint16 : blue value isnt needed. to save more space for kernel
-	t_txt_params	bump_par; // must be an array for all textures
+	int				textures_size; //the sumary size of all textures
+	t_txt_params	txt_par[MAX_TEXTURE_COUNT]; //w, h and start point for each texture in txt array
 }				t_envi;
 
 typedef struct	s_edi
@@ -209,6 +225,13 @@ struct	s_rt
 };
 
 /*
+**	Init
+*/
+
+int		init_start_params(t_rt *rt);
+int		read_textures(t_rt *rt);
+
+/*
 **	CL		stuff
 */
 int			init_cl(t_cl *cl);
@@ -219,7 +242,8 @@ int			freed_up_memory(t_cl *cl);
 /*
 **	SDL		stuff
 */
-int			init_sdl(t_sdl *sdl);
+
+int			init_sdl(t_sdl *sdl, int w, int h);
 int			close_sdl(t_sdl *sdl);
 
 /*
@@ -244,5 +268,7 @@ int			there_will_be_loop(t_rt *rt);
 
 # include "parse.h"
 # include "mymath.h"
+# include "xml.h"
+# include "editor.h"
 
 #endif

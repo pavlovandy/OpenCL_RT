@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/08/21 14:15:40 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/14 18:18:05 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ static int	translate(t_rt *rt)
 		translate_vector.s[2] += TRANSLATE_SPEED;
 	if (keyboard_state[SDL_SCANCODE_S])
 		translate_vector.s[2] -= TRANSLATE_SPEED;
+	if (keyboard_state[SDL_SCANCODE_SPACE])
+		translate_vector.s[1] += TRANSLATE_SPEED;
+	if (keyboard_state[SDL_SCANCODE_LCTRL])
+		translate_vector.s[1] -= TRANSLATE_SPEED;
 	translate_vector = ft_rotate_camera(translate_vector, rt->pov);
 	rt->pov.coord = add_double3(rt->pov.coord, translate_vector);
 	if (vector_len(translate_vector) != 0)
@@ -33,7 +37,7 @@ static int	translate(t_rt *rt)
 	return (0);
 }
 
-int			rotation(t_rt *rt)
+int			rotation(t_rt *rt) //sometimes its must rotate z coordinate also
 {
 	int				x;
 	int				y;
@@ -41,20 +45,26 @@ int			rotation(t_rt *rt)
 	SDL_GetRelativeMouseState(&x, &y);
 	if (x == 0 && y == 0)
 		return (0);
-	rt->pov.dir.s0 += (y) * ROTATION_SPEED;
-	rt->pov.dir.s1 += (x) * ROTATION_SPEED;
-	rt->pov.cx = cos(rt->pov.dir.s0 / 180 * M_PI);
-	rt->pov.sx = sin(rt->pov.dir.s0 / 180 * M_PI);
-	rt->pov.cy = cos(rt->pov.dir.s1 / 180 * M_PI);
-	rt->pov.sy = sin(rt->pov.dir.s1 / 180 * M_PI);
+	rt->pov.dir.s[0] += (y) * ROTATION_SPEED;
+	rt->pov.dir.s[1] += (x) * ROTATION_SPEED;
+	rt->pov.cx = cos(rt->pov.dir.s[0] / 180 * M_PI);
+	rt->pov.sx = sin(rt->pov.dir.s[0] / 180 * M_PI);
+	rt->pov.cy = cos(rt->pov.dir.s[1] / 180 * M_PI);
+	rt->pov.sy = sin(rt->pov.dir.s[1] / 180 * M_PI);
 	return (1);
 }
 
-int			mouse_events(t_rt *rt, Uint8 button)
+
+
+int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 {
 	if (button == SDL_BUTTON_LEFT)
 	{
-		
+		rt->edi.chosen_obj = get_object_intersection(rt, x, y);
+		if (rt->edi.chosen_obj > -1)
+			rt->scene.obj[rt->edi.chosen_obj].color = (cl_double3){{0, 0, 255}};
+		clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
+		return (1);
 	}
 	else	
 		return (0);
@@ -86,7 +96,7 @@ int			user_events(t_rt *rt)
 		else if (ev.type == SDL_QUIT)
 			exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
 		else if (ev.type == SDL_MOUSEBUTTONDOWN)
-			mouse_events(rt, ev.button.button);
+			mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
 	}
 	return (changes);
 }
@@ -103,7 +113,7 @@ int			there_will_be_loop(t_rt *rt)
 
 			
 			/*There should be relinkage to OpenCL*/
-			ret = clSetKernelArg(rt->cl.rt_kernel, 4, sizeof(rt->pov), &rt->pov);
+			ret = clSetKernelArg(rt->cl.rt_kernel, 2, sizeof(rt->pov), &rt->pov);
 			if (ret != CL_SUCCESS)
 				return (error_message(RED"clSetKernelArg(4) exception"COLOR_OFF));
 			/*__________________________________________________*/

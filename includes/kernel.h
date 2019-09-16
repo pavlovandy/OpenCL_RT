@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kernel.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.unit.ua>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/08/20 15:41:33 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/16 18:42:18 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ typedef union	u_shape
 	t_cylin_data	cylin;
 }				t_shape;
 
+typedef struct	s_rotation_matrix
+{
+	double3		e1;
+	double3		e2;
+	double3		e3;
+}				t_rotation_matrix;
+
 typedef struct	s_fig
 {
 	int			fig_type;
@@ -76,8 +83,12 @@ typedef struct	s_fig
 	double		reflective;
 	double		trans;
 	double3		rotation;
+	t_rotation_matrix	rotation_martix;
 	double		ior;
 	int			text_no;
+	int			normal_map_no;
+	double2		txt_offset;
+	double2		txt_scale;
 }				t_fig;
 
 typedef struct	s_pov
@@ -91,6 +102,8 @@ typedef struct	s_pov
 	double		d;
 	double		vh;
 	double		vw;
+	int			w;
+	int			h;
 }				t_pov;
 
 typedef struct	s_raytrace_tree
@@ -111,7 +124,7 @@ typedef struct	s_obj_and_dist
 typedef struct	s_light
 {
 	int			type_num;
-	double		intensity;
+	double3		intensity;
 	double3		v;
 }				t_light;
 
@@ -123,31 +136,65 @@ typedef struct	s_scene
 	t_light		light[MAX_LIGHTING_COUNT];
 }				t_scene;
 
-double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
-double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global uint *bump);
-double3	trim_color(double3 color);
-uint	color_to_canvas(double3 color);
-double3	canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
-t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
-										__global t_scene *scene, \
-										double mini, double max);
-double	calculate_light(__global t_scene *scene, double3 eye, \
+typedef struct	s_txt_params
+{
+	int		w;
+	int		h;
+	int		start_pos;
+}				t_txt_params;
+
+//main stuff
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global t_txt_params *txt_params);
+double3		canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
+double3		calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
-						int	closest_obj, __global uint *bump_map);
-double3	reflected_ray(double3 normal, double3 prim_ray);
-double	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
+						t_fig fig, __global uint *texture, __global t_txt_params *txt_params);
+
+
+
+
+double3		get_intersity_after_shadow_rays(double3 intersect_point, double3 light_dir, \
 										__global t_scene *scene, double min_range, \
 										double max_range, __global t_light *light);
-double3	refract_ray(double3 prim_ray, double3 normal, double ior2_new);
-double3	rotate_camera(double3 direction, t_pov pov);
-
-uint		get_texture_pixel_sphere(double3 intersect_point, t_fig data, __global uint *texture);
-void		swap(double* a, double*b);
+double3		refract_ray(double3 prim_ray, double3 normal, double ior2_new);
+double3		reflected_ray(double3 normal, double3 prim_ray);
 double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
-double3		uint_to_double3(uint a);
+double3		beers_law(double distance, double3 obj_absorb);
+
+
+//rotation
+double3		rotate_camera(double3 direction, t_pov pov);
 double3		rotate_x(double3 v, double angle);
 double3		rotate_y(double3 v, double angle);
 double3		rotate_z(double3 v, double angle);
-double2		cartesian_to_sperical_coords(double3 intersect_point, t_fig data);
+
+//intersections
+double2		intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
+double2		intersect_plane(double3 eye, double3 dir, t_plane_data plane);
+double2		intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin);
+double2		intersect_cone(double3 eye, double3 dir, t_cone_data cone);
+double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node);
+t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
+										__global t_scene *scene, \
+										double mini, double max);
+
+//color managment
+double3		uint_to_double3(uint a);
+double3		trim_color(double3 color);
+uint		color_to_canvas(double3 color);
+
+
+//texture staff
+double2		get_sperical_coords(double3 intersect_point, t_fig data);
+double2		get_plane_coords(double3 intersect_point, t_fig data);
+double2		get_cylin_coords(double3 intersect_point, t_fig data);
+double2		get_cone_coords(double3 intersect_point, t_fig data);
+double3		new_basis(double3 point, t_rotation_matrix m);
+double2		get_texture_space_coords(double3 intersect_point, t_fig data);
+uint		get_texture_pixel(double2 coord, __global uint *texture, t_txt_params params, int no);
+
+//other functions
+void		swap(double* a, double*b);
+double		line_point(double start, double end, double p);
 
 #endif
