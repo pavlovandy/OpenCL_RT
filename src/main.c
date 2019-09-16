@@ -79,11 +79,11 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[1].rotation = (cl_double3){{150.0 * M_PI / 180.0, 120.0 * M_PI / 180.0, 50.0 * M_PI / 180.0}};
 	scene->obj[1].rotation_martix = build_rotation_matrix_form_angles(scene->obj[1].rotation);
 	scene->obj[1].color = (cl_double3){{255, 0, 0}};
-	scene->obj[1].specular = (cl_int)-1;
-	scene->obj[1].reflective = (cl_double)0.9;
+	scene->obj[1].specular = (cl_int)1000;
+	scene->obj[1].reflective = (cl_double)0;
 	scene->obj[1].trans = (cl_double)0;
 	scene->obj[1].ior = (cl_double)1.3;
-	scene->obj[1].text_no = 0;
+	scene->obj[1].text_no = -1;
 	scene->obj[1].normal_map_no = -1;
 	scene->obj[1].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[1].txt_scale = (cl_double2){{1, 1}};
@@ -94,7 +94,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[2].rotation = (cl_double3){{M_PI / 2, 0, 0}};
 	scene->obj[2].rotation_martix = build_rotation_matrix_form_angles(scene->obj[2].rotation);
 	scene->obj[2].color = (cl_double3){{255, 0, 0}};
-	scene->obj[2].specular = (cl_int)-1;
+	scene->obj[2].specular = (cl_int)1000;
 	scene->obj[2].reflective = (cl_double)0;
 	scene->obj[2].trans = (cl_double)0;
 	scene->obj[2].ior = (cl_double)1;

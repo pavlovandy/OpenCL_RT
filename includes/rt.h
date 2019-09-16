@@ -21,14 +21,15 @@
 
 # include "../libft/libft.h"
 # ifdef __APPLE__
-# include "../frameworks/SDL2.framework/Headers/SDL.h"
-# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-# include "../frameworks/mxml-3.0/include/mxml.h" // Add path mxml header ++
-# include <OpenCL/opencl.h>
+#  include "../frameworks/SDL2.framework/Headers/SDL.h"
+#  include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#  include "../frameworks/mxml-3.0/include/mxml.h" // Add path mxml header ++
+#  include <OpenCL/opencl.h>
 # else
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
 #  include <SDL2/SDL_image.h>
+#  include "../frameworks/mxml-3.0/include/mxml.h"
 # endif
 # include <stdio.h>
 # include "terminal_colors.h"

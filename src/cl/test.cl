@@ -2,8 +2,13 @@
 
 double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
 {
-	return (prim_ray - normal * 2 * dot(normal, prim_ray));
+	return (prim_ray - 2 * dot(normal, prim_ray) * normal);
 }
+
+// double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
+// {
+// 	return (2 * dot(normal, prim_ray) * normal - prim_ray);
+// }
 
 /*
 	Seems like i dont know how to insert this feature here.
@@ -147,15 +152,15 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 			light_len = length(light_dir);
 			/*blicks*/
 			if (fig.specular > 0)
-			{
+			{						
 				reflect_ray = reflected_ray(new_normal, light_dir);
-				scalar = dot(reflect_ray, -dir);
+				scalar = dot(reflect_ray, dir);
 				if (scalar > 0)
 				{
-					scalar = (pow(scalar / (light_len * length(reflect_ray)), fig.specular));
+					scalar = pow(scalar / (length(-dir) * length(reflect_ray)), fig.specular); //d^2 where d is distance from light to dot
 					if (light->type_num == POINT)
 						scalar /= light_len;
-					intensity += scalar * local_intensity;
+					intensity += local_intensity * scalar;
 				}
 			}
 			/*brightness*/
