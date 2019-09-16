@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 12:22:48 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/11 17:10:37 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/14 20:21:26 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ft_create_cam(t_pov *pov)
 {
 	pov->d = D;
-	pov->vw = VW;
-	pov->vh = VH;
+	pov->vw = 1.155 * D;
+	pov->vh = pov->vw * pov->h / pov->w;
 	pov->coord = (cl_double3){{0, 0, 0}};
 	pov->dir = (cl_double3){{0, 0, 0}};
 }

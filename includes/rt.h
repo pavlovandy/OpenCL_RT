@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/12 22:54:05 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/14 18:56:04 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
 
 # define D	0.1
-# define VW	(1.155 * D)
-# define VH	(VW * WIN_HEIGHT / WIN_WIDTH)
+
 
 # define MAX_TEXTURE_COUNT 10
 
@@ -259,5 +258,6 @@ int			there_will_be_loop(t_rt *rt);
 # include "parse.h"
 # include "mymath.h"
 # include "xml.h"
+# include "editor.h"
 
 #endif

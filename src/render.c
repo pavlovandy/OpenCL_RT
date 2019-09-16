@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/14 16:25:05 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/14 18:25:22 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ int			render_scene(t_rt *rt)
 	int		ret;
 	cl_uint	*pixels;
 	int		i;
-
-	ret = clSetKernelArg(rt->cl.rt_kernel, 0, sizeof(rt->cl.scene_mem), &rt->cl.scene_mem);
-	if (ret != CL_SUCCESS)
-		return (error_message(RED"clSetKernelArg(0) exception"COLOR_OFF));
 	
 	pixels = (cl_uint*)rt->sdl.win_sur->pixels;
 	

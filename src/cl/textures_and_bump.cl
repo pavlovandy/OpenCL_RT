@@ -29,3 +29,4 @@ uint	get_texture_pixel(double2 coord, __global uint *texture, t_txt_params param
 	it = coord[1] * params.w - 1;
 	return (texture[params.start_pos + is * params.w + it]);
 }
+
