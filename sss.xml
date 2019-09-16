@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+!-- This is a comment 
+	spher : centre, radius, RGB, transparency, reflective, specular, texture.
+	plane : dot, normal, RGB, transparency, reflective, specular, texture.
+	cylin : dot, dir, RGB, transparency, reflective, specular, texture.
+	cone  : vertex, dir, angle, RGB, transparency, reflective, specular, texture.
+	light : type(point/ambient/direct), position, intensity.
+	cam   : position.
+--
+<RT>
+	<spher>
+		<centre>0 0 0</centre>
+		<transparency>0 </transparency>
+	</spher> 
+	<light>
+		<type>point</type>
+		<position>10 10 -5</position>
+		<intensity>10 10 10</intensity>
+	</light>
+	<cam>
+		<position>0 0 -10</position>
+	</cam>
+
+</RT>

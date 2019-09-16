@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/14 20:22:16 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/16 19:59:33 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int		move_fig(t_rt *rt)
 			return(0);
 
 		cl_double3	dir = (cl_double3){{x / 100.0, -y / 100.0, 0}};
-		dir = ft_rotate_minus_camera(dir, rt->pov);
-		rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent = add_double3(rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent, dir);
-		clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
+		// dir = ft_rotate_minus_camera(dir, rt->pov);
+		// rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent = add_double3(rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent, dir);
+		// clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 
 		// printf("i = %d x = %d cent.x = %f\n", rt->edi.chosen_obj, x, rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent.s[0]);
 

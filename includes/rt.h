@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/14 18:56:04 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/16 20:39:58 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 # ifdef __APPLE__
-# define WIN_WIDTH	1600
-# define WIN_HEIGHT	1200
+# define WIN_WIDTH	800
+# define WIN_HEIGHT	600
 # else
 #  define WIN_WIDTH	1200
 #  define WIN_HEIGHT	800
@@ -49,7 +49,7 @@
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
-
+# define AIR_IOR 1.00029;
 # define D	0.1
 
 
@@ -104,6 +104,13 @@ typedef union	u_shape
 	t_cylin_data	cylin;
 }				t_shape;
 
+typedef struct	s_rotation_matrix
+{
+	cl_double3		e1;
+	cl_double3		e2;
+	cl_double3		e3;
+}				t_rotation_matrix;
+
 struct	s_fig
 {
 	cl_int		fig_type;
@@ -114,9 +121,12 @@ struct	s_fig
 	cl_double	reflective;
 	cl_double	trans;
 	cl_double3	rotation;
+	t_rotation_matrix	rotation_martix;
 	cl_double	ior;
 	cl_int		text_no;
 	cl_int		normal_map_no;
+	cl_double2	txt_offset;
+	cl_double2	txt_scale;
 };
 
 struct	s_sdl
