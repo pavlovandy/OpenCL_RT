@@ -27,10 +27,12 @@ double3	beers_law(double distance, double3 obj_absorb)
 
 double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
 {
+	double cosX = -dot(prim_ray, normal); 
 	double n2 = 1.00029;
+	if (cosX > 0)
+		swap(&n1, &n2);
 	double r0 = (n1 - n2) / (n1 + n2);
 	r0 *= r0;
-	double cosX = -dot(normal, prim_ray);
 	if (n1 > n2)
 	{
 		double n = n1 / n2;
@@ -43,7 +45,7 @@ double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
 	double x = 1.0 - cosX;
 	double ret = r0 + (1.0 - r0) * x * x * x * x * x;
  
-	ret = (reflective + (1.0 - reflective) * ret);
+	// ret = (reflective + (1.0 - reflective) * ret);
 	return (ret);
 }
 
