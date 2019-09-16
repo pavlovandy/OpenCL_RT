@@ -29,7 +29,7 @@
 #  include <SDL2/SDL.h>
 #  include <CL/cl.h>
 #  include <SDL2/SDL_image.h>
-#  include "../frameworks/mxml-3.0/include/mxml.h"
+#  include <mxml.h>
 # endif
 # include <stdio.h>
 # include "terminal_colors.h"

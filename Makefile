@@ -40,21 +40,22 @@ MXML = ./frameworks/mxml-3.0/lib #add folder path ++
 
 FT_LIB	= $(addprefix $(FT),libft.a)
 
-LINKS = -L$(FT) -l ft -lm -L$(MXML) -lmxml #add link mxml ++
+LINKS = -L$(FT) -l ft -lm #add link mxml ++
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
-	LINKS += -lSDL2 -lSDL2_image -lOpenCL
+	LINKS += -lSDL2 -lSDL2_image -lOpenCL -lmxml -lpthread
+else
+	LINKS += -L$(MXML) -lmxml
 endif
 SDL_PATH = ./framework
 
-INCLUDES = 		-I$(FT) -I$(INC_DIR) 
+INCLUDES = 		-I$(FT) -I$(INC_DIR) -I./frameworks/mxml-3.0/include
 
 ifeq ($(UNAME_S),Darwin)
 INCLUDES += -I./frameworks/SDL2.framework/Headers \
 			-I./frameworks/SDL2_image.framework/Headers \
-			-F./frameworks \
-			-I./frameworks/mxml-3.0/include #add mxml-3.0 include ++
+			-F./frameworks 
 endif
 
 				
