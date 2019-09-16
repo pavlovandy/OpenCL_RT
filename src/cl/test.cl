@@ -151,10 +151,12 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 				reflect_ray = reflected_ray(new_normal, light_dir);
 				scalar = dot(reflect_ray, -dir);
 				if (scalar > 0)
+				{
 					scalar = (pow(scalar / (light_len * length(reflect_ray)), fig.specular));
-				if (light->type_num == POINT)
-					scalar /= light_len;
-				intensity += scalar * local_intensity;
+					if (light->type_num == POINT)
+						scalar /= light_len;
+					intensity += scalar * local_intensity;
+				}
 			}
 			/*brightness*/
 			scalar = dot(new_normal, light_dir);
