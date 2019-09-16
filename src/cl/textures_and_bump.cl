@@ -27,6 +27,7 @@ double2	get_sperical_coords(double3 intersect_point, t_fig data)
 		st[1] = point[0] < 0 ? 0.5 : 0;
 	if (point[1] < 0)
 		st[1] = 1 - st[1];
+	st *= data.txt_scale;
 	return (st);
 }
 
@@ -60,7 +61,6 @@ double2	get_cylin_coords(double3 intersect_point, t_fig data)
 double2	get_cone_coords(double3 intersect_point, t_fig data)
 {
 	double2		st;
-	double		len;
 
 	double3		point = intersect_point - data.shape.sphere.cent;
 	if (length(data.rotation) > 0)

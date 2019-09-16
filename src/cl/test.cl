@@ -2,7 +2,7 @@
 
 double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
 {
-	return (2 * dot(normal, prim_ray) * normal - prim_ray);
+	return (prim_ray - normal * 2 * dot(normal, prim_ray));
 }
 
 /*
@@ -49,7 +49,9 @@ double3	refract_ray(double3 prim_ray, double3 normal, double ior_new)
 	double		k;
 
 	if (cosi < 0)
+	{
 		cosi = -cosi;
+	}
 	else
 	{
 		normal = -normal;
@@ -87,8 +89,6 @@ double3	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_d
 	return (local_intensity);
 }
 
-
-
 double3	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
 						t_fig fig, __global uint *texture, __global t_txt_params *txt_params)
@@ -101,12 +101,12 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	double	scalar;
 	double3	reflect_ray;
 	double3	local_intensity;
-	double3	new_normal = normal;
+	double3	new_normal;
 	double2 texture_space_coords;
 	double	light_len;
 	double3	pix_color;
 
-	if (fig.normal_map_no > -1 || fig.text_no > -1)
+	if ((fig.normal_map_no > -1) || (fig.text_no > -1))
 		texture_space_coords = get_texture_space_coords(intersect_point, fig);
 	
 	if (fig.normal_map_no > -1)
@@ -119,8 +119,9 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 		double3 dv = normal_from_map[1] / 255 * 2 - 1;
 		new_normal = normalize(normal - du * t + dv * b);
 	}
+	else
+		new_normal = normal;
 	
-
 	if (fig.text_no > -1)
 	 	pix_color = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.text_no], fig.text_no));
 	else
@@ -150,12 +151,20 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 				reflect_ray = reflected_ray(new_normal, light_dir);
 				scalar = dot(reflect_ray, -dir);
 				if (scalar > 0)
-					intensity += (1.0 / light_len * pow(scalar / (light_len * length(reflect_ray)), fig.specular) * local_intensity);
+					scalar = (pow(scalar / (light_len * length(reflect_ray)), fig.specular));
+				if (light->type_num == POINT)
+					scalar /= light_len;
+				intensity += scalar * local_intensity;
 			}
 			/*brightness*/
 			scalar = dot(new_normal, light_dir);
 			if (scalar > 0)
-				intensity += (scalar / (light_len * light_len) * local_intensity);
+			{
+				scalar = (scalar / light_len);
+				if (light->type_num == POINT)
+					scalar /= light_len;
+				intensity += scalar * local_intensity;
+			}
 		}
 	}
 	return (pix_color * intensity);
@@ -202,10 +211,8 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 			//mix color and go deeper
 			local_color *= curr_node.part_of_primary_ray;
-
 			double fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
-
-			if (fig.trans > 0 && count < tree_nodes && fren < 1)
+			if (fig.trans > 0 && count < tree_nodes)
 			{
 				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren) * fig.trans;
 				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
@@ -225,12 +232,15 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 				{
 					local_color *= (1 - fig.reflective);
 					tree[count].start = intersect_point;
-					tree[count].dir = normalize(reflected_ray(normal, -curr_node.dir));
+					tree[count].dir = reflected_ray(normal, curr_node.dir);
 					tree[count].min_range = EPSILON;
 					tree[count].max_range = BIG_VALUE;
 					count++;
 				}
 			}
+
+			// if (tree[count].part_of_primary_ray < 0.6)
+			// 	printf("%f %f %f\n", local_color[0], local_color[1], local_color[2]);
 
 			color += local_color;
 			curr++;

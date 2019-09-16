@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/15 15:19:37 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/16 18:51:07 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 
 # define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 # ifdef __APPLE__
-# define WIN_WIDTH	1600
-# define WIN_HEIGHT	1200
+# define WIN_WIDTH	800
+# define WIN_HEIGHT	600
 # else
 #  define WIN_WIDTH	1200
 #  define WIN_HEIGHT	800

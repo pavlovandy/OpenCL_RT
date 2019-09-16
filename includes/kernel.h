@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/15 15:34:52 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/16 18:42:18 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ double3		get_intersity_after_shadow_rays(double3 intersect_point, double3 light_
 double3		refract_ray(double3 prim_ray, double3 normal, double ior2_new);
 double3		reflected_ray(double3 normal, double3 prim_ray);
 double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
-
+double3		beers_law(double distance, double3 obj_absorb);
 
 
 //rotation
@@ -195,4 +195,6 @@ uint		get_texture_pixel(double2 coord, __global uint *texture, t_txt_params para
 
 //other functions
 void		swap(double* a, double*b);
+double		line_point(double start, double end, double p);
+
 #endif
