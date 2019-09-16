@@ -14,6 +14,11 @@
 #  define CL_SILENCE_DEPRECATION
 #endif
 
+#ifndef CL_USE_DEPRECATED_OPENCL_1_2_APIS
+# define CL_USE_DEPRECATED_OPENCL_1_2_APIS
+#endif
+
+
 #ifndef RT_H
 # define RT_H
 
@@ -251,6 +256,7 @@ int			close_sdl(t_sdl *sdl);
 **	Friendly user stuff
 */
 int			error_message(char *mess);
+int			print_usage(void);
 
 
 /*

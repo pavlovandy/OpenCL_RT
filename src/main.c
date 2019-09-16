@@ -111,6 +111,15 @@ int		main(int argc, char **argv)
 
 	if (init_start_params(&rt))
 		return (error_message(RED"couldnt init params"COLOR_OFF));
+	if (argc == 2)
+	{
+		if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
+			return (1);
+	}
+	else if (argc == 1)
+		make_little_default_scene(&rt.scene);
+	else
+		return (print_usage());
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
 	if (read_textures(&rt))
@@ -119,12 +128,6 @@ int		main(int argc, char **argv)
 		return (1);
 	if (create_program_and_kernels(&rt.cl))
 		return (1);
-	make_little_default_scene(&rt.scene);
-
-	// if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
-	// 	return (1);
-
-
 	if (set_up_memory(&rt, &rt.cl))
 		return (1);
 	there_will_be_loop(&rt);

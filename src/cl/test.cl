@@ -247,10 +247,6 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 					count++;
 				}
 			}
-
-			// if (tree[count].part_of_primary_ray < 0.6)
-			// 	printf("%f %f %f\n", local_color[0], local_color[1], local_color[2]);
-
 			color += local_color;
 			curr++;
 		}
