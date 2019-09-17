@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/16 21:45:23 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/17 14:13:00 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
 # ifdef __APPLE__
 # define WIN_WIDTH	800
 # define WIN_HEIGHT	600
