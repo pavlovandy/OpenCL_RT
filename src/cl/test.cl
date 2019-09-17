@@ -2,8 +2,13 @@
 
 double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
 {
-	return (prim_ray - normal * 2 * dot(normal, prim_ray));
+	return (prim_ray - 2 * dot(normal, prim_ray) * normal);
 }
+
+// double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
+// {
+// 	return (2 * dot(normal, prim_ray) * normal - prim_ray);
+// }
 
 /*
 	Seems like i dont know how to insert this feature here.
@@ -22,10 +27,12 @@ double3	beers_law(double distance, double3 obj_absorb)
 
 double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
 {
+	double cosX = -dot(prim_ray, normal); 
 	double n2 = 1.00029;
+	if (cosX > 0)
+		swap(&n1, &n2);
 	double r0 = (n1 - n2) / (n1 + n2);
 	r0 *= r0;
-	double cosX = -dot(normal, prim_ray);
 	if (n1 > n2)
 	{
 		double n = n1 / n2;
@@ -38,7 +45,7 @@ double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
 	double x = 1.0 - cosX;
 	double ret = r0 + (1.0 - r0) * x * x * x * x * x;
  
-	ret = (reflective + (1.0 - reflective) * ret);
+	// ret = (reflective + (1.0 - reflective) * ret);
 	return (ret);
 }
 
@@ -147,15 +154,15 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 			light_len = length(light_dir);
 			/*blicks*/
 			if (fig.specular > 0)
-			{
+			{						
 				reflect_ray = reflected_ray(new_normal, light_dir);
-				scalar = dot(reflect_ray, -dir);
+				scalar = dot(reflect_ray, dir);
 				if (scalar > 0)
 				{
-					scalar = (pow(scalar / (light_len * length(reflect_ray)), fig.specular));
+					scalar = pow(scalar / (length(-dir) * length(reflect_ray)), fig.specular); //d^2 where d is distance from light to dot
 					if (light->type_num == POINT)
 						scalar /= light_len;
-					intensity += scalar * local_intensity;
+					intensity += local_intensity * scalar;
 				}
 			}
 			/*brightness*/
@@ -240,10 +247,6 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 					count++;
 				}
 			}
-
-			// if (tree[count].part_of_primary_ray < 0.6)
-			// 	printf("%f %f %f\n", local_color[0], local_color[1], local_color[2]);
-
 			color += local_color;
 			curr++;
 		}
