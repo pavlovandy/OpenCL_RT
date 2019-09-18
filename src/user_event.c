@@ -60,20 +60,23 @@ cl_double3	canvas_to_viewport(int x, int y, t_pov pov)
 								-(double)y * pov.vh / pov.h, (double)pov.d}});
 }
 
-double		calculate_multiplier()
+static void	cool_little_function(t_rt *rt, cl_double3 *data, cl_double3 dir)
 {
+	cl_double3		oc;
 	
+	oc = minus_double3(rt->pov.coord, *data);
+	dir = increase_double3(dir, vector_len(oc));
+	*data = add_double3(*data, dir);
 }
 
 int		move_fig(t_rt *rt)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	t_fig	*obj;
 	cl_int	ret;
-	int	g_x;
-	int	g_y;
-	cl_double3		oc;
+	int		g_x;
+	int		g_y;
 	double		dir_len;
 
 	
@@ -82,7 +85,6 @@ int		move_fig(t_rt *rt)
 		SDL_GetRelativeMouseState(&x, &y);
 		if (x == 0 && y == 0)
 			return(0);
-		
 		SDL_GetMouseState(&g_x, &g_y);
 		obj = rt->scene.obj + rt->edi.chosen_obj;
 		dir_len = vector_len(canvas_to_viewport(g_x, g_y, rt->pov));	
@@ -90,31 +92,17 @@ int		move_fig(t_rt *rt)
 		dir = ft_rotate_camera(dir, rt->pov);
 
 		if (obj->fig_type == SPHERE)
-		{
-			oc = minus_double3(rt->pov.coord, obj->shape.sphere.cent);
-			dir = increase_double3(dir, vector_len(oc));
-			obj->shape.sphere.cent = add_double3(obj->shape.sphere.cent, dir);
-		}
+			cool_little_function(rt, &obj->shape.sphere.cent, dir);	
 		else if (obj->fig_type == CONE)
-		{
-			oc = minus_double3(rt->pov.coord, obj->shape.cone.vertex);
-			dir = increase_double3(dir, vector_len(oc));
-			obj->shape.cone.vertex = add_double3(obj->shape.cone.vertex, dir);
-		}
+			cool_little_function(rt, &obj->shape.cone.vertex, dir);
 		else if (obj->fig_type == PLANE)
-		{
-			oc = minus_double3(rt->pov.coord, obj->shape.plane.dot);
-			dir = increase_double3(dir, vector_len(oc));
-			obj->shape.plane.dot = add_double3(obj->shape.plane.dot, dir);
-		}
+			cool_little_function(rt, &obj->shape.plane.dot, dir);
 		else if (obj->fig_type == CYLIN)
-		{
-			oc = minus_double3(rt->pov.coord, obj->shape.cylin.dot);
-			dir = increase_double3(dir, vector_len(oc));
-			obj->shape.cylin.dot = add_double3(obj->shape.cylin.dot, dir);
-		}
+			cool_little_function(rt, &obj->shape.cylin.dot, dir);
 
-		clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
+		ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
+		if (ret != CL_SUCCESS)
+			exit(error_message(RED"Something went bad\n"COLOR_OFF));
 		return (1);
 	}
 	return (0);
