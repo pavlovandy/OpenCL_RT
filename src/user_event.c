@@ -54,22 +54,43 @@ int			rotation(t_rt *rt) //sometimes its must rotate z coordinate also
 	return (1);
 }
 
+cl_double3	canvas_to_viewport(int x, int y, t_pov pov)
+{
+	return ((cl_double3){{(double)x * pov.vw / pov.w, \
+								-(double)y * pov.vh / pov.h, (double)pov.d}});
+}
+
 int		move_fig(t_rt *rt)
 {
 	int	x;
 	int	y;
+	int	g_x;
+	int	g_y;
 	cl_int	ret;
+	t_fig	*obj;
+	cl_double3	eye_coord;
+	cl_double3		oc;
+	double		dir_len;
 	
 	if (rt->edi.chosen_obj != -1)
 	{
 		SDL_GetRelativeMouseState(&x, &y);
 		if (x == 0 && y == 0)
 			return(0);
+		SDL_GetMouseState(&g_x, &g_y);
 
-		cl_double3	dir = (cl_double3){{x / 100.0, -y / 100.0, 0}};
-		// dir = ft_rotate_minus_camera(dir, rt->pov);
-		// rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent = add_double3(rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent, dir);
-		// clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
+		eye_coord = rt->pov.coord;
+		obj = rt->scene.obj + rt->edi.chosen_obj;
+		oc = minus_double3(eye_coord, obj->shape.sphere.cent);
+		oc = ft_rotate_camera(oc, rt->pov);
+		dir_len = vector_len(canvas_to_viewport(g_x, g_y, rt->pov));
+
+		
+		cl_double3	dir = (cl_double3){{2 * x * rt->pov.vh / rt->pov.w * vector_len(oc) / dir_len,  2 * (-y) * rt->pov.vw / rt->pov.h * vector_len(oc) / dir_len, 0}};
+		dir = ft_rotate_camera(dir, rt->pov);
+
+		rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent = add_double3(rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent, dir);
+		clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 
 		// printf("i = %d x = %d cent.x = %f\n", rt->edi.chosen_obj, x, rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent.s[0]);
 
@@ -84,7 +105,6 @@ int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 		rt->edi.chosen_obj = get_object_intersection(rt, x, y);
 		if (rt->edi.chosen_obj > -1)
 			rt->scene.obj[rt->edi.chosen_obj].color = (cl_double3){{0, 0, 255}};
-		
 		return (1);
 	}
 	else	
