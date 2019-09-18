@@ -57,6 +57,11 @@ cl_double3	minus_double3(cl_double3 a, cl_double3 b)
 	return ((cl_double3){{a.s[0] - b.s[0], a.s[1] - b.s[1], a.s[2] - b.s[2]}});
 }
 
+cl_double3	increase_double3(cl_double3 a, double multi)
+{
+	return ((cl_double3){{a.s[0] * multi, a.s[1] * multi, a.s[2] * multi}});
+}
+
 double		vector_len(cl_double3 a)
 {
 	return (sqrt(a.s[0] * a.s[0] + a.s[1] * a.s[1] + a.s[2] * a.s[2]));

@@ -26,6 +26,7 @@ cl_double3	ft_rotate_camera(cl_double3 direction, t_pov pov);
 
 cl_double3	add_double3(cl_double3 a, cl_double3 b);
 cl_double3	minus_double3(cl_double3 a, cl_double3 b);
+cl_double3	increase_double3(cl_double3 a, double multi);
 
 double		vector_len(cl_double3 a);
 t_rotation_matrix build_rotation_matrix_form_angles(cl_double3 rot);

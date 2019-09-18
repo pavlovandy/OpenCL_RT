@@ -60,40 +60,61 @@ cl_double3	canvas_to_viewport(int x, int y, t_pov pov)
 								-(double)y * pov.vh / pov.h, (double)pov.d}});
 }
 
+double		calculate_multiplier()
+{
+	
+}
+
 int		move_fig(t_rt *rt)
 {
 	int	x;
 	int	y;
+	t_fig	*obj;
+	cl_int	ret;
 	int	g_x;
 	int	g_y;
-	cl_int	ret;
-	t_fig	*obj;
-	cl_double3	eye_coord;
 	cl_double3		oc;
 	double		dir_len;
+
 	
 	if (rt->edi.chosen_obj != -1)
 	{
 		SDL_GetRelativeMouseState(&x, &y);
 		if (x == 0 && y == 0)
 			return(0);
-		SDL_GetMouseState(&g_x, &g_y);
-
-		eye_coord = rt->pov.coord;
-		obj = rt->scene.obj + rt->edi.chosen_obj;
-		oc = minus_double3(eye_coord, obj->shape.sphere.cent);
-		oc = ft_rotate_camera(oc, rt->pov);
-		dir_len = vector_len(canvas_to_viewport(g_x, g_y, rt->pov));
-
 		
-		cl_double3	dir = (cl_double3){{2 * x * rt->pov.vh / rt->pov.w * vector_len(oc) / dir_len,  2 * (-y) * rt->pov.vw / rt->pov.h * vector_len(oc) / dir_len, 0}};
+		SDL_GetMouseState(&g_x, &g_y);
+		obj = rt->scene.obj + rt->edi.chosen_obj;
+		dir_len = vector_len(canvas_to_viewport(g_x, g_y, rt->pov));	
+		cl_double3	dir = (cl_double3){{x * rt->pov.vh / (rt->pov.w * dir_len), (-y) * rt->pov.vw / (rt->pov.h * dir_len), 0}};
 		dir = ft_rotate_camera(dir, rt->pov);
 
-		rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent = add_double3(rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent, dir);
+		if (obj->fig_type == SPHERE)
+		{
+			oc = minus_double3(rt->pov.coord, obj->shape.sphere.cent);
+			dir = increase_double3(dir, vector_len(oc));
+			obj->shape.sphere.cent = add_double3(obj->shape.sphere.cent, dir);
+		}
+		else if (obj->fig_type == CONE)
+		{
+			oc = minus_double3(rt->pov.coord, obj->shape.cone.vertex);
+			dir = increase_double3(dir, vector_len(oc));
+			obj->shape.cone.vertex = add_double3(obj->shape.cone.vertex, dir);
+		}
+		else if (obj->fig_type == PLANE)
+		{
+			oc = minus_double3(rt->pov.coord, obj->shape.plane.dot);
+			dir = increase_double3(dir, vector_len(oc));
+			obj->shape.plane.dot = add_double3(obj->shape.plane.dot, dir);
+		}
+		else if (obj->fig_type == CYLIN)
+		{
+			oc = minus_double3(rt->pov.coord, obj->shape.cylin.dot);
+			dir = increase_double3(dir, vector_len(oc));
+			obj->shape.cylin.dot = add_double3(obj->shape.cylin.dot, dir);
+		}
+
 		clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
-
-		// printf("i = %d x = %d cent.x = %f\n", rt->edi.chosen_obj, x, rt->scene.obj[rt->edi.chosen_obj].shape.sphere.cent.s[0]);
-
 		return (1);
 	}
 	return (0);
@@ -103,8 +124,6 @@ int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 	if (button == SDL_BUTTON_LEFT)
 	{
 		rt->edi.chosen_obj = get_object_intersection(rt, x, y);
-		if (rt->edi.chosen_obj > -1)
-			rt->scene.obj[rt->edi.chosen_obj].color = (cl_double3){{0, 0, 255}};
 		return (1);
 	}
 	else	
