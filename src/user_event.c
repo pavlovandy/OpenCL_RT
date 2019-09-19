@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/16 19:59:33 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/18 20:37:58 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int			user_events(t_rt *rt)
 	SDL_Event	ev;
 	int			changes;
 	static int	rotations = 0;
-	static int			move = 0;
+	static int	move = 0;
 
 	changes = 0;
 	changes += translate(rt);
@@ -122,6 +122,8 @@ int			user_events(t_rt *rt)
 			exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
 		else if (ev.type == SDL_MOUSEBUTTONDOWN)
 			{
+					if (ev.button.button == SDL_BUTTON_LEFT)
+						changes += pres_buttn(rt, ev.button.x, ev.button.y);
 				move = mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
 				SDL_GetRelativeMouseState(NULL, NULL);
 			}

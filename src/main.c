@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/17 15:34:54 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/18 20:18:55 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ int		main(int argc, char **argv)
 		return (print_usage());
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
+	if (init_but(&rt))
+		return (1);
 	if (read_textures(&rt))
 		return (1);
 	if (init_cl(&rt.cl))
@@ -131,7 +133,6 @@ int		main(int argc, char **argv)
 	if (set_up_memory(&rt, &rt.cl))
 		return (1);
 	there_will_be_loop(&rt);
-	// ft_xml_save("sss.xml", &rt.scene, rt.pov);
 	close_sdl(&rt.sdl);
 	freed_up_memory(&rt.cl);
 	return (0);

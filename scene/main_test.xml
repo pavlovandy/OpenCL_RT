@@ -8,7 +8,7 @@
 	light	: type, position, intensity.
 	cam		: position.
 --
-<RT width = "2999" heigth = "2999">
+<RT width = "100" heigth = "600">
 	<spher>
 		<centre>1 2 3</centre>
 		<texture> -1 </texture>

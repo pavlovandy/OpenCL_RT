@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/17 15:37:52 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/18 21:58:49 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			render_scene(t_rt *rt)
 		return (error_message(RED"Oops"COLOR_OFF));		
 	clFinish(rt->cl.command_queue);
 
+	apply_surface(rt->sdl.win_sur, rt);
 	SDL_UpdateWindowSurface(rt->sdl.win);
 	return (0);
 }
