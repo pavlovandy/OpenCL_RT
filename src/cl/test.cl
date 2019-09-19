@@ -109,7 +109,7 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	double3	reflect_ray;
 	double3	local_intensity;
 	double3	new_normal;
-	double2 texture_space_coords;
+	double2 texture_space_coords = 0;
 	double	light_len;
 	double3	pix_color;
 
@@ -129,10 +129,11 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	else
 		new_normal = normal;
 	
+	
 	if (fig.text_no > -1)
-	 	pix_color = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.text_no], fig.text_no));
+		pix_color = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.text_no], fig.text_no));
 	else
-		pix_color = fig.color;
+		pix_color = fig.color;	
 
 	i = -1;
 	while (++i < scene->count_light)
@@ -220,7 +221,9 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 
 			//mix color and go deeper
 			local_color *= curr_node.part_of_primary_ray;
-			double fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
+			double fren = 0;
+			if (fig.reflective > 0)
+				fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
 			if (fig.trans > 0 && count < tree_nodes)
 			{
 				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren) * fig.trans;

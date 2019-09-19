@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/17 15:34:54 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:20:53 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[2].reflective = (cl_double)0;
 	scene->obj[2].trans = (cl_double)0;
 	scene->obj[2].ior = (cl_double)1;
-	scene->obj[2].text_no = 2;
+	scene->obj[2].text_no = -1;
 	scene->obj[2].normal_map_no = -1;
 	scene->obj[2].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[2].txt_scale = (cl_double2){{1, 1}};
@@ -120,6 +120,15 @@ int		main(int argc, char **argv)
 		make_little_default_scene(&rt.scene);
 	else
 		return (print_usage());
+	printf("%f\n", rt.scene.obj[0].trans);
+
+	rt.scene.obj[0].text_no = -1;
+	rt.scene.obj[0].normal_map_no = -1;
+	rt.scene.obj[0].txt_offset = (cl_double2){{0, 0}};
+	rt.scene.obj[0].txt_scale = (cl_double2){{1, 1}};
+	rt.scene.obj[0].rotation = (cl_double3){{M_PI / 2, 0, 0}};
+	rt.scene.obj[0].rotation_martix = build_rotation_matrix_form_angles(rt.scene.obj[0].rotation);
+
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
 	if (read_textures(&rt))
