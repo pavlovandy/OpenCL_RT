@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:02:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/19 16:13:29 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:30:28 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void	ft_screenshot(t_rt *rt)
 {
+	SDL_Surface	*surr = SDL_CreateRGBSurface(0, rt->pov.w, rt->pov.h, 32, 0, 0, 0, 0);
 	
+	ft_memcpy(surr->pixels, rt->sdl.win_sur->pixels, rt->sdl.win_sur->w * rt->sdl.win_sur->h * 4);
+	IMG_SavePNG(surr, "ScreenShoot.png");
+	SDL_FreeSurface(surr);
 }
 
 void	ft_butn_sent(t_rt *rt)
