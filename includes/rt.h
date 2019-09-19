@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 16:27:50 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:56:45 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
-# define AIR_IOR 1.00029;
+# define MIN_IOR 1.01;
 # define D	0.1
 
 # define COUNT_BUTT 3
