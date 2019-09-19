@@ -41,7 +41,7 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 # ifdef __APPLE__
 # define WIN_WIDTH	800
 # define WIN_HEIGHT	600
