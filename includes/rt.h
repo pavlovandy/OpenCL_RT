@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/18 20:29:44 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:27:50 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
 # ifdef __APPLE__
-# define WIN_WIDTH	800
-# define WIN_HEIGHT	600
+# define WIN_WIDTH		800
+# define WIN_HEIGHT		600
 # else
-#  define WIN_WIDTH	1200
+#  define WIN_WIDTH		1200
 #  define WIN_HEIGHT	800
 # endif
 # define MAX_OBJ_COUNT 20
