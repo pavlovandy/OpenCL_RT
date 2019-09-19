@@ -222,7 +222,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			//mix color and go deeper
 			local_color *= curr_node.part_of_primary_ray;
 			double fren = 0;
-			fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
+				fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
 			if (fig.trans > 0 && count < tree_nodes)
 			{
 				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren) * fig.trans;

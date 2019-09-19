@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 16:47:05 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/16 21:36:36 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:38:31 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ static void	ft_create_all(t_scene *scene, int i)
 	scene->obj[i].trans = (cl_double) 0;
 	scene->obj[i].text_no = -1;
 	scene->obj[i].normal_map_no = -1;
-	scene->obj[i].ior = AIR_IOR;
+	scene->obj[i].txt_offset = (cl_double2){{0, 0}};
+	scene->obj[i].txt_scale = (cl_double2){{1, 1}};
+	scene->obj[i].rotation = (cl_double3){{0 , 0, 0}};
+	scene->obj[i].rotation_martix = build_rotation_matrix_form_angles(scene->obj[i].rotation);
+	scene->obj[i].ior = MIN_IOR;
 }
 
 void		ft_create_spher(t_scene *scene, int i)

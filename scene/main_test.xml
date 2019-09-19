@@ -14,8 +14,9 @@
 		<texture> 0 </texture>
 		<bump> 1 </bump>
 		<specular> 500</specular>
-		<transparency> 0.2 </transparency>
+		<transparency> 0.8 </transparency>
 		<reflective> 0 </reflective>
+		<bump>-1</bump>
 	</spher>
 	<cylin>
 		<dot>10 2 0</dot>
@@ -31,7 +32,7 @@
 		<RGB>83 83 83</RGB>
 		<reflective> 0 </reflective>
 		<normal>0 -1 0</normal>
-		<transparency> 0</transparency>
+		<transparency> 0.5</transparency>
 	</plane>
 	<light>
 		<type> point </type>

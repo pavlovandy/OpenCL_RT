@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 15:40:57 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/19 16:30:14 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int			user_events(t_rt *rt)
 	SDL_Event	ev;
 	int			changes;
 	static int	rotations = 0;
-	static int			move = 0;
+	static int	move = 0;
 
 	changes = 0;
 	changes += translate(rt);
@@ -136,15 +136,7 @@ int			user_events(t_rt *rt)
 		if (ev.type == SDL_KEYDOWN)
 		{
 			if (ev.key.keysym.sym == SDLK_ESCAPE)
-			{
-				SDL_Surface	*surr = SDL_CreateRGBSurface(0, rt->pov.w, rt->pov.h, 32, 0, 0, 0, 0);
-				ft_memcpy(surr->pixels, rt->sdl.win_sur->pixels, rt->sdl.win_sur->w * rt->sdl.win_sur->h * 4);
-				IMG_SavePNG(surr, "ScreenShoot.png");
-				SDL_FreeSurface(surr);
-
-
 				exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
-			}
 			else if (ev.key.keysym.sym == SDLK_0)
 			{
 				rotations = !rotations;
@@ -156,6 +148,8 @@ int			user_events(t_rt *rt)
 			exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
 		else if (ev.type == SDL_MOUSEBUTTONDOWN)
 			{
+					if (ev.button.button == SDL_BUTTON_LEFT)
+						changes += pres_buttn(rt, ev.button.x, ev.button.y);
 				move = mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
 				SDL_GetRelativeMouseState(NULL, NULL);
 			}

@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 18:07:07 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/19 18:16:49 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
-# define AIR_IOR 1.00029;
+# define MIN_IOR 1.01;
 # define D	0.1
 
-
+# define COUNT_BUTT 3
 # define MAX_TEXTURE_COUNT 10
 
 typedef	struct s_fig	t_fig;
@@ -66,6 +66,11 @@ typedef	struct s_sdl	t_sdl;
 typedef	struct s_scene	t_scene;
 typedef	struct s_rt		t_rt;
 typedef	struct s_pov	t_pov;
+
+enum	e_but
+{
+	SENT = 1, SAVE, SCREEN
+};
 
 enum	e_fig
 {
@@ -251,15 +256,23 @@ typedef struct	s_edi
 	int		chosen_obj;
 }				t_edi;
 
+typedef struct	s_button
+{
+	int			type;
+	SDL_Surface	*image;
+	SDL_Rect	offset;
+	int			available;
+}				t_button;
 
 struct	s_rt
 {
-	t_sdl	sdl;
-	t_scene	scene;
-	t_pov	pov;
-	t_cl	cl;
-	t_envi	envi;
-	t_edi	edi;
+	t_sdl		sdl;
+	t_scene		scene;
+	t_pov		pov;
+	t_cl		cl;
+	t_envi		envi;
+	t_edi		edi;
+	t_button	butt[COUNT_BUTT];
 };
 
 /*
@@ -300,7 +313,12 @@ int			render_scene(t_rt *rt);
 **	User
 */
 int			there_will_be_loop(t_rt *rt);
-
+/*
+**	Button
+*/
+int			init_but(t_rt *rt);
+void		apply_surface(SDL_Surface *dest, t_rt *rt);
+int			pres_buttn(t_rt *rt, int x, int y);
 /*
 **	Parse
 */
