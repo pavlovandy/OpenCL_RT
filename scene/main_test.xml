@@ -11,9 +11,10 @@
 <RT width = "1200" heigth = "1200">
 	<spher>
 		<centre>1 2 3</centre>
-		<texture> -1 </texture>
+		<texture> 0 </texture>
+		<bump> 1 </bump>
 		<specular> 500</specular>
-		<transparency> 0.9 </transparency>
+		<transparency> 0.2 </transparency>
 		<reflective> 0 </reflective>
 	</spher>
 	<cylin>

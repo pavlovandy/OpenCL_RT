@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 16:20:53 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/19 18:04:44 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,9 @@ int		main(int argc, char **argv)
 		return (print_usage());
 	printf("%f\n", rt.scene.obj[0].trans);
 
-	rt.scene.obj[0].text_no = -1;
-	rt.scene.obj[0].normal_map_no = -1;
+	rt.scene.obj[0].text_no = 0;
+	rt.scene.obj[0].ior = 1.01;
+	rt.scene.obj[0].normal_map_no = 1;
 	rt.scene.obj[0].txt_offset = (cl_double2){{0, 0}};
 	rt.scene.obj[0].txt_scale = (cl_double2){{1, 1}};
 	rt.scene.obj[0].rotation = (cl_double3){{M_PI / 2, 0, 0}};
