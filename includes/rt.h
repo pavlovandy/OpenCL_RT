@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 18:16:49 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/21 17:39:54 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,16 @@ typedef struct	s_cone_data
 
 typedef struct	s_rectangle_data
 {
+	cl_double3	v0;
 	cl_double3	v1;
 	cl_double3	v2;
 	cl_double3	v3;
-	cl_double3	v4;
 }				t_rectangle_data;
 
 typedef struct	s_disk_data
 {
 	cl_double3	cent;
+	cl_double3	normal;
 	cl_double	radius;
 }				t_disk_data;
 
@@ -120,9 +121,9 @@ typedef struct	s_torus_data
 
 typedef struct	s_triangle_data
 {
+	cl_double3	v0;
 	cl_double3	v1;
 	cl_double3	v2;
-	cl_double3	v3;
 }				t_triangle_data;
 
 typedef struct	s_cylin_data
@@ -166,6 +167,7 @@ struct	s_fig
 	cl_double	ior;
 	cl_int		text_no;
 	cl_int		normal_map_no;
+	cl_int		transparancy_map_no;
 	cl_double2	txt_offset;
 	cl_double2	txt_scale;
 

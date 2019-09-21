@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 18:16:01 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/21 17:40:59 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ typedef struct	s_cone_data
 
 typedef struct	s_rectangle_data
 {
+	double3	v0;
 	double3	v1;
 	double3	v2;
 	double3	v3;
-	double3	v4;
 }				t_rectangle_data;
 
 typedef struct	s_disk_data
 {
 	double3	cent;
+	double3 normal;
 	double	radius;
 }				t_disk_data;
 
@@ -71,9 +72,9 @@ typedef struct	s_torus_data
 
 typedef struct	s_triangle_data
 {
+	double3	v0;
 	double3	v1;
 	double3	v2;
-	double3	v3;
 }				t_triangle_data;
 
 typedef struct	s_cylin_data
@@ -116,6 +117,7 @@ typedef struct	s_fig
 	double		ior;
 	int			text_no;
 	int			normal_map_no;
+	int			transparancy_map_no;
 	double2		txt_offset;
 	double2		txt_scale;
 
@@ -180,7 +182,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 double3		canvas_to_viewport(int x, int y, int w, int h, t_pov pov);
 double3		calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
-						t_fig fig, __global uint *texture, __global t_txt_params *txt_params);
+						t_fig fig, __global uint *texture, __global t_txt_params *txt_params, double2 texture_coords);
 
 
 
@@ -190,7 +192,7 @@ double3		get_intersity_after_shadow_rays(double3 intersect_point, double3 light_
 										double max_range, __global t_light *light);
 double3		refract_ray(double3 prim_ray, double3 normal, double ior2_new);
 double3		reflected_ray(double3 normal, double3 prim_ray);
-double		fresnel(double3 prim_ray, double3 normal, double n1, double reflective);
+double		fresnel(double3 prim_ray, double3 normal, double n1);
 double3		beers_law(double distance, double3 obj_absorb);
 
 

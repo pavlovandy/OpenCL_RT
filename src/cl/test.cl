@@ -25,7 +25,7 @@ double3	beers_law(double distance, double3 obj_absorb)
 	return (exp(obj_absorb * (-distance)));
 }
 
-double fresnel(double3 prim_ray, double3 normal, double n1, double reflective)
+double fresnel(double3 prim_ray, double3 normal, double n1)
 {
 	double cosX = -dot(prim_ray, normal); 
 	double n2 = 1.00029;
@@ -98,7 +98,7 @@ double3	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_d
 
 double3	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
-						t_fig fig, __global uint *texture, __global t_txt_params *txt_params)
+						t_fig fig, __global uint *texture, __global t_txt_params *txt_params, double2 texture_space_coords)
 {
 	int		i;
 	__global t_light	*light;
@@ -109,12 +109,8 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	double3	reflect_ray;
 	double3	local_intensity;
 	double3	new_normal;
-	double2 texture_space_coords = 0;
 	double	light_len;
 	double3	pix_color;
-
-	if ((fig.normal_map_no > -1) || (fig.text_no > -1))
-		texture_space_coords = get_texture_space_coords(intersect_point, fig);
 	
 	if (fig.normal_map_no > -1)
 	{
@@ -188,6 +184,8 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 	int			count = 1;
 	int			curr = 0;
 	double3		color = 0;
+	double		trans;
+	double2		texture_space_coords;
 
 	double3		intersect_point;
 	t_obj_and_dist	obj_and_dist;
@@ -212,23 +210,32 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 		{
 			fig = scene->obj[obj_and_dist.obj];
 			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
+			if ((fig.normal_map_no > -1) || (fig.text_no > -1) || (fig.transparancy_map_no > -1))
+				texture_space_coords = get_texture_space_coords(intersect_point, fig);
+			if ((fig.transparancy_map_no == -1))
+				trans = fig.trans;
+			else
+			{
+				trans = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.transparancy_map_no], fig.transparancy_map_no))[0];
+				trans = 1 - trans / 255;
+			}
 			//normal calculations
 			normal = calculate_normal(fig, intersect_point, curr_node);
 			//--------------------
 
 			//get local color value
-			local_color = calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, fig, texture, txt_params);
+			local_color = calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, fig, texture, txt_params, texture_space_coords);
 
 			//mix color and go deeper
 			local_color *= curr_node.part_of_primary_ray;
 			double fren = 0;
-				fren = fresnel(curr_node.dir, normal, fig.ior, fig.reflective); //prart of reflected ray
-			if (fig.trans > 0 && count < tree_nodes)
+			fren = fresnel(curr_node.dir, normal, fig.ior); //prart of reflected ray
+			if (trans > 0 && count < tree_nodes)
 			{
-				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren) * fig.trans;
+				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren) * trans;
 				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
 				{
-					local_color *= (1 - fig.trans);
+					local_color *= (1 - trans);
 					tree[count].start = intersect_point;
 					tree[count].dir = normalize(refract_ray(curr_node.dir, normal, fig.ior));
 					tree[count].min_range = EPSILON;
@@ -238,7 +245,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			}
 			if (fig.reflective > 0 && count < tree_nodes)
 			{
-				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (fig.reflective * (1 - fig.trans) + fig.trans * fren);
+				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (fig.reflective * (1 - trans) + trans * fren);
 				if (tree[count].part_of_primary_ray > MINIMUM_INTENSITY)
 				{
 					local_color *= (1 - fig.reflective);

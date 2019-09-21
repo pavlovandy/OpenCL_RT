@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:51 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/16 19:54:42 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/21 12:48:31 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ cl_double3	ft_rotate_camera(cl_double3 direction, t_pov pov) //should be replace
 	direction.s[1] = new_y;
 	direction.s[2] = new_z;
 	return (direction);
+}
+
+cl_double2	*reverse_matrix_2x2(cl_double2 *src)
+{
+	cl_double2	col1;
+	cl_double2	col2;
+	double		det;
+
+	col1 = src[0];
+	col2 = src[1];
+
+	det = det_matrix_2x2(src);
+	src[0].s[0] = col2.s[1] / det;
+	src[1].s[0] = -col2.s[0] / det;
+	src[0].s[1] = -col1.s[1] / det;
+	src[1].s[1] = col1.s[0] / det;
+	return (src);
+}
+
+double	det_matrix_2x2(cl_double2 *src)
+{
+	return (src[0].s[0] * src[1].s[1] - src[1].s[0] * src[0].s[1]);
 }
 
 cl_double3	ft_rotate_reverse_camera(cl_double3 direction, t_pov pov)
