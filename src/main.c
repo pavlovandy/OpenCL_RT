@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/21 17:55:38 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/21 18:55:37 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,10 @@ void	make_little_default_scene(t_scene *scene)
 	// scene->obj[2].txt_offset = (cl_double2){{0, 0}};
 	// scene->obj[2].txt_scale = (cl_double2){{1, 1}};
 
-	scene->obj[2].fig_type = (cl_int)RECTANGLE; //its not a rectangle but just 2 triangle so it could render even 2 triangle that not in 1 plane should check for it in editor and parser
-	scene->obj[2].shape.rectangle.v0 = (cl_double3){{1, 1, 0}};
-	scene->obj[2].shape.rectangle.v3 = (cl_double3){{1, -1, 0}};
-	scene->obj[2].shape.rectangle.v2 = (cl_double3){{-1, -1, 0}};
-	scene->obj[2].shape.rectangle.v1 = (cl_double3){{-1, 1, 0}};
-	// scene->obj[2].shape.disk.cent = (cl_double3){{0, 0, 4}};
-	// scene->obj[2].shape.disk.radius = 1;
-	// scene->obj[2].shape.disk.normal = (cl_double3){{0, 0, 1}};;
+	scene->obj[2].fig_type = (cl_int)DISK; //its not a rectangle but just 2 triangle so it could render even 2 triangle that not in 1 plane should check for it in editor and parser
+	scene->obj[2].shape.disk.cent = (cl_double3){{0, 0, 4}};
+	scene->obj[2].shape.disk.radius = 1;
+	scene->obj[2].shape.disk.normal = (cl_double3){{0, 0, 1}};;
 
 	scene->obj[2].rotation = (cl_double3){{0, 0, 0}};
 	scene->obj[2].rotation_martix = build_rotation_matrix_form_angles(scene->obj[2].rotation);
@@ -121,8 +117,8 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[2].reflective = (cl_double)0;
 	scene->obj[2].trans = (cl_double)0;
 	scene->obj[2].ior = (cl_double)1;
-	scene->obj[2].transparancy_map_no = 4;
-	scene->obj[2].text_no = -1;
+	scene->obj[2].transparancy_map_no = -1;
+	scene->obj[2].text_no = 0;
 	scene->obj[2].normal_map_no = -1;
 	scene->obj[2].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[2].txt_scale = (cl_double2){{1, 1}};

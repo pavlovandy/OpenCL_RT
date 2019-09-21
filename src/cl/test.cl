@@ -212,7 +212,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
 			if ((fig.normal_map_no > -1) || (fig.text_no > -1) || (fig.transparancy_map_no > -1))
 				texture_space_coords = get_texture_space_coords(intersect_point, fig);
-			if ((fig.transparancy_map_no == -1))
+			if (fig.transparancy_map_no == -1)
 				trans = fig.trans;
 			else
 			{
