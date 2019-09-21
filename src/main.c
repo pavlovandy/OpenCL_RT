@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 16:55:13 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/19 17:44:08 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].reflective = (cl_double)0;
 	scene->obj[0].trans = (cl_double)0;
 	scene->obj[0].ior = (cl_double)1.4;
-	scene->obj[0].text_no = -1;
+	scene->obj[0].text_no = 1;
 	scene->obj[0].normal_map_no = -1;
 	scene->obj[0].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[0].txt_scale = (cl_double2){{1, 1}};
@@ -83,7 +83,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[1].reflective = (cl_double)1;
 	scene->obj[1].trans = (cl_double)1;
 	scene->obj[1].ior = (cl_double)1.3;
-	scene->obj[1].text_no = -1;
+	scene->obj[1].text_no = 0;
 	scene->obj[1].normal_map_no = -1;
 	scene->obj[1].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[1].txt_scale = (cl_double2){{1, 1}};
@@ -98,8 +98,8 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[2].reflective = (cl_double)0;
 	scene->obj[2].trans = (cl_double)0;
 	scene->obj[2].ior = (cl_double)1;
-	scene->obj[2].text_no = -1;
-	scene->obj[2].normal_map_no = -1;
+	scene->obj[2].text_no = 0;
+	scene->obj[2].normal_map_no = 1;
 	scene->obj[2].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[2].txt_scale = (cl_double2){{1, 1}};
 	

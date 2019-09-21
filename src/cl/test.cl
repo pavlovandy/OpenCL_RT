@@ -133,7 +133,7 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	if (fig.text_no > -1)
 		pix_color = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.text_no], fig.text_no));
 	else
-		pix_color = fig.color;	
+		pix_color = fig.color;
 
 	i = -1;
 	while (++i < scene->count_light)

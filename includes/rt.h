@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 16:56:45 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/19 18:05:55 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ struct	s_fig
 
 	cl_double3	color;
 	cl_int		specular;
+	cl_int		noise;
 	cl_double	reflective;
 	cl_double	trans;
 	cl_double3	rotation;
