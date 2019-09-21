@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 18:05:55 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/21 13:54:28 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ enum	e_but
 
 enum	e_fig
 {
-	SPHERE = 1, PLANE, CONE, CYLIN
+	SPHERE = 1, PLANE, CONE, CYLIN, RECTANGLE, TRIANGLE, DISK, TORUS
 };
 enum	e_light
 {
@@ -100,6 +100,31 @@ typedef struct	s_cone_data
 	cl_double	tangent;
 }				t_cone_data;
 
+typedef struct	s_rectangle_data
+{
+	cl_double3	v1;
+	cl_double3	v2;
+	cl_double3	v3;
+	cl_double3	v4;
+}				t_rectangle_data;
+
+typedef struct	s_disk_data
+{
+	cl_double3	cent;
+	cl_double	radius;
+}				t_disk_data;
+
+typedef struct	s_torus_data
+{
+}				t_torus_data;
+
+typedef struct	s_triangle_data
+{
+	cl_double3	v1;
+	cl_double3	v2;
+	cl_double3	v3;
+}				t_triangle_data;
+
 typedef struct	s_cylin_data
 {
 	cl_double3	dir;
@@ -113,7 +138,12 @@ typedef union	u_shape
 	t_cone_data		cone;
 	t_plane_data	plane;
 	t_cylin_data	cylin;
+	t_rectangle_data	rectangle;
+	t_triangle_data	triangle;
+	t_torus_data	torus;
+	t_disk_data		disk;
 }				t_shape;
+
 
 typedef struct	s_rotation_matrix
 {
@@ -139,6 +169,9 @@ struct	s_fig
 	cl_int		normal_map_no;
 	cl_double2	txt_offset;
 	cl_double2	txt_scale;
+
+	cl_int		cut;
+	t_plane_data	plane;
 };
 
 struct	s_sdl

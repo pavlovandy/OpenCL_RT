@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 17:44:08 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/21 13:54:35 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,16 @@ int		main(int argc, char **argv)
 		make_little_default_scene(&rt.scene);
 	else
 		return (print_usage());
+	printf("%f\n", rt.scene.obj[0].trans);
+
+	rt.scene.obj[0].text_no = 0;
+	rt.scene.obj[0].ior = 1.01;
+	rt.scene.obj[0].normal_map_no = 1;
+	rt.scene.obj[0].txt_offset = (cl_double2){{0, 0}};
+	rt.scene.obj[0].txt_scale = (cl_double2){{1, 1}};
+	rt.scene.obj[0].rotation = (cl_double3){{M_PI / 2, 0, 0}};
+	rt.scene.obj[0].rotation_martix = build_rotation_matrix_form_angles(rt.scene.obj[0].rotation);
+
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
 	if (init_but(&rt))

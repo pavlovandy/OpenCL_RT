@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 16:08:56 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/19 18:16:01 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ __constant double	PI = 3.14159265359;
 
 enum	e_fig
 {
-	SPHERE = 1, PLANE, CONE, CYLIN
+	SPHERE = 1, PLANE, CONE, CYLIN, RECTANGLE, TRIANGLE, DISK, TORUS
 };
 enum	e_light
 {
@@ -51,6 +51,31 @@ typedef struct	s_cone_data
 	double	tangent;
 }				t_cone_data;
 
+typedef struct	s_rectangle_data
+{
+	double3	v1;
+	double3	v2;
+	double3	v3;
+	double3	v4;
+}				t_rectangle_data;
+
+typedef struct	s_disk_data
+{
+	double3	cent;
+	double	radius;
+}				t_disk_data;
+
+typedef struct	s_torus_data
+{
+}				t_torus_data;
+
+typedef struct	s_triangle_data
+{
+	double3	v1;
+	double3	v2;
+	double3	v3;
+}				t_triangle_data;
+
 typedef struct	s_cylin_data
 {
 	double3	dir;
@@ -64,6 +89,10 @@ typedef union	u_shape
 	t_cone_data		cone;
 	t_plane_data	plane;
 	t_cylin_data	cylin;
+	t_rectangle_data	rectangle;
+	t_triangle_data	triangle;
+	t_torus_data	torus;
+	t_disk_data		disk;
 }				t_shape;
 
 typedef struct	s_rotation_matrix
@@ -89,6 +118,9 @@ typedef struct	s_fig
 	int			normal_map_no;
 	double2		txt_offset;
 	double2		txt_scale;
+
+	int		cut;
+	t_plane_data	plane;
 }				t_fig;
 
 typedef struct	s_pov
