@@ -30,11 +30,10 @@ double2	get_disk_coords(double3 intersect_point, t_fig data)
 	double3		point = intersect_point - data.shape.disk.cent;
 	if (length(data.rotation) > 0)
 		point = new_basis(point, data.rotation_martix);
-	st[0] = length(point) / data.shape.disk.radius;
+	point /= data.shape.disk.radius;
+	st[0] = length(point);
 
-	st[1] = acos(point[0]) / (2 * M_PI);
-	if (point[2] < 0)
-		st[1] = 1 - st[1];
+	st[1] = atan2(point[1], point[0]) / (2 * M_PI);
 	st *= data.txt_scale;
 	return (st);
 }
