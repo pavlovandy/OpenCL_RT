@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/22 13:55:52 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 15:22:45 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	make_little_default_scene(t_scene *scene)
 {
 	scene->count_obj = (cl_int)3;
 	scene->count_light = (cl_int)4;
+	scene->count_neg_obj = 0;
 	
 	scene->light[0].type_num = (cl_int)POINT;
 	scene->light[0].intensity = (cl_double3){{5, 5, 5}};
@@ -59,6 +60,9 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].normal_map_no = -1;
 	scene->obj[0].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[0].txt_scale = (cl_double2){{1, 1}};
+	scene->obj[0].cutting = 1;
+	scene->obj[0].cutting_plane.dot = (cl_double3){{0, 0.3, -0.3}};
+	scene->obj[0].cutting_plane.normal = (cl_double3){{0.70710678118, 0.70710678118, 0}};
 
 	scene->obj[1].fig_type = (cl_int)SPHERE;
 	scene->obj[1].shape.sphere.cent = (cl_double3){{-3, 1, 5}};
@@ -89,6 +93,8 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[1].normal_map_no = 1;
 	scene->obj[1].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[1].txt_scale = (cl_double2){{1, 1}};
+	scene->obj[1].cutting_plane.dot = (cl_double3){{0, 0.3, -0.3}};
+	scene->obj[1].cutting_plane.normal = (cl_double3){{0.70710678118, 0.70710678118, 0}};
 
 	// scene->obj[2].fig_type = (cl_int)PLANE;
 	// scene->obj[2].shape.plane.dot = (cl_double3){{0, -1, 0}};
@@ -117,11 +123,14 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[2].reflective = (cl_double)0;
 	scene->obj[2].trans = (cl_double)0;
 	scene->obj[2].ior = (cl_double)1;
-	scene->obj[2].transparancy_map_no = -1;
+	scene->obj[2].transparancy_map_no = 4;
 	scene->obj[2].text_no = 0;
-	scene->obj[2].normal_map_no = -1;
+	scene->obj[2].normal_map_no = 1;
 	scene->obj[2].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[2].txt_scale = (cl_double2){{1, 1}};
+	scene->obj[2].cutting = 1;
+	scene->obj[2].cutting_plane.dot = (cl_double3){{0, 0.3, -0.3}};
+	scene->obj[2].cutting_plane.normal = (cl_double3){{0.70710678118, 0.70710678118, 0}};
 }
 
 int		main(int argc, char **argv)
@@ -139,15 +148,6 @@ int		main(int argc, char **argv)
 		make_little_default_scene(&rt.scene);
 	else
 		return (print_usage());
-
-	rt.scene.obj[0].text_no = 0;
-	rt.scene.obj[0].ior = 1.01;
-	rt.scene.obj[0].normal_map_no = 1;
-	rt.scene.obj[0].txt_offset = (cl_double2){{0, 0}};
-	rt.scene.obj[0].txt_scale = (cl_double2){{1, 1}};
-	rt.scene.obj[0].rotation = (cl_double3){{M_PI / 2, 0, 0}};
-	rt.scene.obj[0].rotation_martix = build_rotation_matrix_form_angles(rt.scene.obj[0].rotation);
-
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
 	if (init_but(&rt))

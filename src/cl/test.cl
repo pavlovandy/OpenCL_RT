@@ -1,11 +1,11 @@
 #include "kernel.h"
 
-double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
+double3	reflected_ray(double3 normal, double3 prim_ray)
 {
 	return (prim_ray - 2 * dot(normal, prim_ray) * normal);
 }
 
-// double3	reflected_ray(double3 normal, double3 prim_ray) //not sure
+// double3	reflected_ray(double3 normal, double3 prim_ray)
 // {
 // 	return (2 * dot(normal, prim_ray) * normal - prim_ray);
 // }
@@ -44,8 +44,6 @@ double fresnel(double3 prim_ray, double3 normal, double n1)
 	}
 	double x = 1.0 - cosX;
 	double ret = r0 + (1.0 - r0) * x * x * x * x * x;
- 
-	// ret = (reflective + (1.0 - reflective) * ret);
 	return (ret);
 }
 

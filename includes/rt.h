@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/21 17:39:54 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 15:36:42 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 # ifdef __APPLE__
 # define WIN_WIDTH		800
 # define WIN_HEIGHT		600
@@ -51,12 +51,14 @@
 # endif
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
+# define MAX_NEGATIVE_OBJ_COUNT 5
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
 # define MIN_IOR 1.01;
 # define D	0.1
+
 
 # define COUNT_BUTT 3
 # define MAX_TEXTURE_COUNT 10
@@ -171,8 +173,8 @@ struct	s_fig
 	cl_double2	txt_offset;
 	cl_double2	txt_scale;
 
-	cl_int		cut;
-	t_plane_data	plane;
+	cl_int			cutting;
+	t_plane_data	cutting_plane;
 };
 
 struct	s_sdl
@@ -203,12 +205,20 @@ typedef struct	s_light
 	cl_double3	v;
 }				t_light;
 
+typedef struct	s_negative_fig
+{
+	cl_int		fig_type;
+	t_shape		shape;
+}				t_negative_fig;
+
 struct	s_scene
 {
-	cl_int		count_obj;
-	t_fig		obj[MAX_OBJ_COUNT];
-	cl_int		count_light;
-	t_light		light[MAX_LIGHTING_COUNT];
+	cl_int			count_obj;
+	t_fig			obj[MAX_OBJ_COUNT];
+	cl_int			count_light;
+	t_light			light[MAX_LIGHTING_COUNT];
+	cl_int			count_neg_obj;
+	t_negative_fig	neg_obj[MAX_NEGATIVE_OBJ_COUNT];
 };
 
 typedef struct	s_cl

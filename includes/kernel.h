@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/21 17:40:59 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 15:24:13 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
+# define MAX_NEGATIVE_OBJ_COUNT 5
 
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
@@ -121,8 +122,8 @@ typedef struct	s_fig
 	double2		txt_offset;
 	double2		txt_scale;
 
-	int		cut;
-	t_plane_data	plane;
+	int			cutting;
+	t_plane_data	cutting_plane;
 }				t_fig;
 
 typedef struct	s_pov
@@ -162,12 +163,20 @@ typedef struct	s_light
 	double3		v;
 }				t_light;
 
+typedef struct	s_negative_fig
+{
+	int		fig_type;
+	t_shape		shape;
+}				t_negative_fig;
+
 typedef struct	s_scene
 {
 	int			count_obj;
 	t_fig		obj[MAX_OBJ_COUNT];
 	int			count_light;
 	t_light		light[MAX_LIGHTING_COUNT];
+	int			count_neg_obj;
+	t_negative_fig	neg_obj[MAX_NEGATIVE_OBJ_COUNT];
 }				t_scene;
 
 typedef struct	s_txt_params

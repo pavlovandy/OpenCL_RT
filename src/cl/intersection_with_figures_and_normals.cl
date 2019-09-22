@@ -139,38 +139,64 @@ double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree cu
 	double3		tmp_2;
 	double3		normal;
 
-	if (fig.fig_type == SPHERE)
+	switch (fig.fig_type)
 	{
-		normal = intersect_point - fig.shape.sphere.cent;
-		normal = normalize(normal);
-	}else if (fig.fig_type == PLANE)
-	{
-		if (dot(curr_node.dir , fig.shape.plane.normal) >= 0)
-			fig.shape.plane.normal = -fig.shape.plane.normal;
-		normal = fig.shape.plane.normal;
-	}else if (fig.fig_type == CYLIN)
-	{
-		tmp = fig.shape.cylin.dot - intersect_point;
-		normal = normalize((dot(tmp, fig.shape.cylin.dir) * fig.shape.cylin.dir) - tmp);
-	}else if (fig.fig_type == CONE)
-	{
-		tmp = fig.shape.cone.vertex - intersect_point;
-		normal = normalize(((dot(tmp, tmp) / dot(tmp, fig.shape.cone.dir)) * fig.shape.cone.dir) - tmp);
-	}else if (fig.fig_type == TRIANGLE)
-	{
-		tmp = fig.shape.triangle.v0 - fig.shape.triangle.v1;
-		tmp_2 = fig.shape.triangle.v0 - fig.shape.triangle.v2;
-		normal = normalize(cross(tmp, tmp_2));
-	}else if (fig.fig_type == DISK)
-	{
-		normal = fig.shape.disk.normal;
-	}else if (fig.fig_type == RECTANGLE)
-	{
-		tmp = fig.shape.rectangle.v0 - fig.shape.rectangle.v1;
-		tmp_2 = fig.shape.rectangle.v0 - fig.shape.rectangle.v2;
-		normal = normalize(cross(tmp, tmp_2));	
+		case SPHERE:
+			normal = intersect_point - fig.shape.sphere.cent;
+			normal = normalize(normal);
+			break ;
+		case PLANE:
+			normal = fig.shape.plane.normal;
+			break ;
+		case CYLIN:
+			tmp = fig.shape.cylin.dot - intersect_point;
+			normal = normalize((dot(tmp, fig.shape.cylin.dir) * fig.shape.cylin.dir) - tmp);
+			break ;
+		case CONE:
+			tmp = fig.shape.cone.vertex - intersect_point;
+			normal = normalize(((dot(tmp, tmp) / dot(tmp, fig.shape.cone.dir)) * fig.shape.cone.dir) - tmp);
+			break ;
+		case TRIANGLE:
+			tmp = fig.shape.triangle.v0 - fig.shape.triangle.v1;
+			tmp_2 = fig.shape.triangle.v0 - fig.shape.triangle.v2;
+			normal = normalize(cross(tmp, tmp_2));
+			break ;
+		case DISK:
+			normal = fig.shape.disk.normal;
+			break ;
+		case RECTANGLE:
+			tmp = fig.shape.rectangle.v0 - fig.shape.rectangle.v1;
+			tmp_2 = fig.shape.rectangle.v0 - fig.shape.rectangle.v2;
+			normal = normalize(cross(tmp, tmp_2));
+			break ;
 	}
+	if (fig.fig_type == PLANE || fig.fig_type == DISK || fig.fig_type == RECTANGLE || fig.fig_type == TRIANGLE)
+		if (dot(curr_node.dir , normal) >= 0)
+			normal = -normal;
 	return (normal);
+}
+
+double2		cut_result(double2 prev, t_fig fig, double3 eye, double3 dir)
+{
+	double			h_plane;
+	double			h_point;
+	double3			intersect_point;
+	t_plane_data	cut;
+
+	if (fig.cutting)
+	{
+		cut = fig.cutting_plane;
+		h_plane = -(dot(cut.normal, (cut.dot + fig.shape.sphere.cent)));
+		intersect_point = eye + dir * prev[0];
+		h_point = -(dot(cut.normal, intersect_point));
+		if (h_plane > h_point)
+			prev[0] = -BIG_VALUE;
+		intersect_point = eye + dir * prev[1];
+		h_point = -(dot(cut.normal, intersect_point));
+		if (h_plane > h_point)
+			prev[1] = -BIG_VALUE;
+	}
+	return (prev);
 }
 
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
@@ -181,24 +207,24 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 	double	closest_dist = BIG_VALUE;
 	int		closest_obj = -1;
 	int		i;
+	t_fig 	fig;
 
 	i = -1;
 	while (++i < scene->count_obj)
 	{
-		if (scene->obj[i].fig_type == SPHERE)
-			res = intersect_sphere(eye, dir, scene->obj[i].shape.sphere);
-		else if (scene->obj[i].fig_type == PLANE)
-			res = intersect_plane(eye, dir, scene->obj[i].shape.plane);
-		else if (scene->obj[i].fig_type == CYLIN)
-			res = intersect_cylin(eye, dir, scene->obj[i].shape.cylin);
-		else if (scene->obj[i].fig_type == CONE)
-			res = intersect_cone(eye, dir, scene->obj[i].shape.cone);
-		else if (scene->obj[i].fig_type == TRIANGLE)
-			res = intersect_triangle(eye, dir, scene->obj[i].shape.triangle);
-		else if (scene->obj[i].fig_type == DISK)
-			res = intersect_disk(eye, dir, scene->obj[i].shape.disk);
-		else if (scene->obj[i].fig_type == RECTANGLE)
-			res = intersect_rectangle(eye, dir, scene->obj[i].shape.rectangle);
+		fig = scene->obj[i];
+		switch (fig.fig_type)
+		{
+			case SPHERE:	res = intersect_sphere(eye, dir, fig.shape.sphere);			break;
+			case PLANE:		res = intersect_plane(eye, dir, fig.shape.plane);			break;
+			case CYLIN:		res = intersect_cylin(eye, dir, fig.shape.cylin);			break;
+			case CONE:		res = intersect_cone(eye, dir, fig.shape.cone);				break;
+			case TRIANGLE:	res = intersect_triangle(eye, dir, fig.shape.triangle);		break;
+			case DISK:		res = intersect_disk(eye, dir, fig.shape.disk);				break;
+			case RECTANGLE:	res = intersect_rectangle(eye, dir, fig.shape.rectangle);	break;
+		}
+
+		res = cut_result(res, fig, eye, dir);		
 		if (res[0] > mini && res[0] < max && res[0] < closest_dist)
 		{
 			closest_dist = res[0];
