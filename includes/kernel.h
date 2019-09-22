@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/22 17:18:04 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 18:34:10 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct	s_negative_fig
 {
 	int					fig_type;
 	t_shape				shape;
+	t_rotation_matrix	rotation_matrix; //only for cylinder
 }				t_negative_fig;
 
 typedef struct	s_scene
@@ -224,7 +225,11 @@ double2		intersect_triangle(double3 eye, double3 dir, t_triangle_data triangle);
 double2		intersect_rectangle(double3 eye, double3 dir, t_rectangle_data rectangle);
 double2		intersect_disk(double3 eye, double3 dir, t_disk_data disk);
 double3		get_obj_dot(t_fig fig);
+
 double2		cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, double3 dir);
+double2		cut_with_sphere(double2 prev, double3 *point, t_sphere_data sphere);
+double2		cut_with_plane(double2 prev, double3 *point, t_plane_data plane);
+//double2		cut_with_cylin(double2 prev, double3 *point, t_cylin_data cylin);
 
 double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node);
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \

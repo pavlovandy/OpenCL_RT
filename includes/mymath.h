@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:26 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/21 12:38:16 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 18:57:00 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ cl_double2	*reverse_matrix_2x2(cl_double2 *src);
 
 double		vector_len(cl_double3 a);
 t_rotation_matrix build_rotation_matrix_form_angles(cl_double3 rot);
+t_rotation_matrix build_rotation_matrix_for_cylin(cl_double3 dir);
 cl_double3	ft_normalize(cl_double3 a);
 
 cl_double3	ft_rotate_reverse_camera(cl_double3 direction, t_pov pov);

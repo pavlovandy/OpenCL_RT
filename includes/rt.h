@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/22 16:56:04 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 19:22:50 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
 # ifdef __APPLE__
 # define WIN_WIDTH		800
 # define WIN_HEIGHT		600
@@ -213,6 +213,7 @@ typedef struct	s_negative_fig //add to parser. currently supported sphere planes
 {
 	cl_int		fig_type;
 	t_shape		shape;
+	t_rotation_matrix	rotation_matrix; //only for cylinder
 }				t_negative_fig;
 
 struct	s_scene

@@ -208,7 +208,6 @@ double3	get_obj_dot(t_fig fig)
 	return (res);
 }
 
-
 double2	cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, double3 dir)
 {
 	double			h_plane;
@@ -240,10 +239,80 @@ double2	cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, do
 	return (prev);
 }
 
-// double2		cut_result_with_negative_planes(double2 prev, t_fig fig, __global t_scene *scene)
-// {
+double2		cut_with_sphere(double2 prev, double3 *point, t_sphere_data sphere)
+{
+	double3		shifted;
 
-// }
+	if (prev[0] > -BIG_VALUE + 1)
+	{
+		shifted = point[0] - sphere.cent;
+		if (dot(shifted, shifted) <= sphere.radius * sphere.radius)
+			prev[0] = -BIG_VALUE;
+	}
+	if (prev[1] > -BIG_VALUE + 1)
+	{
+		shifted = point[1] - sphere.cent;
+		if (dot(shifted, shifted) <= sphere.radius * sphere.radius)
+			prev[1] = -BIG_VALUE;
+	}
+	return (prev);
+}
+
+double2		cut_with_plane(double2 prev, double3 *point, t_plane_data plane)
+{
+	double		h_plane;
+	double		h_point;
+
+	h_plane = -(dot(plane.normal, plane.dot));
+	if (prev[0] > -BIG_VALUE)
+	{
+		h_point = -(dot(plane.normal, point[0]));
+		if (h_plane > h_point)
+			prev[0] = -BIG_VALUE;
+	}
+	if (prev[1] > -BIG_VALUE)
+	{
+		h_point = -(dot(plane.normal, point[1]));
+		if (h_plane > h_point)
+			prev[1] = -BIG_VALUE;
+	}
+	return (prev);
+}
+
+double2		cut_with_cylin(double2 prev, double3 *point, t_negative_fig cylin)
+{
+	
+}
+
+double2		cut_result_with_negative_obj(double2 prev, t_fig fig, __global t_scene *scene, double3 eye, double3 dir)
+{
+	int		i = -1;
+	double3	intersect_point[2];
+	
+	if (prev[0] > -BIG_VALUE + 1)
+		intersect_point[0] = eye + dir * prev[0];
+	if (prev[1] > -BIG_VALUE + 1)
+		intersect_point[1] = eye + dir * prev[1];
+
+	while (++i < scene->count_neg_obj)
+	{
+		switch (scene->neg_obj[i].fig_type)
+		{
+			case SPHERE:
+				prev = cut_with_sphere(prev, intersect_point, scene->neg_obj[i].shape.sphere);
+			break;
+			case PLANE:
+				prev = cut_with_plane(prev, intersect_point, scene->neg_obj[i].shape.plane);
+			break;
+			case CYLIN:
+				//prev = cut_with_cylin(prev, intersect_point, scene->neg_obj[i].shape.cylin);
+			break;
+			default:
+			break;
+		}
+	}
+	return (prev);
+}
 
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 										__global t_scene *scene, \
@@ -271,7 +340,8 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 		}
 
 		res = cut_result_with_personal_planes(res, fig, eye, dir);
-		//res = cut_result_with_negative_obj(res, fig, scene);
+		if (scene->count_neg_obj > 0)
+			res = cut_result_with_negative_obj(res, fig, scene, eye, dir);
 
 		if (res[0] > mini && res[0] < max && res[0] < closest_dist)
 		{
