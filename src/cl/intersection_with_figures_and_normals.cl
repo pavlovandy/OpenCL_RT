@@ -7,16 +7,16 @@ double2	intersect_triangle(double3 eye, double3 dir, t_triangle_data triangle)
 	double3	pvec = cross(dir, v0v2);
 	double	det = dot(v0v1, pvec);
 	if (fabs(det) < EPSILON)
-		return (BIG_VALUE);
+		return (-BIG_VALUE);
 	det = 1 / det;
 	double3	tvec = eye - triangle.v0;
 	double	u = dot(tvec, pvec) * det;
 	if (u < 0)
-		return (BIG_VALUE);
+		return (-BIG_VALUE);
 	double3 qvec = cross(tvec, v0v1); 
 	double	v = dot(dir, qvec) * det;
 	if (v < 0 || u + v > 1)
-		return (BIG_VALUE);
+		return (-BIG_VALUE);
 	double	t = dot(v0v2, qvec) * det;
 	return (t);
 }
@@ -44,7 +44,7 @@ double2	intersect_disk(double3 eye, double3 dir, t_disk_data disk)
 	a = dot(oc, disk.normal);
 	b = dot(dir, disk.normal);
 	if (b == 0 || a * b > 0)
-		return (BIG_VALUE);
+		return (-BIG_VALUE);
 	double t = -a / b;
 	double3	p = dir * t + oc;
 	if (dot(p, p) > disk.radius * disk.radius)
@@ -67,7 +67,7 @@ double2	intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere)
 	
 	d = b * b - a * c;
 	if (d < 0)
-		return (BIG_VALUE);
+		return (-BIG_VALUE);
 	d = sqrt(d);
 	roots = (double2)((-b + d) / a, (-b - d) / a);
 	return (roots);
@@ -103,7 +103,7 @@ double2	intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin)
 	c = dot(oc, oc) - scalar2 * scalar2 - cylin.radius * cylin.radius;
 	d = b * b - a * c;
 	if (d < 0)
-		return (BIG_VALUE);
+		return (-BIG_VALUE);
 	d = sqrt(d);
 	roots = ((double2)((-b + d),(-b - d))) / a;
 	m = roots[0] * scalar + scalar2;
@@ -134,7 +134,7 @@ double2	intersect_cone(double3 eye, double3 dir, t_cone_data cone)
 	c = dot(oc, oc) - (1.0 + tangent2) * scalar2 * scalar2 ;
 	d = b * b - a * c;
 	if (d < 0)
-		return (BIG_VALUE);
+		return (-BIG_VALUE);
 	d = sqrt(d);
 	roots = ((double2)((-b + d),(-b - d)) / a);
 	m = roots[0] * scalar + scalar2;
@@ -189,7 +189,7 @@ double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree cu
 	return (normal);
 }
 
-double2		cut_result(double2 prev, t_fig fig, double3 eye, double3 dir)
+double2		cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, double3 dir)
 {
 	double			h_plane;
 	double			h_point;
@@ -200,16 +200,27 @@ double2		cut_result(double2 prev, t_fig fig, double3 eye, double3 dir)
 	{
 		cut = fig.cutting_plane;
 		h_plane = -(dot(cut.normal, (cut.dot + fig.shape.sphere.cent)));
-		intersect_point = eye + dir * prev[0];
-		h_point = -(dot(cut.normal, intersect_point));
-		if (h_plane > h_point)
-			prev[0] = -BIG_VALUE;
-		intersect_point = eye + dir * prev[1];
-		h_point = -(dot(cut.normal, intersect_point));
-		if (h_plane > h_point)
-			prev[1] = -BIG_VALUE;
+		if (prev[0] > -BIG_VALUE)
+		{
+			intersect_point = eye + dir * prev[0];
+			h_point = -(dot(cut.normal, intersect_point));
+			if (h_plane > h_point)
+				prev[0] = -BIG_VALUE;
+		}
+		if (prev[1] > -BIG_VALUE)
+		{
+			intersect_point = eye + dir * prev[1];
+			h_point = -(dot(cut.normal, intersect_point));
+			if (h_plane > h_point)
+				prev[1] = -BIG_VALUE;
+		}
 	}
 	return (prev);
+}
+
+double2		cut_result_with_negative_planes(double2 prev, t_fig fig, __global t_scene *scene)
+{
+
 }
 
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
@@ -237,7 +248,9 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 			case RECTANGLE:	res = intersect_rectangle(eye, dir, fig.shape.rectangle);	break;
 		}
 
-		res = cut_result(res, fig, eye, dir);		
+		res = cut_result_with_personal_planes(res, fig, eye, dir);
+		res = cut_result_with_negative_obj(res, fig, scene);
+		
 		if (res[0] > mini && res[0] < max && res[0] < closest_dist)
 		{
 			closest_dist = res[0];
