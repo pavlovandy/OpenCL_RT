@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/22 16:02:17 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 16:56:04 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ typedef struct	s_cone_data
 	cl_double3	vertex;
 	cl_double3	dir;
 	cl_double	tangent;
-	cl_double	mmax;
-	cl_double	mmin;
+	cl_double	mmax; //add to parser. inf = BIG_VALUE
+	cl_double	mmin; //add to parser. inf = -BIG_VALUE
 }				t_cone_data;
 
-typedef struct	s_rectangle_data
+typedef struct	s_rectangle_data //add to parser
 {
 	cl_double3	v0;
 	cl_double3	v1;
@@ -112,18 +112,18 @@ typedef struct	s_rectangle_data
 	cl_double3	v3;
 }				t_rectangle_data;
 
-typedef struct	s_disk_data
+typedef struct	s_disk_data  //add to parser
 {
 	cl_double3	cent;
 	cl_double3	normal;
 	cl_double	radius;
 }				t_disk_data;
 
-typedef struct	s_torus_data
+typedef struct	s_torus_data 
 {
 }				t_torus_data;
 
-typedef struct	s_triangle_data
+typedef struct	s_triangle_data  //add to parser
 {
 	cl_double3	v0;
 	cl_double3	v1;
@@ -135,8 +135,8 @@ typedef struct	s_cylin_data
 	cl_double3	dir;
 	cl_double3	dot;
 	cl_double	radius;
-	cl_double	mmax;
-	cl_double	mmin;
+	cl_double	mmax; //add to parser. inf = BIG_VALUE
+	cl_double	mmin; //add to parser. inf = -BIG_VALUE
 }				t_cylin_data;
 
 typedef union	u_shape
@@ -177,8 +177,8 @@ struct	s_fig
 	cl_double2	txt_offset;
 	cl_double2	txt_scale;
 
-	cl_int			cutting;
-	t_plane_data	cutting_plane;
+	cl_int			cutting;  //add to parser. default 0
+	t_plane_data	cutting_plane;  //add to parser. if cutting = 0 unused
 };
 
 struct	s_sdl
@@ -209,7 +209,7 @@ typedef struct	s_light
 	cl_double3	v;
 }				t_light;
 
-typedef struct	s_negative_fig
+typedef struct	s_negative_fig //add to parser. currently supported sphere planes and cone
 {
 	cl_int		fig_type;
 	t_shape		shape;
@@ -221,7 +221,7 @@ struct	s_scene
 	t_fig			obj[MAX_OBJ_COUNT];
 	cl_int			count_light;
 	t_light			light[MAX_LIGHTING_COUNT];
-	cl_int			count_neg_obj;
+	cl_int			count_neg_obj; //default 0
 	t_negative_fig	neg_obj[MAX_NEGATIVE_OBJ_COUNT];
 };
 

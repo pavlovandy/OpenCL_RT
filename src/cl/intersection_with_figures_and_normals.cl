@@ -1,5 +1,7 @@
 #include "kernel.h"
 
+
+
 double2	intersect_triangle(double3 eye, double3 dir, t_triangle_data triangle)
 {
 	double3 v0v1 = triangle.v1 - triangle.v0;
@@ -146,7 +148,7 @@ double2	intersect_cone(double3 eye, double3 dir, t_cone_data cone)
 	return(roots);
 }
 
-double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node)
+double3	calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node)
 {
 	double3		tmp;//dot - intersect.point
 	double3		tmp_2;
@@ -189,17 +191,37 @@ double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree cu
 	return (normal);
 }
 
-double2		cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, double3 dir)
+double3	get_obj_dot(t_fig fig)
+{
+	double3	res;
+
+	switch (fig.fig_type)
+	{
+			case SPHERE:	res = fig.shape.sphere.cent;	break;
+			case PLANE:		res = fig.shape.plane.dot;		break;
+			case CYLIN:		res = fig.shape.cylin.dot;		break;
+			case CONE:		res = fig.shape.cone.vertex;	break;
+			case TRIANGLE:	res = fig.shape.triangle.v0;	break;
+			case DISK:		res = fig.shape.disk.cent;		break;
+			case RECTANGLE:	res = fig.shape.rectangle.v0;	break;
+	}
+	return (res);
+}
+
+
+double2	cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, double3 dir)
 {
 	double			h_plane;
 	double			h_point;
 	double3			intersect_point;
 	t_plane_data	cut;
+	double3			obj_dot;
 
 	if (fig.cutting)
 	{
 		cut = fig.cutting_plane;
-		h_plane = -(dot(cut.normal, (cut.dot + fig.shape.sphere.cent)));
+		obj_dot = get_obj_dot(fig);
+		h_plane = -(dot(cut.normal, (cut.dot + obj_dot)));
 		if (prev[0] > -BIG_VALUE)
 		{
 			intersect_point = eye + dir * prev[0];
@@ -218,10 +240,10 @@ double2		cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, d
 	return (prev);
 }
 
-double2		cut_result_with_negative_planes(double2 prev, t_fig fig, __global t_scene *scene)
-{
+// double2		cut_result_with_negative_planes(double2 prev, t_fig fig, __global t_scene *scene)
+// {
 
-}
+// }
 
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 										__global t_scene *scene, \
@@ -249,8 +271,8 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 		}
 
 		res = cut_result_with_personal_planes(res, fig, eye, dir);
-		res = cut_result_with_negative_obj(res, fig, scene);
-		
+		//res = cut_result_with_negative_obj(res, fig, scene);
+
 		if (res[0] > mini && res[0] < max && res[0] < closest_dist)
 		{
 			closest_dist = res[0];

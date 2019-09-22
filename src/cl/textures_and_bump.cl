@@ -25,7 +25,6 @@ double2	get_rectangle_coords(double3 intersect_point, t_fig data)
 double2	get_disk_coords(double3 intersect_point, t_fig data)
 {
 	double2		st;
-	double		phi;
 
 	double3		point = intersect_point - data.shape.disk.cent;
 	if (length(data.rotation) > 0)
