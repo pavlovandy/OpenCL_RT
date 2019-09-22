@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/22 15:36:42 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/22 16:02:17 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ typedef struct	s_cone_data
 	cl_double3	vertex;
 	cl_double3	dir;
 	cl_double	tangent;
+	cl_double	mmax;
+	cl_double	mmin;
 }				t_cone_data;
 
 typedef struct	s_rectangle_data
@@ -133,6 +135,8 @@ typedef struct	s_cylin_data
 	cl_double3	dir;
 	cl_double3	dot;
 	cl_double	radius;
+	cl_double	mmax;
+	cl_double	mmin;
 }				t_cylin_data;
 
 typedef union	u_shape

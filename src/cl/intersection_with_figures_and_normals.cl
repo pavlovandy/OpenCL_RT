@@ -96,7 +96,7 @@ double2	intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin)
 	double2	roots;
 	double	scalar = dot(dir, cylin.dir);
 	double	scalar2 = dot(oc, cylin.dir);
-
+	double	m;
 	
 	a = dot(dir, dir) - scalar * scalar;
 	b = dot(dir, oc) - (scalar * scalar2);
@@ -106,6 +106,12 @@ double2	intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin)
 		return (BIG_VALUE);
 	d = sqrt(d);
 	roots = ((double2)((-b + d),(-b - d))) / a;
+	m = roots[0] * scalar + scalar2;
+	if (m < cylin.mmin || m > cylin.mmax)
+		roots[0] = -BIG_VALUE;
+	m = roots[1] * scalar + scalar2;
+	if (m < cylin.mmin || m > cylin.mmax)
+		roots[1] = -BIG_VALUE;
 	return(roots);
 }
 
@@ -120,6 +126,7 @@ double2	intersect_cone(double3 eye, double3 dir, t_cone_data cone)
 	double	scalar = dot(dir, cone.dir);
 	double	scalar2 = dot(oc,cone.dir);
 	double	tangent2 = cone.tangent * cone.tangent;
+	double	m;
 
 
 	a = dot(dir, dir) - (1.0 + tangent2) * (scalar * scalar);
@@ -130,6 +137,12 @@ double2	intersect_cone(double3 eye, double3 dir, t_cone_data cone)
 		return (BIG_VALUE);
 	d = sqrt(d);
 	roots = ((double2)((-b + d),(-b - d)) / a);
+	m = roots[0] * scalar + scalar2;
+	if (m < cone.mmin || m > cone.mmax)
+		roots[0] = -BIG_VALUE;
+	m = roots[1] * scalar + scalar2;
+	if (m < cone.mmin || m > cone.mmax)
+		roots[1] = -BIG_VALUE;
 	return(roots);
 }
 
