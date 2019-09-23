@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/21 13:54:35 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/21 19:41:57 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[1].normal_map_no = -1;
 	scene->obj[1].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[1].txt_scale = (cl_double2){{1, 1}};
+	scene->obj[1].noise = -1;
 
 	scene->obj[2].fig_type = (cl_int)PLANE;
 	scene->obj[2].shape.plane.dot = (cl_double3){{0, -1, 0}};
@@ -102,6 +103,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[2].normal_map_no = 1;
 	scene->obj[2].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[2].txt_scale = (cl_double2){{1, 1}};
+	scene->obj[2].noise = -1;
 	
 }
 
@@ -129,6 +131,7 @@ int		main(int argc, char **argv)
 	rt.scene.obj[0].txt_scale = (cl_double2){{1, 1}};
 	rt.scene.obj[0].rotation = (cl_double3){{M_PI / 2, 0, 0}};
 	rt.scene.obj[0].rotation_martix = build_rotation_matrix_form_angles(rt.scene.obj[0].rotation);
+	rt.scene.obj[0].noise = -1;
 
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);

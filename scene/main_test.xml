@@ -11,28 +11,30 @@
 <RT width = "1200" heigth = "1200">
 	<spher>
 		<centre>1 2 3</centre>
-		<texture> 0 </texture>
-		<bump> 1 </bump>
 		<specular> 500</specular>
-		<transparency> 0.8 </transparency>
+		<transparency> 0 </transparency>
 		<reflective> 0 </reflective>
-		<bump>-1</bump>
+
 	</spher>
 	<cylin>
 		<dot>10 2 0</dot>
 		<dir>0 0 1</dir>
 		<RGB>0 255 0</RGB>
+		<texture> -1 </texture>
+		<bump> -1 </bump>
 	</cylin>
 	<cone>
 		<vertex>0 1 5</vertex>
 		<angle> 30 </angle>
+		<reflective>0.4</reflective>
+		<transparency>0.8</transparency>
 	</cone>
 	<plane> 
 		<dot>10 0 0 </dot>
 		<RGB>83 83 83</RGB>
 		<reflective> 0 </reflective>
-		<normal>0 -1 0</normal>
-		<transparency> 0.5</transparency>
+		<normal>0 1 0</normal>
+		<transparency> 0</transparency>
 	</plane>
 	<light>
 		<type> point </type>

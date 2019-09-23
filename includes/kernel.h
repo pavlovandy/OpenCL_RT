@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kernel.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 18:16:01 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/21 19:01:56 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 
+__constant		double random[5] = {12341243, 324124, 234123412, 123, 15351};
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
 __constant double3 BACKGROUND_COLOR =  ((double3)(0.f, 0.f, 0.f));
@@ -109,6 +110,7 @@ typedef struct	s_fig
 
 	double3		color;
 	int			specular;
+	int			noise;
 	double		reflective;
 	double		trans;
 	double3		rotation;
@@ -229,4 +231,7 @@ uint		get_texture_pixel(double2 coord, __global uint *texture, t_txt_params para
 void		swap(double* a, double*b);
 double		line_point(double start, double end, double p);
 
+
+double3	ft_noise	(double3 eye, double2 dir);
+double3	ft_noise1 	(double3 inter, double2 coords);
 #endif
