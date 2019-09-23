@@ -143,6 +143,13 @@ int			user_events(t_rt *rt)
 				SDL_SetRelativeMouseMode(rotations);
 				SDL_GetRelativeMouseState(NULL, NULL);
 			}
+			else if (ev.key.keysym.sym == SDLK_m)
+			{
+				rt->filters.obj_movement[0].move = 1;
+				rt->filters.obj_movement[0].dir = (cl_double3){{0, 0, 0.05}};
+				rt->filters.motion = !rt->filters.motion;
+				changes = 1;
+			}
 		}
 		else if (ev.type == SDL_QUIT)
 			exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
