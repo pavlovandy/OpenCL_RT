@@ -61,7 +61,7 @@
 
 
 # define COUNT_BUTT 3
-# define RENDER_ITARATION 10
+# define RENDER_ITARATION 20
 # define MAX_TEXTURE_COUNT 10
 
 typedef	struct s_fig	t_fig;
@@ -79,7 +79,7 @@ enum	e_but
 
 enum	e_fig
 {
-	SPHERE = 1, PLANE, CONE, CYLIN, RECTANGLE, TRIANGLE, DISK, TORUS
+	SPHERE = 1, PLANE, CONE, CYLIN, RECTANGLE, TRIANGLE, DISK, ELLIPSE, TORUS
 };
 enum	e_light
 {
@@ -126,6 +126,10 @@ typedef struct	s_torus_data
 {
 }				t_torus_data;
 
+typedef struct	s_ellipse_data
+{
+}				t_ellipse_data;
+
 typedef struct	s_triangle_data  //add to parser
 {
 	cl_double3	v0;
@@ -151,9 +155,9 @@ typedef union	u_shape
 	t_rectangle_data	rectangle;
 	t_triangle_data	triangle;
 	t_torus_data	torus;
+	t_ellipse_data	ellipse;
 	t_disk_data		disk;
 }				t_shape;
-
 
 typedef struct	s_rotation_matrix
 {

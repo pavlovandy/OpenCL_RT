@@ -168,5 +168,7 @@ t_rotation_matrix build_rotation_matrix_for_cylin(cl_double3 dir)
 	rm.e1 = (cl_double3){{1, 1, 0}}; //dovilnii napryamok golovne shchob buv ortogonalnii
 	rm.e1.s[2] = -(rm.e3.s[0] * rm.e1.s[0] + rm.e3.s[1] * rm.e1.s[1]) / rm.e3.s[2];
 	rm.e2 = cross(rm.e3, rm.e1);
+	printf("%f %f %f\n%f %f %f\n%f %f %f\n", rm.e1.s[0], rm.e1.s[1], rm.e1.s[2], rm.e2.s[0], rm.e2.s[1], rm.e2.s[2], rm.e3.s[0], rm.e3.s[1], rm.e3.s[2]);
+	fflush(stdout);
 	return (rm);
 }

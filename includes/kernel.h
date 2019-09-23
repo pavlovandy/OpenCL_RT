@@ -26,7 +26,7 @@ __constant double	PI = 3.14159265359;
 
 enum	e_fig
 {
-	SPHERE = 1, PLANE, CONE, CYLIN, RECTANGLE, TRIANGLE, DISK, TORUS
+	SPHERE = 1, PLANE, CONE, CYLIN, RECTANGLE, TRIANGLE, DISK, ELLIPSE, TORUS
 };
 enum	e_light
 {
@@ -73,6 +73,10 @@ typedef struct	s_torus_data
 {
 }				t_torus_data;
 
+typedef struct	s_ellipse_data
+{
+}				t_ellipse_data;
+
 typedef struct	s_triangle_data
 {
 	double3				v0;
@@ -98,6 +102,7 @@ typedef union	u_shape
 	t_rectangle_data	rectangle;
 	t_triangle_data		triangle;
 	t_torus_data		torus;
+	t_ellipse_data		ellipse;
 	t_disk_data			disk;
 }				t_shape;
 

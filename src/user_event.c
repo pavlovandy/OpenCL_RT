@@ -146,7 +146,7 @@ int			user_events(t_rt *rt)
 			else if (ev.key.keysym.sym == SDLK_m)
 			{
 				rt->filters.obj_movement[0].move = 1;
-				rt->filters.obj_movement[0].dir = (cl_double3){{0, 0, 0.1}};
+				rt->filters.obj_movement[0].dir = (cl_double3){{0, 0, 0.05}};
 				rt->filters.motion = !rt->filters.motion;
 				changes = 1;
 			}

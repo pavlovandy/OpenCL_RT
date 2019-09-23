@@ -1,7 +1,5 @@
 #include "kernel.h"
 
-
-
 double2	intersect_triangle(double3 eye, double3 dir, t_triangle_data triangle)
 {
 	double3 v0v1 = triangle.v1 - triangle.v0;
@@ -281,10 +279,28 @@ double2		cut_with_plane(double2 prev, double3 *point, t_plane_data plane)
 
 double2		cut_with_cylin(double2 prev, double3 *point, t_negative_fig cylin)
 {
-	
+	double3		shifted;
+
+	if (prev[0] > -BIG_VALUE + 1)
+	{
+		shifted = point[0] - cylin.shape.cylin.dot;
+		shifted = new_basis(shifted, cylin.rotation_matrix);
+		if (shifted[2] < cylin.shape.cylin.mmax && shifted[2] > cylin.shape.cylin.mmin)
+			if (shifted[0] * shifted[0] + shifted[1] * shifted[1] <= cylin.shape.cylin.radius * cylin.shape.cylin.radius)
+				prev[0] = -BIG_VALUE;
+	}
+	if (prev[1] > -BIG_VALUE + 1)
+	{
+		shifted = point[1] - cylin.shape.cylin.dot;
+		shifted = new_basis(shifted, cylin.rotation_matrix);
+		if (shifted[2] < cylin.shape.cylin.mmax && shifted[2] > cylin.shape.cylin.mmin)
+			if (shifted[0] * shifted[0] + shifted[1] * shifted[1] <= cylin.shape.cylin.radius * cylin.shape.cylin.radius)
+				prev[1] = -BIG_VALUE;
+	}
+	return (prev);
 }
 
-double2		cut_result_with_negative_obj(double2 prev, t_fig fig, __global t_scene *scene, double3 eye, double3 dir)
+double2		cut_result_with_negative_obj(double2 prev, __global t_scene *scene, double3 eye, double3 dir)
 {
 	int		i = -1;
 	double3	intersect_point[2];
@@ -314,11 +330,42 @@ double2		cut_result_with_negative_obj(double2 prev, t_fig fig, __global t_scene 
 	return (prev);
 }
 
+void				cut_4_roots(double3 eye, double3 dir, double4 res, \
+								__global t_scene *scene, int *closest_obj, \
+								double *closest_dist, double mini, \
+								double maxi, t_fig fig, int fig_no)
+{
+	int		i;
+	double2	res1 = (double2)(res[0], res[1]);
+	double2	res2 = (double2)(res[2], res[3]);
+
+	res1 = cut_result_with_personal_planes(res1, fig, eye, dir);
+	if (scene->count_neg_obj > 0)
+		res1 = cut_result_with_negative_obj(res1, scene, eye, dir);
+
+	res2 = cut_result_with_personal_planes(res2, fig, eye, dir);
+	if (scene->count_neg_obj > 0)
+		res2 = cut_result_with_negative_obj(res2, scene, eye, dir);
+
+	res = (double4)(res1, res2);
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (res[i] > mini && res[i] < maxi && res[i] < *closest_dist)
+		{
+			*closest_dist = res[i];
+			*closest_obj = fig_no;
+		}
+	}
+}
+
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 										__global t_scene *scene, \
-										double mini, double max)
+										double mini, double maxi)
 {
 	double2	res;
+	double4	torus_res;
 	double	closest_dist = BIG_VALUE;
 	int		closest_obj = -1;
 	int		i;
@@ -337,22 +384,32 @@ t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \
 			case TRIANGLE:	res = intersect_triangle(eye, dir, fig.shape.triangle);		break;
 			case DISK:		res = intersect_disk(eye, dir, fig.shape.disk);				break;
 			case RECTANGLE:	res = intersect_rectangle(eye, dir, fig.shape.rectangle);	break;
+			//case ELLIPSE:	res = intersect_ellipse(eye, dir, fig.shape.ellipse);		break;
+			//case TORUS:		torus_res =  intersect_torus(eye, dir, fig, ...))		break;
 		}
 
-		res = cut_result_with_personal_planes(res, fig, eye, dir);
-		if (scene->count_neg_obj > 0)
-			res = cut_result_with_negative_obj(res, fig, scene, eye, dir);
+		if (fig.fig_type == TORUS)
+		{
+			cut_4_roots(eye, dir, torus_res, scene, \
+					&closest_obj, &closest_dist, mini, maxi, fig, i);
+		}
+		else
+		{
+			res = cut_result_with_personal_planes(res, fig, eye, dir);
+			if (scene->count_neg_obj > 0)
+				res = cut_result_with_negative_obj(res, scene, eye, dir);
+			if (res[0] > mini && res[0] < maxi && res[0] < closest_dist)
+			{
+				closest_dist = res[0];
+				closest_obj = i;
+			}
+			if (res[1] > mini && res[1] < maxi && res[1] < closest_dist)
+			{
+				closest_dist = res[1];
+				closest_obj = i;
+			}
+		}
 
-		if (res[0] > mini && res[0] < max && res[0] < closest_dist)
-		{
-			closest_dist = res[0];
-			closest_obj = i;
-		}
-		if (res[1] > mini && res[1] < max && res[1] < closest_dist)
-		{
-			closest_dist = res[1];
-			closest_obj = i;
-		}
 	}
 	return ((t_obj_and_dist){closest_obj, closest_dist});
 }
