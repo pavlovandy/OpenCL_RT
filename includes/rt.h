@@ -41,7 +41,7 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
 # ifdef __APPLE__
 # define WIN_WIDTH		800
 # define WIN_HEIGHT		600
@@ -61,6 +61,7 @@
 
 
 # define COUNT_BUTT 3
+# define RENDER_ITARATION 10
 # define MAX_TEXTURE_COUNT 10
 
 typedef	struct s_fig	t_fig;
@@ -68,6 +69,8 @@ typedef	struct s_sdl	t_sdl;
 typedef	struct s_scene	t_scene;
 typedef	struct s_rt		t_rt;
 typedef	struct s_pov	t_pov;
+typedef	double	t_vector __attribute__((vector_size(sizeof(double)*4)));
+
 
 enum	e_but
 {
@@ -281,6 +284,21 @@ typedef struct	s_button
 	int			available;
 }				t_button;
 
+typedef struct	s_obj_movement
+{
+	int			move; //bool
+	cl_double3	dir;
+}				t_obj_movement;
+
+typedef struct	s_filters
+{
+	int		motion;
+	cl_double3	*colors;
+	cl_uint		*buff;
+	t_obj_movement	obj_movement[MAX_OBJ_COUNT];
+}				t_filters;
+
+
 struct	s_rt
 {
 	t_sdl		sdl;
@@ -288,6 +306,7 @@ struct	s_rt
 	t_pov		pov;
 	t_cl		cl;
 	t_envi		envi;
+	t_filters	filters;
 	t_edi		edi;
 	t_button	butt[COUNT_BUTT];
 };

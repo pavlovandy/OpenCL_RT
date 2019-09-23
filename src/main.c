@@ -14,7 +14,7 @@
 
 void	make_little_default_scene(t_scene *scene)
 {
-	scene->count_obj = (cl_int)3;
+	scene->count_obj = (cl_int)2;
 	scene->count_light = (cl_int)4;
 	scene->count_neg_obj = 0;
 	
@@ -58,7 +58,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].fig_type = (cl_int)SPHERE;
 	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 5.5}};
 	scene->obj[0].color = (cl_double3){{0, 255, 0}};
-	scene->obj[0].shape.sphere.radius = (cl_double)0;
+	scene->obj[0].shape.sphere.radius = (cl_double)1;
 	scene->obj[0].rotation = (cl_double3){{0 * M_PI / 180.0, 0 * M_PI / 180.0, 0 * M_PI / 180.0}};
 	scene->obj[0].rotation_martix = build_rotation_matrix_form_angles(scene->obj[0].rotation);
 	scene->obj[0].specular = (cl_int)-1;
@@ -97,12 +97,12 @@ void	make_little_default_scene(t_scene *scene)
 	// scene->obj[1].shape.cone.mmax = 5;
 	scene->obj[1].rotation = (cl_double3){{0 * M_PI / 180.0, 0 * M_PI / 180.0, 0 * M_PI / 180.0}};
 	scene->obj[1].rotation_martix = build_rotation_matrix_form_angles(scene->obj[1].rotation);
-	scene->obj[1].color = (cl_double3){{255, 0, 0}};
+	scene->obj[1].color = (cl_double3){{0, 255, 255}};
 	scene->obj[1].specular = (cl_int)1000;
 	scene->obj[1].reflective = (cl_double)0;
 	scene->obj[1].trans = (cl_double)0;
 	scene->obj[1].ior = (cl_double)1.3;
-	scene->obj[1].text_no = 3;
+	scene->obj[1].text_no = -1;
 	scene->obj[1].transparancy_map_no = -1;
 	scene->obj[1].normal_map_no = -1;
 	scene->obj[1].txt_offset = (cl_double2){{0, 0}};

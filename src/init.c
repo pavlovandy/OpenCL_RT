@@ -32,11 +32,25 @@ static int	init_pov(t_pov *pov)
 
 int			init_start_params(t_rt *rt)
 {
+	int		i;
+
 	rt->envi.textures_size = 0;
 	rt->envi.txt_count = 0;
 	rt->envi.txt = 0;
-	init_pov(&rt->pov);
 	
+
+	init_pov(&rt->pov);
+	rt->filters.motion = 0;
+	i = -1;
+	while (++i < MAX_OBJ_COUNT)
+	{
+		rt->filters.obj_movement[i].move = 0;
+		rt->filters.obj_movement[i].dir = (cl_double3){{0, 0, 0}};
+	}
+
+	rt->filters.colors = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
+	rt->filters.buff = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
+	i = -1;
 	return (0);
 }
 
