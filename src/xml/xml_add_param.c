@@ -6,11 +6,23 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 01:34:10 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:57:10 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
+
+int	add_position2(const char *str, t_scene *scene, int i, const char *tag)
+{
+	cl_double3	dot;
+
+	if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == DISK && \
+		ft_get_3param(3, str, &dot, NULL))
+		scene->obj[i].shape.disk.cent = (cl_double3)dot;
+	else
+		return (0);
+	return (1);
+}
 
 int	add_position(const char *str, t_scene *scene, int i, const char *tag)
 {
@@ -28,6 +40,8 @@ int	add_position(const char *str, t_scene *scene, int i, const char *tag)
 	else if (ft_strequ(tag, "dot") && scene->obj[i].fig_type == CYLIN \
 			&& ft_get_3param(3, str, &dot, NULL))
 		scene->obj[i].shape.cylin.dot = (cl_double3)dot;
+	else if (add_position2(str, scene, i, tag))
+		return (0);
 	else
 	{
 		ft_putstr(RED"XML : invalid param "COLOR_OFF);
@@ -51,6 +65,8 @@ int	ft_add_radius(const char *str, t_scene *scene, int i)
 		scene->obj[i].shape.sphere.radius = (cl_double)one_dot;
 	else if (scene->obj[i].fig_type == CYLIN)
 		scene->obj[i].shape.cylin.radius = (cl_double)one_dot;
+	else if (scene->obj[i].fig_type == DISK)
+		scene->obj[i].shape.disk.radius = (cl_double)one_dot;
 	else
 	{
 		ft_putendl(RED"XML : invalid param(radius have spher/cylin)"COLOR_OFF);
@@ -67,6 +83,8 @@ int	ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag)
 		return (1);
 	if (ft_strequ(tag, "normal") && scene->obj[i].fig_type == PLANE)
 		scene->obj[i].shape.plane.normal = ft_normalize((cl_double3)dot);
+	else if (ft_strequ(tag, "normal") && scene->obj[i].fig_type == DISK)
+		scene->obj[i].shape.disk.normal = ft_normalize((cl_double3)dot);
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CYLIN)
 		scene->obj[i].shape.cylin.dir = ft_normalize((cl_double3)dot);
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CONE)

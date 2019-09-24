@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 00:07:17 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:17:51 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 		rt->edi.chosen_obj = get_object_intersection(rt, x, y);
 		return (1);
 	}
-	else	
+	else
 		return (0);
 }
 
@@ -124,7 +124,7 @@ int			user_events(t_rt *rt)
 	int			changes;
 	static int	rotations = 0;
 	static int	move = 0;
-
+	int		ret;
 	changes = 0;
 	changes += translate(rt);
 	if (rotations)
@@ -135,6 +135,8 @@ int			user_events(t_rt *rt)
 	{
 		if (ev.type == SDL_KEYDOWN)
 		{
+			
+			
 			if (ev.key.keysym.sym == SDLK_ESCAPE)
 			{
 				system("leaks -q RT");
@@ -163,8 +165,18 @@ int			user_events(t_rt *rt)
 				move = mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
 				SDL_GetRelativeMouseState(NULL, NULL);
 			}
+		
 		else if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT)
 			move = 0;
+		else if (rt->edi.chosen_obj != -1)
+		{
+				if ((changes += ft_edit(rt->scene.obj+rt->edi.chosen_obj)))
+				{
+					ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
+					if (ret != CL_SUCCESS)
+					exit(error_message(RED"Something went bad\n"COLOR_OFF));
+				}
+		}
 	}
 	return (changes);
 }

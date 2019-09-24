@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 04:27:07 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:45:29 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,15 @@ int	ft_is_param(mxml_node_t *node, t_scene *scene, int i, int what_is)
 	return (1);
 }
 
+int	ft_is_obj2(const char *str, t_scene *scene, int *il)
+{
+	if (ft_strequ(str, "disk"))
+		ft_create_disk(scene, il[0]);
+	else
+		return (0);
+	return (1);
+}
+
 int	ft_is_obj(const char *str, t_scene *scene, int *il, t_pov *pov)
 {
 	il[0] += 1;
@@ -113,6 +122,8 @@ int	ft_is_obj(const char *str, t_scene *scene, int *il, t_pov *pov)
 		ft_create_cone(scene, il[0]);
 	else if (ft_strequ(str, "cylin"))
 		ft_create_cylin(scene, il[0]);
+	else if (ft_is_obj2(str, scene, il))
+		return (1);
 	else if (ft_strequ(str, "light"))
 	{
 		il[0] -= 1;

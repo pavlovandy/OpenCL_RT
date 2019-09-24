@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 17:40:36 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 20:11:24 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,19 +171,19 @@ struct	s_fig
 	cl_int		fig_type;
 	t_shape		shape;
 
-	cl_double3	color; //+
-	cl_int		specular; //+
-	cl_double	reflective; //+
-	cl_double	trans; //+
-	cl_double3	rotation;	//+
+	cl_double3	color; //+ pallete to buttons 
+	cl_int		specular; // -1 is off 0 - 1000
+	cl_double	reflective; // 0 - 1
+	cl_double	trans; //+ 0 - 1
+	cl_double3	rotation;	//+ no edit
 	t_rotation_matrix	rotation_martix;	//+
-	cl_double	ior;	//+
-	cl_int		noise; //+
-	cl_int		text_no; //+
-	cl_int		normal_map_no; 
-	cl_int		transparancy_map_no;	//+
-	cl_double2	txt_offset;	//+
-	cl_double2	txt_scale;	//+
+	cl_double	ior;	//+ MIN_IOR - 2
+	cl_int		noise; //+ -1 - 1
+	cl_int		text_no; //+ -1 if off find out
+	cl_int		normal_map_no; // -1 if off 6 find out
+	cl_int		transparancy_map_no;	//+ find out
+	cl_double2	txt_offset;	//+ no edit
+	cl_double2	txt_scale;	//+ no edit
 
 	cl_int			cutting;  //add to parser. default 0	---done
 	t_plane_data	cutting_plane;  //add to parser. if cutting = 0 unused	---done
@@ -361,8 +361,10 @@ int			init_but(t_rt *rt);
 void		apply_surface(SDL_Surface *dest, t_rt *rt);
 int			pres_buttn(t_rt *rt, int x, int y);
 /*
-**	Parse
+**	Edit
 */
+
+int			ft_edit(t_fig *fig);
 
 # include "parse.h"
 # include "mymath.h"

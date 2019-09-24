@@ -6,7 +6,7 @@
 #    By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/24 01:08:29 by ozhyhadl         ###   ########.fr        #
+#    Updated: 2019/09/24 19:43:31 by ozhyhadl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
 		xml/xml_read.c xml/xml_create_obj.c xml/xml_add_param.c \
 		xml/xml_add_param_help.c xml/xml_add_light.c xml/xml_create_cam.c xml/xml_it_is.c \
 		xml/xml_save.c xml/xml_write_obj.c xml/xml_write_other.c xml/xml_write_param.c \
-		xml/xml_add_param2.c button/init_but.c button/action_but.c
+		xml/xml_add_param2.c button/init_but.c button/action_but.c editor/check_edit.c \
+		xml/xml_create_obj2.c
 
 HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h
 
@@ -76,6 +77,7 @@ obj_dir:
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)/xml
 	mkdir -p $(OBJ_DIR)/button
+	mkdir -p $(OBJ_DIR)/editor
 
 xml:
 	/lib/mxml-3.0

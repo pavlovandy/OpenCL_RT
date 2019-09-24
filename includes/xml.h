@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 00:53:43 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:44:20 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_create_cone(t_scene *scene, int i);
 void	ft_create_pale(t_scene *scene, int i);
 void	ft_create_spher(t_scene *scene, int i);
 void	ft_creat_light(t_scene *scene, int l);
+void	ft_create_all(t_scene *scene, int i);
+void	ft_create_disk(t_scene *scene, int i);
 
 /*
 **	Add ++ add_param(position, radius, normal, dir, tang, type) to figure

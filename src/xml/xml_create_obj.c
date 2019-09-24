@@ -6,13 +6,13 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 16:47:05 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 17:48:23 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:39:54 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
 
-static void	ft_create_all(t_scene *scene, int i)
+void	ft_create_all(t_scene *scene, int i)
 {
 	scene->obj[i].color = (cl_double3){{255, 0, 0}};
 	scene->obj[i].specular = (cl_int)-1;
