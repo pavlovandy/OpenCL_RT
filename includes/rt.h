@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 04:12:52 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 17:40:36 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,16 +171,16 @@ struct	s_fig
 	cl_int		fig_type;
 	t_shape		shape;
 
-	cl_double3	color;
-	cl_int		specular;
-	cl_int		noise;
-	cl_double	reflective;
-	cl_double	trans;
+	cl_double3	color; //+
+	cl_int		specular; //+
+	cl_double	reflective; //+
+	cl_double	trans; //+
 	cl_double3	rotation;	//+
 	t_rotation_matrix	rotation_martix;	//+
 	cl_double	ior;	//+
-	cl_int		text_no;
-	cl_int		normal_map_no;
+	cl_int		noise; //+
+	cl_int		text_no; //+
+	cl_int		normal_map_no; 
 	cl_int		transparancy_map_no;	//+
 	cl_double2	txt_offset;	//+
 	cl_double2	txt_scale;	//+

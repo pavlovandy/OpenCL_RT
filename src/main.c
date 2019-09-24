@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 04:02:02 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 17:55:17 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[1].normal_map_no = -1;
 	scene->obj[1].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[1].txt_scale = (cl_double2){{1, 1}};
-	scene->obj[1].cutting = 0;
-	scene->obj[1].cutting_plane.dot = (cl_double3){{0, 0.3, -0.3}};
-	scene->obj[1].cutting_plane.normal = (cl_double3){{0.70710678118, 0.70710678118, 0}};
+	scene->obj[1].cutting = 1;
+	scene->obj[1].cutting_plane.dot = (cl_double3){{0, 0, 0}};
+	scene->obj[1].cutting_plane.normal = (cl_double3){{0, 1, 0}};
 
 	// scene->obj[2].fig_type = (cl_int)PLANE;
 	// scene->obj[2].shape.plane.dot = (cl_double3){{0, -1, 0}};

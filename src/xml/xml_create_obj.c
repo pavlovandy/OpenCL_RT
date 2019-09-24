@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 16:47:05 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 04:14:00 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 17:48:23 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_create_all(t_scene *scene, int i)
 	scene->obj[i].reflective = (cl_double)0;
 	scene->obj[i].trans = (cl_double) 0;
 	scene->obj[i].text_no = -1;
-	scene->obj[i].noise = 1;
+	scene->obj[i].noise = -1;
 	scene->obj[i].normal_map_no = -1;
 	scene->obj[i].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[i].txt_scale = (cl_double2){{1, 1}};
@@ -29,7 +29,7 @@ static void	ft_create_all(t_scene *scene, int i)
 	scene->obj[i].cutting = 0;
 	scene->obj[i].transparancy_map_no = -1;
 	scene->obj[i].cutting_plane.dot = (cl_double3){{0, 0, 0}};
-	scene->obj[i].cutting_plane.normal = (cl_double3){{0, 1, 0}};
+	scene->obj[i].cutting_plane.normal = (cl_double3){{0, 1, 1}};
 }
 
 void		ft_create_spher(t_scene *scene, int i)
