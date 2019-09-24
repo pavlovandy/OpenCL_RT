@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:02:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 00:16:41 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:07:51 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		pres_buttn(t_rt *rt, int x, int y)
 			{
 					ft_butn_sent(rt);
 				if (rt->butt[i].type == SAVE)
-					ft_xml_save("SaveSceneRT.xml", &rt->scene, rt->pov);
+					ft_xml_save("SaveSceneRT.xml", &rt->scene, rt->pov, rt);
 				else if (rt->butt[i].type == SCREEN)
 					ft_screenshot(rt);
 			}

@@ -9,26 +9,13 @@
 	cam		: position.
 --
 <RT width = "1200" heigth = "1200">
-	<plane>
-		<dot>0 0 0</dot>
-		<normal>0 0 1</normal>
-		<RGB>0 255 255</RGB>
-		<transparency>0</transparency>
-		<reflective>0</reflective>
-		<specular>1000</specular>
-		<texture>-1</texture>
-		<bump>-1</bump>
-		<cutting>0</cutting>
-		<cut_dot>0 0.3 -0.3</cut_dot>
-		<cut_normal>0.7 0.7 0</cut_normal>
-		<rotation>0 0 0</rotation>
-		<ior>1.0</ior>
-		<transp_map_no>-1</transp_map_no>
-		<txt_offset>0 0</txt_offset>
-		<txt_scale>1 1</txt_scale>
-	</plane>
-	<plane>
-	</plane>
+
+	<spher>
+		<centre> 0 2 0</centre>
+		<radius>1</radius>
+		<texture>0</texture>
+		<bump>1</bump>
+	</spher>
 	<light>
 		<type> point </type>
 		<position> 0 1 -4 </position>

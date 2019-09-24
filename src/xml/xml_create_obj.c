@@ -6,13 +6,13 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 16:47:05 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 19:39:54 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:41:52 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
 
-void	ft_create_all(t_scene *scene, int i)
+void	ft_create_all(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].color = (cl_double3){{255, 0, 0}};
 	scene->obj[i].specular = (cl_int)-1;
@@ -30,25 +30,28 @@ void	ft_create_all(t_scene *scene, int i)
 	scene->obj[i].transparancy_map_no = -1;
 	scene->obj[i].cutting_plane.dot = (cl_double3){{0, 0, 0}};
 	scene->obj[i].cutting_plane.normal = (cl_double3){{0, 1, 1}};
+	filter->obj_movement[i].move = 0;
+	filter->obj_movement[i].dir = (cl_double3){{0, 1, 1}};
+	
 }
 
-void		ft_create_spher(t_scene *scene, int i)
+void		ft_create_spher(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].fig_type = (cl_int)SPHERE;
 	scene->obj[i].shape.sphere.cent = (cl_double3){{0, 0, 0}};
 	scene->obj[i].shape.sphere.radius = (cl_double)1;
-	ft_create_all(scene, i);
+	ft_create_all(scene, i, filter);
 }
 
-void		ft_create_pale(t_scene *scene, int i)
+void		ft_create_pale(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].fig_type = (cl_int)PLANE;
 	scene->obj[i].shape.plane.dot = (cl_double3){{0, 0, 0}};
 	scene->obj[i].shape.plane.normal = (cl_double3){{0, 1, 0}};
-	ft_create_all(scene, i);
+	ft_create_all(scene, i, filter);
 }
 
-void		ft_create_cone(t_scene *scene, int i)
+void		ft_create_cone(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].fig_type = (cl_int)CONE;
 	scene->obj[i].shape.cone.dir = (cl_double3){{0, 1, 0}};
@@ -56,10 +59,10 @@ void		ft_create_cone(t_scene *scene, int i)
 	scene->obj[i].shape.cone.tangent = 0.24;
 	scene->obj[i].shape.cone.mmax = BIG_VALUE;
 	scene->obj[i].shape.cone.mmin = -BIG_VALUE;
-	ft_create_all(scene, i);
+	ft_create_all(scene, i, filter);
 }
 
-void		ft_create_cylin(t_scene *scene, int i)
+void		ft_create_cylin(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].fig_type = (cl_int)CYLIN;
 	scene->obj[i].shape.cylin.dir = (cl_double3){{1, 0, 0}};
@@ -67,5 +70,5 @@ void		ft_create_cylin(t_scene *scene, int i)
 	scene->obj[i].shape.cylin.radius = (cl_double)1;
 	scene->obj[i].shape.cylin.mmax = BIG_VALUE;
 	scene->obj[i].shape.cylin.mmin = -BIG_VALUE;
-	ft_create_all(scene, i);
+	ft_create_all(scene, i, filter);
 }

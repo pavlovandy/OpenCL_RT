@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 19:44:20 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:44:11 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@
 /*
 **	Add ++ parse xml
 */
-int		ft_parse_xml(char *name_file, t_scene *scene, t_pov *pov);
+int		ft_parse_xml(char *name_file, t_scene *scene, t_pov *pov, t_rt *rt);
 int		ft_check_child(mxml_node_t *node);
 int		ft_is_cam(mxml_node_t *node, t_pov *pov, int what_is);
 int		ft_is_light(mxml_node_t *node, t_scene *scene, int l, int what_is);
-int		ft_is_param(mxml_node_t *node, t_scene *scene, int i, int what_is);
-int		ft_is_obj(const char *str, t_scene *scene, int *il, t_pov *pov);
+int		ft_is_param(mxml_node_t *node, t_rt *rt, int i, int what_is);
+int		ft_is_obj(const char *str, t_scene *scene, int *il, t_rt *rt);
 
 /*
 **	Add ++ create define figure and light
 */
-void	ft_create_cylin(t_scene *scene, int i);
-void	ft_create_cone(t_scene *scene, int i);
-void	ft_create_pale(t_scene *scene, int i);
-void	ft_create_spher(t_scene *scene, int i);
+void	ft_create_cylin(t_scene *scene, int i, t_filters *filter);
+void	ft_create_cone(t_scene *scene, int i, t_filters *filter);
+void	ft_create_pale(t_scene *scene, int i, t_filters *filter);
+void	ft_create_spher(t_scene *scene, int i, t_filters *filter);
 void	ft_creat_light(t_scene *scene, int l);
-void	ft_create_all(t_scene *scene, int i);
-void	ft_create_disk(t_scene *scene, int i);
+void	ft_create_all(t_scene *scene, int i, t_filters *filter);
+void	ft_create_disk(t_scene *scene, int i, t_filters *filter);
 
 /*
 **	Add ++ add_param(position, radius, normal, dir, tang, type) to figure
@@ -45,6 +45,7 @@ int		ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag);
 int		ft_add_tanget(const char *str, t_scene *scene, int i);
 int		ft_add_type_light(t_scene *scene, int l, char *str);
 int		ft_add_mmin_mmax(const char *str, t_scene *scene, int i, const char *tag);
+int		ft_add_move_dir(const char *str, t_rt *rt, int i);
 
 /*
 **	Add ++ add_param(color, specular, reflection) to figure
@@ -63,9 +64,9 @@ int		ft_add_cam_dot(const char *str, t_pov *pov);
 **	Add ++ xml write to xml file
 */
 
-int		ft_xml_save(char *name_file, t_scene *scene, t_pov pov);
-void	ft_write_to_xml(t_fig fig, mxml_node_t *data);
-void	ft_write_all(t_fig fig, mxml_node_t *node);
+int		ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt);
+void	ft_write_to_xml(t_fig fig, mxml_node_t *data, t_obj_movement *filter);
+void	ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter);
 void	ft_write_3param(cl_double3 param, mxml_node_t *node, const char *name);
 void	ft_write_param(cl_double param, mxml_node_t *node, const char *name);
 void	ft_write_cam(t_pov pov, mxml_node_t *data);

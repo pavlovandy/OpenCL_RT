@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 19:45:29 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:44:37 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ int	ft_is_light(mxml_node_t *node, t_scene *scene, int l, int what_is)
 	return (0);
 }
 
-int	ft_is_param2(mxml_node_t *node, t_scene *scene, int i, const char *name)
+int	ft_is_param2(mxml_node_t *node, t_rt *rt, int i, const char *name)
 {
+	t_scene	*scene;
+
+	scene = &rt->scene;
 		if (ft_strequ(name, "mmin") || ft_strequ(name, "mmax"))
 			return(ft_add_mmin_mmax(mxmlGetOpaque(node), scene, i, name));
 		else if (ft_strequ(name, "transparency") || ft_strequ(name, "specular") || \
@@ -74,13 +77,19 @@ int	ft_is_param2(mxml_node_t *node, t_scene *scene, int i, const char *name)
 		ft_strequ(name, "transp_map_no") || ft_strequ(name, "txt_offset") || \
 		ft_strequ(name, "txt_scale"))
 			return (add_for_all_obj(mxmlGetOpaque(node), scene, i, name));
+		else if (ft_strequ(name, "move_dir"))
+			return(ft_add_move_dir(mxmlGetOpaque(node), rt, i));
+
+		
 		return (0);
 }
 
-int	ft_is_param(mxml_node_t *node, t_scene *scene, int i, int what_is)
+int	ft_is_param(mxml_node_t *node, t_rt *rt, int i, int what_is)
 {
 	const char	*name;
+	t_scene		*scene;
 
+	scene = &rt->scene;
 	if (what_is != 1)
 		return (1);
 	name = mxmlGetElement(node);
@@ -95,34 +104,34 @@ int	ft_is_param(mxml_node_t *node, t_scene *scene, int i, int what_is)
 		return (ft_add_normal_dir(mxmlGetOpaque(node), scene, i, name));
 	else if (ft_strequ(name, "angle"))
 		return (ft_add_tanget(mxmlGetOpaque(node), scene, i));
-	else if (ft_is_param2(node, scene, i, name))
+	else if (ft_is_param2(node, rt, i, name))
 		return(0);
 	ft_putstr(RED"XML : invalid param "COLOR_OFF);
 	ft_putendl(name);
 	return (1);
 }
 
-int	ft_is_obj2(const char *str, t_scene *scene, int *il)
+int	ft_is_obj2(const char *str, t_scene *scene, int *il, t_rt *rt)
 {
 	if (ft_strequ(str, "disk"))
-		ft_create_disk(scene, il[0]);
+		ft_create_disk(scene, il[0], &rt->filters);
 	else
 		return (0);
 	return (1);
 }
 
-int	ft_is_obj(const char *str, t_scene *scene, int *il, t_pov *pov)
+int	ft_is_obj(const char *str, t_scene *scene, int *il, t_rt *rt)
 {
 	il[0] += 1;
 	if (ft_strequ(str, "spher"))
-		ft_create_spher(scene, il[0]);
+		ft_create_spher(scene, il[0], &rt->filters);
 	else if (ft_strequ(str, "plane"))
-		ft_create_pale(scene, il[0]);
+		ft_create_pale(scene, il[0], &rt->filters);
 	else if (ft_strequ(str, "cone"))
-		ft_create_cone(scene, il[0]);
+		ft_create_cone(scene, il[0], &rt->filters);
 	else if (ft_strequ(str, "cylin"))
-		ft_create_cylin(scene, il[0]);
-	else if (ft_is_obj2(str, scene, il))
+		ft_create_cylin(scene, il[0], &rt->filters);
+	else if (ft_is_obj2(str, scene, il, rt))
 		return (1);
 	else if (ft_strequ(str, "light"))
 	{
@@ -134,7 +143,7 @@ int	ft_is_obj(const char *str, t_scene *scene, int *il, t_pov *pov)
 	else if (ft_strequ(str, "cam"))
 	{
 		il[0] -= 1;
-		ft_create_cam(pov);
+		ft_create_cam(&rt->pov);
 		return (3);
 	}
 		else return (0);

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 17:34:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 17:46:52 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:20:28 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exit_parse(mxml_node_t *tree, FILE *fp, char *str)
 	return (1);
 }
 
-int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov)
+int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 {
 	int			index[3];
 	mxml_node_t	*son;
@@ -34,11 +34,11 @@ int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov)
 	{
 		son = mxmlGetFirstChild(node);
 		if (mxmlGetElement(node) != NULL && !(what_is = \
-			ft_is_obj(mxmlGetElement(node), scene, index, pov)))
+			ft_is_obj(mxmlGetElement(node), scene, index, rt)))
 			return (error_message(RED"XML: Not valid tag"COLOR_OFF));
 		while (son != NULL)
 		{
-			if (mxmlGetElement(son) != NULL && ((ft_is_param(son, scene, \
+			if (mxmlGetElement(son) != NULL && ((ft_is_param(son, rt, \
 			index[0], what_is) && (ft_is_light(son, scene, index[1], what_is) \
 			&& ft_is_cam(son, pov, what_is))) || ft_check_child(son)))
 				return (1);
@@ -53,7 +53,7 @@ int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov)
 	return (0);
 }
 
-int	ft_parse_xml(char *name_file, t_scene *scene, t_pov *pov)
+int	ft_parse_xml(char *name_file, t_scene *scene, t_pov *pov, t_rt *rt)
 {
 	FILE		*fp;
 	mxml_node_t	*tree;
@@ -74,7 +74,7 @@ int	ft_parse_xml(char *name_file, t_scene *scene, t_pov *pov)
 		return (exit_parse(tree, fp, RED"Use first tag <RT> </RT>"COLOR_OFF));
 	ft_add_w_h(pov, node);
 	node = mxmlGetFirstChild(node);
-	if (ft_read_xml(node, scene, pov))
+	if (ft_read_xml(node, scene, pov, rt))
 		return (exit_parse(tree, fp, NULL));
 	fclose(fp);
 	mxmlDelete(tree);

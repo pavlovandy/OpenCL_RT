@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 20:47:41 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:36:01 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct	s_rectangle_data //add to parser
 	cl_double3	v3;
 }				t_rectangle_data;
 
-typedef struct	s_disk_data  //add to parser
+typedef struct	s_disk_data  //add to parser	---done
 {
 	cl_double3	cent;
 	cl_double3	normal;

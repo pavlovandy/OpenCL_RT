@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 00:50:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 04:34:58 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:43:57 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,16 @@ int		ft_add_mmin_mmax(const char *str, t_scene *scene, int i, const char *tag)
 	}
 	else
 		return (0);
+	return (1);
+}
+
+int		ft_add_move_dir(const char *str, t_rt *rt, int i)
+{
+	cl_double3	dot;
+
+	if (!ft_get_3param(3, str, &dot, NULL))
+		return (0);
+	rt->filters.obj_movement[i].move = 1;
+	rt->filters.obj_movement[i].dir = (cl_double3)dot;
 	return (1);
 }

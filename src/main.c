@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 17:55:17 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:07:07 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int		main(int argc, char **argv)
 		return (error_message(RED"couldnt init params"COLOR_OFF));
 	if (argc == 2)
 	{
-		if (ft_parse_xml(argv[1], &rt.scene, &rt.pov))
+		if (ft_parse_xml(argv[1], &rt.scene, &rt.pov, &rt))
 			return (1);
 	}
 	else if (argc == 1)

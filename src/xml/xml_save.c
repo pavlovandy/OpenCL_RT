@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:32:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 04:13:38 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 22:17:00 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			is_param_ltag(const char *str)
 		ft_strequ(str, "cut_dot") || ft_strequ(str, "cut_normal") ||
 		ft_strequ(str, "rotation") || ft_strequ(str, "ior") || \
 		ft_strequ(str, "transp_map_no") || ft_strequ(str, "txt_offset") || \
-		ft_strequ(str, "txt_scale"))
+		ft_strequ(str, "txt_scale") || ft_strequ(str, "move_dir"))
 		return (1);
 	return (0);
 }
@@ -63,7 +63,7 @@ const char	*whitespace_cb(mxml_node_t *node, int where)
 	return (NULL);
 }
 
-int			ft_xml_save(char *name_file, t_scene *scene, t_pov pov)
+int			ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt)
 {
 	mxml_node_t *xml;
 	mxml_node_t *data;
@@ -74,7 +74,7 @@ int			ft_xml_save(char *name_file, t_scene *scene, t_pov pov)
 	xml = mxmlNewXML("1.0");
 	data = mxmlNewElement(xml, "RT");
 	while (++i < scene->count_obj)
-		ft_write_to_xml(scene->obj[i], data);
+		ft_write_to_xml(scene->obj[i], data, &rt->filters.obj_movement[i]);
 	i = -1;
 	while (++i < scene->count_light)
 		ft_write_light(scene->light[i], data);
