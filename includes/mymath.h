@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymath.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:26 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/22 18:57:00 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/24 23:39:50 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ t_rotation_matrix build_rotation_matrix_for_cylin(cl_double3 dir);
 cl_double3	ft_normalize(cl_double3 a);
 
 cl_double3	ft_rotate_reverse_camera(cl_double3 direction, t_pov pov);
+int				check_rectangle_in_plane(t_rectangle_data rectange);
+
 
 #endif
