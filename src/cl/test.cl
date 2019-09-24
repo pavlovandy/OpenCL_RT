@@ -94,11 +94,10 @@ double3	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_d
 	return (local_intensity);
 }
 
-double3	ft_noise1 (double3 inter, double2 coords)
+double3	ft_noise1 (double2 coords)
 {
 	double3 color;
 	double z;
-	double v;
 
 	z = floor(sin(coords[0] * 2 * M_PI) + sin(coords[1] * 2 * M_PI ));
 	color = (double3){((int)z >> 16) & 0xFF, ((int)z >> 8) & 0xFF, ((int)z & 0xFF)};
@@ -169,7 +168,7 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	else if (fig.noise == 0)
 		pix_color = ft_noise(eye, texture_space_coords);
 	else if (fig.noise == 1)
-	pix_color = ft_noise1(intersect_point, texture_space_coords);
+	pix_color = ft_noise1(texture_space_coords);
 	else
 		pix_color = fig.color;
 
@@ -252,7 +251,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 		{
 			fig = scene->obj[obj_and_dist.obj];
 			intersect_point = curr_node.start + curr_node.dir * obj_and_dist.dist;
-			if ((fig.normal_map_no > -1) || (fig.text_no > -1) || (fig.transparancy_map_no > -1) || sig.noise > -1)
+			if ((fig.normal_map_no > -1) || (fig.text_no > -1) || (fig.transparancy_map_no > -1) || fig.noise > -1)
 				texture_space_coords = get_texture_space_coords(intersect_point, fig);
 			if (fig.transparancy_map_no == -1)
 				trans = fig.trans;

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 !-- This is a comment
 	RT		: width, heigth.
-	spher	: centre, radius, RGB, transparency, reflective, specular, texture, bump.
-	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump.
-	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump.
-	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump.
+	spher	: centre, radius, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
+	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
+	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
+	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
 	light	: type, position, intensity.
 	cam		: position.
 --

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/23 23:11:13 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 04:02:02 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].cutting_plane.dot = (cl_double3){{0, 0.3, -0.3}};
 	scene->obj[0].cutting_plane.normal = (cl_double3){{0.70710678118, 0.70710678118, 0}};
 
-	scene->obj[1].fig_type = (cl_int)SPHERE;
-	scene->obj[1].shape.sphere.cent = (cl_double3){{-3, 1, 5}};
-	scene->obj[1].shape.sphere.radius = (cl_double)2;
+	// scene->obj[1].fig_type = (cl_int)SPHERE;
+	// scene->obj[1].shape.sphere.cent = (cl_double3){{-3, 1, 5}};
+	// scene->obj[1].shape.sphere.radius = (cl_double)2;
 
 	// scene->obj[1].fig_type = (cl_int)PLANE; //hasnt draw from one side
 	// scene->obj[1].shape.plane.dot = (cl_double3){{0, -1, 0}};
@@ -89,19 +89,19 @@ void	make_little_default_scene(t_scene *scene)
 	// scene->obj[1].shape.cylin.mmin = -5;
 	// scene->obj[1].shape.cylin.mmax = 5;
 
-	// scene->obj[1].fig_type = (cl_int)CONE;
-	// scene->obj[1].shape.cone.vertex = (cl_double3){{0, 0, 0}};
-	// scene->obj[1].shape.cone.dir = (cl_double3){{0, 0, 1}};
-	// scene->obj[1].shape.cone.tangent = (cl_double)0.3;
-	// scene->obj[1].shape.cone.mmin = 0;
-	// scene->obj[1].shape.cone.mmax = 5;
+	scene->obj[1].fig_type = (cl_int)CONE;
+	scene->obj[1].shape.cone.vertex = (cl_double3){{4, 0, 0}};
+	scene->obj[1].shape.cone.dir = (cl_double3){{0, 0, 1}};
+	scene->obj[1].shape.cone.tangent = (cl_double)0.3;
+	scene->obj[1].shape.cone.mmin = 0;
+	scene->obj[1].shape.cone.mmax = 5;
 	scene->obj[1].rotation = (cl_double3){{0 * M_PI / 180.0, 0 * M_PI / 180.0, 0 * M_PI / 180.0}};
 	scene->obj[1].rotation_martix = build_rotation_matrix_form_angles(scene->obj[1].rotation);
 	scene->obj[1].color = (cl_double3){{0, 255, 255}};
 	scene->obj[1].specular = (cl_int)1000;
 	scene->obj[1].reflective = (cl_double)0;
 	scene->obj[1].trans = (cl_double)0;
-	scene->obj[1].ior = (cl_double)1.3;
+	scene->obj[1].ior = (cl_double)MIN_IOR;
 	scene->obj[1].text_no = -1;
 	scene->obj[1].transparancy_map_no = -1;
 	scene->obj[1].normal_map_no = -1;

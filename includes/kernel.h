@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/23 23:08:10 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/23 23:15:41 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct	s_fig
 	double3				rotation;
 	t_rotation_matrix	rotation_martix;
 	double				ior;
+	int					noise;
 	int					text_no;
 	int					normal_map_no;
 	int					transparancy_map_no;
@@ -266,5 +267,5 @@ double		line_point(double start, double end, double p);
 
 
 double3	ft_noise	(double3 eye, double2 dir);
-double3	ft_noise1 	(double3 inter, double2 coords);
+double3	ft_noise1 	(double2 coords);
 #endif

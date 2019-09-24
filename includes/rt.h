@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/23 23:08:21 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 04:12:52 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@
 # define MIN_IOR 1.01;
 # define D	0.1
 
-
+# define BIG_VALUE 1000000
 # define COUNT_BUTT 3
 # define RENDER_ITARATION 20
 # define MAX_TEXTURE_COUNT 10
@@ -103,8 +103,8 @@ typedef struct	s_cone_data
 	cl_double3	vertex;
 	cl_double3	dir;
 	cl_double	tangent;
-	cl_double	mmax; //add to parser. inf = BIG_VALUE
-	cl_double	mmin; //add to parser. inf = -BIG_VALUE
+	cl_double	mmax; //add to parser. inf = BIG_VALUE	---done
+	cl_double	mmin; //add to parser. inf = -BIG_VALUE	---done
 }				t_cone_data;
 
 typedef struct	s_rectangle_data //add to parser
@@ -142,8 +142,8 @@ typedef struct	s_cylin_data
 	cl_double3	dir;
 	cl_double3	dot;
 	cl_double	radius;
-	cl_double	mmax; //add to parser. inf = BIG_VALUE
-	cl_double	mmin; //add to parser. inf = -BIG_VALUE
+	cl_double	mmax; //add to parser. inf = BIG_VALUE	---done
+	cl_double	mmin; //add to parser. inf = -BIG_VALUE	---done
 }				t_cylin_data;
 
 typedef union	u_shape
@@ -176,17 +176,17 @@ struct	s_fig
 	cl_int		noise;
 	cl_double	reflective;
 	cl_double	trans;
-	cl_double3	rotation;
-	t_rotation_matrix	rotation_martix;
-	cl_double	ior;
+	cl_double3	rotation;	//+
+	t_rotation_matrix	rotation_martix;	//+
+	cl_double	ior;	//+
 	cl_int		text_no;
 	cl_int		normal_map_no;
-	cl_int		transparancy_map_no;
-	cl_double2	txt_offset;
-	cl_double2	txt_scale;
+	cl_int		transparancy_map_no;	//+
+	cl_double2	txt_offset;	//+
+	cl_double2	txt_scale;	//+
 
-	cl_int			cutting;  //add to parser. default 0
-	t_plane_data	cutting_plane;  //add to parser. if cutting = 0 unused
+	cl_int			cutting;  //add to parser. default 0	---done
+	t_plane_data	cutting_plane;  //add to parser. if cutting = 0 unused	---done
 };
 
 struct	s_sdl
@@ -230,7 +230,7 @@ struct	s_scene
 	t_fig			obj[MAX_OBJ_COUNT];
 	cl_int			count_light;
 	t_light			light[MAX_LIGHTING_COUNT];
-	cl_int			count_neg_obj; //default 0
+	cl_int			count_neg_obj; //default 0	---done
 	t_negative_fig	neg_obj[MAX_NEGATIVE_OBJ_COUNT];
 };
 

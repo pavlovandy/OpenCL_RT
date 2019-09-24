@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 16:30:14 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 00:07:17 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,10 @@ int			user_events(t_rt *rt)
 		if (ev.type == SDL_KEYDOWN)
 		{
 			if (ev.key.keysym.sym == SDLK_ESCAPE)
-				exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
+			{
+				system("leaks -q RT");
+					exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
+			}
 			else if (ev.key.keysym.sym == SDLK_0)
 			{
 				rotations = !rotations;
