@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:51 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/22 18:55:38 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/24 23:23:44 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,18 @@ t_rotation_matrix build_rotation_matrix_for_cylin(cl_double3 dir)
 	t_rotation_matrix	rm;
 
 	rm.e3 = dir;
-	rm.e1 = (cl_double3){{1, 1, 0}}; //dovilnii napryamok golovne shchob buv ortogonalnii
-	rm.e1.s[2] = -(rm.e3.s[0] * rm.e1.s[0] + rm.e3.s[1] * rm.e1.s[1]) / rm.e3.s[2];
+	if (rm.e3.s[2] == 0)
+		rm.e1 = (cl_double3){{0, 0, 1}};	
+	else
+	{
+		rm.e1 = ft_normalize((cl_double3){{1, 1, 0}}); //dovilnii napryamok golovne shchob buv ortogonalnii
+		rm.e1.s[2] = -(rm.e3.s[0] * rm.e1.s[0] + rm.e3.s[1] * rm.e1.s[1]) / rm.e3.s[2];	
+	}
 	rm.e2 = cross(rm.e3, rm.e1);
+
+	rm.e1 = ft_normalize(rm.e1);
+	rm.e2 = ft_normalize(rm.e2);
+	rm.e3 = ft_normalize(rm.e3);
 	printf("%f %f %f\n%f %f %f\n%f %f %f\n", rm.e1.s[0], rm.e1.s[1], rm.e1.s[2], rm.e2.s[0], rm.e2.s[1], rm.e2.s[2], rm.e3.s[0], rm.e3.s[1], rm.e3.s[2]);
 	fflush(stdout);
 	return (rm);

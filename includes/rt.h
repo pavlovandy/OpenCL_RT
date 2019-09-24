@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 21:36:01 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 23:17:04 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,5 +378,6 @@ int			ft_edit(t_fig *fig);
 # include "mymath.h"
 # include "xml.h"
 # include "editor.h"
+# include "functions.h"
 
 #endif
