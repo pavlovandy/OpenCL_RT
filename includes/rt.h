@@ -124,10 +124,18 @@ typedef struct	s_disk_data  //add to parser
 
 typedef struct	s_torus_data 
 {
+	cl_double3	cent; //any
+	cl_double3	dir; //unit vector
+	cl_double	big_radius; // > 0
+	cl_double	inner_radius; // > 0
 }				t_torus_data;
 
 typedef struct	s_ellipse_data
 {
+	cl_double3	cent; //any
+	cl_double	dist_btwn_cent; // > 0
+	cl_double3	dir; // unit vector
+	cl_double	radius_sum; // > 0
 }				t_ellipse_data;
 
 typedef struct	s_triangle_data  //add to parser
