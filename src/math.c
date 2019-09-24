@@ -6,7 +6,7 @@
 /*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:51 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 23:40:54 by anri             ###   ########.fr       */
+/*   Updated: 2019/09/25 00:41:15 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ cl_double3	minus_double3(cl_double3 a, cl_double3 b)
 cl_double3	increase_double3(cl_double3 a, double multi)
 {
 	return ((cl_double3){{a.s[0] * multi, a.s[1] * multi, a.s[2] * multi}});
+}
+
+double		dot(cl_double3 a, cl_double3 b)
+{
+	return (a.s[0] * a.s[0] + a.s[1] * a.s[1] + a.s[2] * a.s[2]);
 }
 
 double		vector_len(cl_double3 a)
@@ -177,13 +182,15 @@ int				check_rectangle_in_plane(t_rectangle_data rectange)
 	return (0); 
 }
 
-t_rotation_matrix build_rotation_matrix_for_cylin(cl_double3 dir)
+t_rotation_matrix build_rotation_matrix_for_dir(cl_double3 dir)
 {
 	t_rotation_matrix	rm;
 
 	rm.e3 = dir;
-	if (rm.e3.s[2] == 0)
-		rm.e1 = (cl_double3){{0, 0, 1}};	
+	if (rm.e3.s[2] == 0 && rm.e3.s[1] != 0)
+		rm.e1 = ft_normalize((cl_double3){{1, 0, 0}});
+	else if (rm.e3.s[2] == 0 && rm.e3.s[1] == 0)
+		rm.e1 = ft_normalize((cl_double3){{0, 0, 1}});
 	else
 	{
 		rm.e1 = ft_normalize((cl_double3){{1, 1, 0}}); //dovilnii napryamok golovne shchob buv ortogonalnii
@@ -194,7 +201,5 @@ t_rotation_matrix build_rotation_matrix_for_cylin(cl_double3 dir)
 	rm.e1 = ft_normalize(rm.e1);
 	rm.e2 = ft_normalize(rm.e2);
 	rm.e3 = ft_normalize(rm.e3);
-	printf("%f %f %f\n%f %f %f\n%f %f %f\n", rm.e1.s[0], rm.e1.s[1], rm.e1.s[2], rm.e2.s[0], rm.e2.s[1], rm.e2.s[2], rm.e3.s[0], rm.e3.s[1], rm.e3.s[2]);
-	fflush(stdout);
 	return (rm);
 }

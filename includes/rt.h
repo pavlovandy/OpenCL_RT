@@ -6,7 +6,7 @@
 /*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 23:17:04 by anri             ###   ########.fr       */
+/*   Updated: 2019/09/24 23:54:20 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ typedef struct	s_light
 	cl_double3	v;
 }				t_light;
 
-typedef struct	s_negative_fig //add to parser. currently supported sphere planes and cone
+typedef struct	s_negative_fig //add to parser. currently supported sphere planes
 {
 	cl_int		fig_type;
 	t_shape		shape;
