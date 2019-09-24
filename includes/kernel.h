@@ -72,10 +72,18 @@ typedef struct	s_disk_data
 
 typedef struct	s_torus_data
 {
+	double3	cent;
+	double3	dir;
+	double	big_radius;
+	double	inner_radius;
 }				t_torus_data;
 
 typedef struct	s_ellipse_data
 {
+	double3	cent;
+	double	dist_btwn_cent;
+	double3	dir;
+	double	radius_sum;
 }				t_ellipse_data;
 
 typedef struct	s_triangle_data
