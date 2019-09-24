@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/22 17:23:37 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/24 21:12:34 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			init_start_params(t_rt *rt)
 	rt->envi.textures_size = 0;
 	rt->envi.txt_count = 0;
 	rt->envi.txt = 0;
-	
+	rt->edi.chosen_obj = -1;
 
 	init_pov(&rt->pov);
 	rt->filters.motion = 0;

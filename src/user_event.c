@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 19:17:51 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:29:32 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int			user_events(t_rt *rt)
 			
 			if (ev.key.keysym.sym == SDLK_ESCAPE)
 			{
-				system("leaks -q RT");
+				// system("leaks -q RT");
 					exit(error_message(GREEN"Bye bye"COLOR_OFF) - 1);
 			}
 			else if (ev.key.keysym.sym == SDLK_0)

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:13:18 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 04:12:46 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:18:30 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ void	ft_write_2param(cl_double2 param, mxml_node_t *node, const char *name)
 	ft_strdel(&tmp);
 }
 
+void	ft_write_big_double(cl_double param, mxml_node_t *node, const char *name)
+{
+	node = mxmlNewElement(node, name);
+		mxmlNewReal(node, param);
+}
+
 void	ft_write_all(t_fig fig, mxml_node_t *node)
 {
 	ft_write_3param(fig.color, node, (const char *)"RGB");
@@ -90,7 +96,7 @@ void	ft_write_all(t_fig fig, mxml_node_t *node)
 	ft_write_3param(fig.cutting_plane.dot, node, "cut_dot");
 	ft_write_3param(fig.cutting_plane.normal, node, "cut_normal");
 	ft_write_3param(fig.rotation, node, "rotation");
-	ft_write_param(fig.ior, node, (const char *)"ior"); 
+	ft_write_big_double(fig.ior, node, (const char *)"ior");
 	ft_write_param((cl_double)fig.transparancy_map_no, node, (const char *)"transp_map_no");
 	ft_write_2param(fig.txt_offset, node, "txt_offset");
 	ft_write_2param(fig.txt_scale, node, "txt_scale");

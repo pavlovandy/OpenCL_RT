@@ -13,7 +13,7 @@
 		<cut_dot>0 0.3 -0.3</cut_dot>
 		<cut_normal>0.7 0.7 0</cut_normal>
 		<rotation>0 0 0</rotation>
-		<ior>1.4</ior>
+		<ior>1.100000</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
@@ -34,7 +34,7 @@
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 0</cut_normal>
 		<rotation>0 0 0</rotation>
-		<ior>1.0</ior>
+		<ior>1.000000</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
@@ -59,11 +59,6 @@
 		<position>10 10 -5</position>
 		<intensity>5 5 5</intensity>
 	</light>
-	<disk>
-		<centre>0 0 5</centre>
-		<normal>0 1 0</normal>
-		<radius>2 </radius>
-	</disk>
 	<cam>
 		<position>0 0 0</position>
 	</cam>
