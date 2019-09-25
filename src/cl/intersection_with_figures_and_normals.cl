@@ -321,7 +321,7 @@ double2		cut_result_with_negative_obj(double2 prev, __global t_scene *scene, dou
 				prev = cut_with_plane(prev, intersect_point, scene->neg_obj[i].shape.plane);
 			break;
 			case CYLIN:
-				//prev = cut_with_cylin(prev, intersect_point, scene->neg_obj[i].shape.cylin);
+				prev = cut_with_cylin(prev, intersect_point, scene->neg_obj[i]);
 			break;
 			default:
 			break;

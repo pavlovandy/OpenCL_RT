@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:16:13 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:31:11 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ int		read_textures(t_rt *rt);
 int			init_cl(t_cl *cl);
 int			create_program_and_kernels(t_cl *cl);
 int			set_up_memory(t_rt *rt, t_cl *cl);
-int			freed_up_memory(t_cl *cl);
+int			freed_up_memory(t_cl *cl, t_rt *rt);
 
 /*
 **	SDL		stuff

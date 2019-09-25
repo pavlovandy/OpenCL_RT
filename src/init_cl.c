@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 15:02:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:16:35 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:31:36 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int			set_up_memory(t_rt *rt, t_cl *cl)
 	return (0);
 }
 
-int			freed_up_memory(t_cl *cl)
+int			freed_up_memory(t_cl *cl, t_rt *rt)
 {
 	cl_int	ret;
 
@@ -196,5 +196,8 @@ int			freed_up_memory(t_cl *cl)
 	ret = clReleaseMemObject(cl->txt_param_mem);
 	if (ret != CL_SUCCESS)
 		error_message(RED"clReleaseMemObject(cl->txt_param_mem) exception but whatever"COLOR_OFF);
+	free(rt->filters.buff);
+	free(rt->filters.colors);
+	free(rt->filters.zbuff);
 	return (0);
 }
