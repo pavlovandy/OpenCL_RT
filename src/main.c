@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:38:28 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 20:50:15 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	make_little_default_scene(t_scene *scene)
 {
 	scene->count_obj = (cl_int)1;
 	scene->count_light = (cl_int)4;
-	scene->count_neg_obj = 1;
+	scene->count_neg_obj = 0;
 	
 	scene->neg_obj[0].fig_type = CYLIN;
 	scene->neg_obj[0].shape.cylin.dir = (cl_double3){{1, 0, 0}};
@@ -27,14 +27,14 @@ void	make_little_default_scene(t_scene *scene)
 
 	scene->neg_obj[0].rotation_matrix = build_rotation_matrix_for_dir(scene->neg_obj[0].shape.cylin.dir);
 
-	scene->light[0].type_num = (cl_int)AMBIENT;
-	scene->light[0].intensity = (cl_double3){{1, 1, 1}};
-	scene->light[0].v = (cl_double3){{1, 4, 10}};
-
-
-	// scene->light[0].type_num = (cl_int)POINT;
-	// scene->light[0].intensity = (cl_double3){{5, 5, 5}};
+	// scene->light[0].type_num = (cl_int)AMBIENT;
+	// scene->light[0].intensity = (cl_double3){{1, 1, 1}};
 	// scene->light[0].v = (cl_double3){{1, 4, 10}};
+
+
+	scene->light[0].type_num = (cl_int)POINT;
+	scene->light[0].intensity = (cl_double3){{5, 5, 5}};
+	scene->light[0].v = (cl_double3){{1, 4, 10}};
 
 	scene->light[1].type_num = (cl_int)POINT;
 	scene->light[1].intensity = (cl_double3){{5, 5, 5}};
@@ -59,10 +59,16 @@ void	make_little_default_scene(t_scene *scene)
 	// scene->obj[0].rotation = (cl_double3){{50 * M_PI / 180.0, 50 * M_PI / 180.0, 0 * M_PI / 180.0}};
 	// scene->obj[0].text_no = 0;
 
-	scene->obj[0].fig_type = (cl_int)SPHERE;
-	scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 0}};
+	// scene->obj[0].fig_type = (cl_int)SPHERE;
+	// scene->obj[0].shape.sphere.cent = (cl_double3){{0, 0, 0}};
+	// scene->obj[0].color = (cl_double3){{0, 255, 0}};
+	// scene->obj[0].shape.sphere.radius = (cl_double)3;
+		scene->obj[0].fig_type = (cl_int)ELLIPSE;
+	scene->obj[0].shape.ellipse.cent = (cl_double3){{0, 0, 5}};
+	scene->obj[0].shape.ellipse.dir = (cl_double3){{1, 0, 0}};
+	scene->obj[0].shape.ellipse.dist_btwn_cent = (cl_double)3;
+	scene->obj[0].shape.ellipse.radius_sum = (cl_double)5;
 	scene->obj[0].color = (cl_double3){{0, 255, 0}};
-	scene->obj[0].shape.sphere.radius = (cl_double)3;
 	scene->obj[0].rotation = (cl_double3){{0 * M_PI / 180.0, 0 * M_PI / 180.0, 0 * M_PI / 180.0}};
 	scene->obj[0].rotation_martix = build_rotation_matrix_form_angles(scene->obj[0].rotation);
 	scene->obj[0].specular = (cl_int)-1;
@@ -71,7 +77,7 @@ void	make_little_default_scene(t_scene *scene)
 	scene->obj[0].ior = (cl_double)1.4;
 	scene->obj[0].transparancy_map_no = -1;
 	scene->obj[0].noise = -1;
-	scene->obj[0].text_no = 5;
+	scene->obj[0].text_no = -1;
 	scene->obj[0].normal_map_no = -1;
 	scene->obj[0].txt_offset = (cl_double2){{0, 0}};
 	scene->obj[0].txt_scale = (cl_double2){{1, 1}};
