@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/23 23:11:42 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:25:18 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		move_obj_a_little(t_rt *rt)
 {
 	int			i;
 	int			obj;
-	cl_double3	change;
+	cl_double3	*dot;
 	t_obj_movement	move;
 	int			ret;
 
@@ -25,7 +25,10 @@ void		move_obj_a_little(t_rt *rt)
 	{
 		move = rt->filters.obj_movement[i];
 		if (move.move)
-			rt->scene.obj[i].shape.sphere.cent = add_double3(rt->scene.obj[i].shape.sphere.cent, move.dir);
+		{
+			dot = get_obj_dot(rt->scene.obj + i);
+			*dot = add_double3(*dot, move.dir);
+		}
 	}
 	ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 	if (ret != CL_SUCCESS)
@@ -36,7 +39,7 @@ void		set_obj_back(t_rt *rt)
 {
 	int			i;
 	int			obj;
-	cl_double3	change;
+	cl_double3	*dot;
 	t_obj_movement	move;
 	int			ret;
 
@@ -46,8 +49,9 @@ void		set_obj_back(t_rt *rt)
 		move = rt->filters.obj_movement[i];
 		if (move.move)
 		{
+			dot = get_obj_dot(rt->scene.obj + i);
 			move.dir = increase_double3(move.dir, RENDER_ITARATION);
-			rt->scene.obj[i].shape.sphere.cent = minus_double3(rt->scene.obj[i].shape.sphere.cent, move.dir);
+			*dot = minus_double3(*dot, move.dir);
 		}
 	}
 	ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);

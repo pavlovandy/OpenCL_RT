@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 21:12:34 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:24:14 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ int			init_start_params(t_rt *rt)
 		rt->filters.obj_movement[i].move = 0;
 		rt->filters.obj_movement[i].dir = (cl_double3){{0, 0, 0}};
 	}
-
-	rt->filters.colors = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
-	rt->filters.buff = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
-	i = -1;
 	return (0);
 }
 

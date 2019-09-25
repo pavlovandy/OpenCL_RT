@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:51 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 00:41:15 by anri             ###   ########.fr       */
+/*   Updated: 2019/09/25 16:26:04 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ cl_double3	increase_double3(cl_double3 a, double multi)
 
 double		dot(cl_double3 a, cl_double3 b)
 {
-	return (a.s[0] * a.s[0] + a.s[1] * a.s[1] + a.s[2] * a.s[2]);
+	return (a.s[0] * b.s[0] + a.s[1] * b.s[1] + a.s[2] * b.s[2]);
 }
 
 double		vector_len(cl_double3 a)
@@ -160,9 +160,9 @@ t_rotation_matrix build_rotation_matrix_form_angles(cl_double3 rot)
 
 cl_double3		cross(cl_double3 a, cl_double3 b)
 {
-	return ((cl_double3){a.s[1] * b.s[2] - a.s[2] * b.s[1], \
+	return ((cl_double3){{a.s[1] * b.s[2] - a.s[2] * b.s[1], \
 							a.s[2] * b.s[0] - a.s[0] * b.s[2], \
-							a.s[0] * b.s[1] - a.s[1] * b.s[0]});
+							a.s[0] * b.s[1] - a.s[1] * b.s[0]}});
 }
 
 int				check_rectangle_in_plane(t_rectangle_data rectange)
@@ -193,7 +193,7 @@ t_rotation_matrix build_rotation_matrix_for_dir(cl_double3 dir)
 		rm.e1 = ft_normalize((cl_double3){{0, 0, 1}});
 	else
 	{
-		rm.e1 = ft_normalize((cl_double3){{1, 1, 0}}); //dovilnii napryamok golovne shchob buv ortogonalnii
+		rm.e1 = ft_normalize((cl_double3){{1, 1, 0}});
 		rm.e1.s[2] = -(rm.e3.s[0] * rm.e1.s[0] + rm.e3.s[1] * rm.e1.s[1]) / rm.e3.s[2];	
 	}
 	rm.e2 = cross(rm.e3, rm.e1);
