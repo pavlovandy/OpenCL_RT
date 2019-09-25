@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 15:02:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 16:24:08 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:05:21 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,14 @@ int			set_up_memory(t_rt *rt, t_cl *cl)
 
 	rt->filters.colors = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
 	rt->filters.buff = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
+	rt->filters.zbuff = ft_memalloc(sizeof(float) * rt->pov.w * rt->pov.h);
 
 	cl->scene_mem = clCreateBuffer(cl->context, CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, sizeof(t_scene), &rt->scene, &ret);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateBuffer(scene_mem) exception"COLOR_OFF));
+	cl->zbuff = clCreateBuffer(cl->context, CL_MEM_WRITE_ONLY, sizeof(cl_float) * rt->pov.h * rt->pov.w, 0, &ret);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clCreateBuffer(zbuff) exception"COLOR_OFF));
 	cl->pixel_ptr = clCreateBuffer(cl->context, CL_MEM_WRITE_ONLY, sizeof(cl_uint) * rt->pov.h * rt->pov.w, 0, &ret);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clCreateBuffer(pixel_ptr) exception"COLOR_OFF));
@@ -160,6 +164,9 @@ int			set_up_memory(t_rt *rt, t_cl *cl)
 	ret = clSetKernelArg(cl->rt_kernel, 4, sizeof(cl->txt_param_mem), &cl->txt_param_mem);
 	if (ret != CL_SUCCESS)
 		return (error_message(RED"clSetKernelArg(4) exception"COLOR_OFF));
+	ret = clSetKernelArg(cl->rt_kernel, 5, sizeof(cl->zbuff), &cl->zbuff);
+	if (ret != CL_SUCCESS)
+		return (error_message(RED"clSetKernelArg(5) exception"COLOR_OFF));
 
 	/* Argument list for click_kernel*/
 	ret = clSetKernelArg(cl->click_kernel, 0, sizeof(cl->scene_mem), &cl->scene_mem);

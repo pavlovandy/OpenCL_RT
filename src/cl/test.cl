@@ -217,7 +217,7 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	return (pix_color * intensity);
 }
 
-double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global t_txt_params *txt_params)
+double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min_range, double max_range, __global uint *texture, __global t_txt_params *txt_params, float *zbuff)
 {
 	double3		normal;
 	double3		local_color;
@@ -298,13 +298,17 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 				}
 			}
 			color += local_color;
+			if (curr == 0)
+				*zbuff = length(intersect_point - eye);
 			curr++;
 		}
 		else
 		{
 			color += BACKGROUND_COLOR * curr_node.part_of_primary_ray;
+			if (curr == 0)
+				*zbuff = BIG_VALUE;
 			curr++;
-			continue ;
+			continue ; //what a hell
 		}
 	}
 	return (color);
@@ -320,18 +324,21 @@ __kernel void	test_kernel(__global t_scene *scene,
 							__global uint *canvas,
 							t_pov pov,
 							__global uint *texture,
-							__global t_txt_params *txt_params)
+							__global t_txt_params *txt_params,
+							__global float *zbuffer)
 {
 	int	id = get_global_id(0);
 	int	x = id % pov.w;
 	int	y = id / pov.w;
 	double3	direction;
+	float	zbuff;
 	double3	color;
 
 	direction = normalize(canvas_to_viewport(x - pov.w /2 , y - pov.h / 2, pov.w, pov.h, pov));
 	direction = rotate_camera(direction, pov);
-	color = ray_trace(pov.coord, direction, scene, 0.1, BIG_VALUE, texture, txt_params);
+	color = ray_trace(pov.coord, direction, scene, 0.1, BIG_VALUE, texture, txt_params, &zbuff);
 	color = trim_color(color);
 	
 	canvas[id] = color_to_canvas(color);
+	zbuffer[id] = zbuff;
 }

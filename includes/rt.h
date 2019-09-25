@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 15:25:24 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/25 17:15:06 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ typedef struct	s_cl
 	
 	cl_mem				scene_mem;
 	cl_mem				pixel_ptr;
+	cl_mem				zbuff;
 	cl_mem				texture_mem;
 	cl_mem				txt_param_mem;
 	cl_mem				id_obj;
@@ -314,6 +315,7 @@ typedef struct	s_filters
 	int		motion;
 	cl_double3	*colors;
 	cl_uint		*buff;
+	cl_float	*zbuff;
 	t_obj_movement	obj_movement[MAX_OBJ_COUNT];
 }				t_filters;
 

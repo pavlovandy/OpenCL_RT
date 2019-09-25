@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 16:25:18 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:14:38 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void		move_obj_a_little(t_rt *rt)
 {
 	int			i;
-	int			obj;
 	cl_double3	*dot;
 	t_obj_movement	move;
 	int			ret;
@@ -38,7 +37,6 @@ void		move_obj_a_little(t_rt *rt)
 void		set_obj_back(t_rt *rt)
 {
 	int			i;
-	int			obj;
 	cl_double3	*dot;
 	t_obj_movement	move;
 	int			ret;
@@ -109,7 +107,7 @@ int			render_scene(t_rt *rt)
 	pixels = (cl_uint*)rt->sdl.win_sur->pixels;
 
 	if (rt->filters.motion)
-	{;
+	{
 		ft_bzero(rt->filters.colors, sizeof(cl_double3) * rt->pov.w * rt->pov.h);
 		i = -1;
 		while (++i < RENDER_ITARATION)
@@ -139,9 +137,17 @@ int			render_scene(t_rt *rt)
 			sizeof(cl_uint) * rt->pov.w * rt->pov.h, pixels, 0, 0, 0);
 		if (ret != CL_SUCCESS)
 			return (error_message(RED"Oops"COLOR_OFF));		
+		ret = clEnqueueReadBuffer(rt->cl.command_queue, rt->cl.zbuff, CL_FALSE, 0,
+			sizeof(cl_uint) * rt->pov.w * rt->pov.h, rt->filters.zbuff, 0, 0, 0);
+		if (ret != CL_SUCCESS)
+			return (error_message(RED"Oops"COLOR_OFF));		
 		clFinish(rt->cl.command_queue);		
 	}
 	
+	i = -1;
+	while (++i < rt->pov.w * rt->pov.h)
+		pixels[i] = ((int)((CLAMP(rt->filters.zbuff[i], 0.0, 50.0) / 50.0) * 255)) << 16;
+
 	apply_surface(rt->sdl.win_sur, rt);
 	SDL_UpdateWindowSurface(rt->sdl.win);
 	return (0);
