@@ -10,7 +10,7 @@
 --
 <RT width = "1200" heigth = "1200">
 	<plane>
-		<dot>0 0 0</dot>
+		<dot>0 0 2</dot>
 		<normal>0 0 1</normal>
 		<RGB>0 255 255</RGB>
 		<transparency>0</transparency>
@@ -49,7 +49,7 @@
 	</plane>
 	<light>
 		<type> point </type>
-		<position> 0 1 -4 </position>
+		<position> 0 4 -4 </position>
 		<intensity> 1 1 1 </intensity>
 	</light>
 	<light>

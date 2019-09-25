@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:50:59 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 19:46:59 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef	struct s_scene	t_scene;
 typedef	struct s_rt		t_rt;
 typedef	struct s_pov	t_pov;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double)*4)));
-
 
 enum	e_but
 {
@@ -178,6 +177,7 @@ typedef struct	s_rotation_matrix
 /*
 **	figure's parametres:
 **	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
+**	
 */
 
 struct	s_fig
@@ -189,18 +189,18 @@ struct	s_fig
 	cl_int				specular; // -1 is off 0 - 1000
 	cl_double			reflective; // 0 - 1
 	cl_double			trans; //+ 0 - 1
-	cl_double3			rotation;	//+ no edit
-	t_rotation_matrix	rotation_martix;	//+
+	cl_double3			rotation;//+ no edit
+	t_rotation_matrix	rotation_martix;//+
 	cl_double			ior;
-	cl_int				noise; //+ -1 - 1
-	cl_int				text_no; //+ -1 if off find out
-	cl_int				normal_map_no; // -1 if off 6 find out
-	cl_int				transparancy_map_no;	//+ find out
-	cl_double2			txt_offset;	//+ no edit
-	cl_double2			txt_scale;	//+ no edit
+	cl_int				noise;//+ -1 - 1
+	cl_int				text_no;//+ -1 if off find out
+	cl_int				normal_map_no;// -1 if off 6 find out
+	cl_int				transparancy_map_no;//+ find out
+	cl_double2			txt_offset;//+ no edit
+	cl_double2			txt_scale;//+ no edit
 
-	cl_int			cutting;  //add to parser. default 0	---done
-	t_plane_data	cutting_plane;  //add to parser. if cutting = 0 unused	---done
+	cl_int				cutting;  //add to parser. default 0	---done
+	t_plane_data		cutting_plane;  //add to parser. if cutting = 0 unused	---done
 };
 
 struct	s_sdl
@@ -336,8 +336,8 @@ struct	s_rt
 **	Init
 */
 
-int		init_start_params(t_rt *rt);
-int		read_textures(t_rt *rt);
+int			init_start_params(t_rt *rt);
+int			read_textures(t_rt *rt);
 
 /*
 **	CL		stuff
@@ -380,7 +380,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig, t_rt *rt);
+int			ft_edit(t_fig *fig);
 
 void		add_filter(t_rt *rt);
 
