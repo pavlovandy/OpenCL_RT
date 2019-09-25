@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:14:38 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:26:34 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int			render_scene(t_rt *rt)
 	i = -1;
 	while (++i < rt->pov.w * rt->pov.h)
 		pixels[i] = ((int)((CLAMP(rt->filters.zbuff[i], 0.0, 50.0) / 50.0) * 255)) << 16;
-
+	add_filter(rt);
 	apply_surface(rt->sdl.win_sur, rt);
 	SDL_UpdateWindowSurface(rt->sdl.win);
 	return (0);
