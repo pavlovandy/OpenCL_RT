@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/25 15:38:49 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/25 16:47:36 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,23 @@ double	ft_clamp(double s, double min, double max)
 		t = min;
 	else if (s >= max)
 		t = max;
-	printf("d = %f\n", t);
 	return (t);
 }
 
-int		ft_edit(t_fig *fig)
+/*
+**	put in the number of textures that are properly textures
+*/
+
+void	change_texture(t_fig *fig, t_rt *rt)
+{
+	if (fig->text_no >= 3)
+		fig->text_no = 0;
+	else
+		fig->text_no++;
+	printf("texture: %d\n", fig->text_no);
+}
+
+int		ft_edit(t_fig *fig, t_rt *rt)
 {
 	const Uint8	*k_s;
 	
@@ -38,7 +50,8 @@ int		ft_edit(t_fig *fig)
 		fig->ior = ft_clamp(fig->ior + 0.04, MIN_IOR, MAX_IOR);
 	else if (k_s[SDL_SCANCODE_I] && k_s[86])
 		fig->ior = ft_clamp(fig->ior - 0.04, MIN_IOR, MAX_IOR);
-
+	else if (k_s[SDL_SCANCODE_Y])
+		change_texture(fig, rt);
 	// else if (fig->fig_type == SPHERE)
 	// {
 	// 	if (k_s[SDL_SCANCODE_R] && k_s[87])
