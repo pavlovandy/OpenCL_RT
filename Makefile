@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anri <anri@student.42.fr>                  +#+  +:+       +#+         #
+#    By: yruda <yruda@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/24 23:21:11 by anri             ###   ########.fr        #
+#    Updated: 2019/09/25 14:05:07 by yruda            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,33 +70,42 @@ FRAMEWORKS += 	-F./frameworks \
 				-framework OpenCL
 endif
 
+COLOR_BLUE =	"\x1b[36m"
+COLOR_NONE =	"\x1b[0m"
+COLOR_RED =		"\x1b[31m"	
+
 all: obj_dir $(FT_LIB) $(NAME)
-	echo 'Compilated!'
+	@echo "\n 	"$(COLOR_BLUE) [ 😎 $(NAME) Compilated! ] "\x1b[0m\n"
 
 obj_dir:
-	mkdir -p $(OBJ_DIR)
-	mkdir -p $(OBJ_DIR)/xml
-	mkdir -p $(OBJ_DIR)/button
-	mkdir -p $(OBJ_DIR)/editor
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/xml
+	@mkdir -p $(OBJ_DIR)/button
+	@mkdir -p $(OBJ_DIR)/editor
 
 xml:
 	/lib/mxml-3.0
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(FRAMEWORKS) $(OBJ) -o $(NAME) $(LINKS)
+	@$(CC) $(FLAGS) $(FRAMEWORKS) $(OBJ) -o $(NAME) $(LINKS)
 
 $(OBJ_DIR)%.o:$(SRC_DIR)%.c $(INC)
-	$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+	@$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+	@echo $(DELETE_PREV) $(COLOR_BLUE) created: "\x1b[97;46m" $(@:%=%) $(COLOR_NONE)
 
 $(FT_LIB):
-	make -C $(FT)
+	@make -C $(FT)
+	@echo "\n 	"$(COLOR_BLUE) [ 😎 $(FT_LIB) ] "\n"
 
 clean:
-	rm -rf $(OBJ_DIR)
-	make -C $(FT) clean
+	@rm -rf $(OBJ_DIR)
+	@echo $(COLOR_RED) [X] $(OBJ_DIR) $(COLOR_NONE)
+	@make -C $(FT) clean
+	@echo $(COLOR_RED) [X] $(FT) $(COLOR_NONE)
 
 fclean: clean
-	rm -f $(NAME)
-	make -C $(FT) fclean
+	@rm -f $(NAME)
+	@echo $(COLOR_RED) [X] $(NAME) $(COLOR_NONE) "\n"
+	@make -C $(FT) fclean
 
 re: fclean all
