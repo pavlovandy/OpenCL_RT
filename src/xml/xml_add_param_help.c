@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 18:30:23 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/25 14:47:25 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/25 15:39:14 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ double	str_to_double(char *line)
 	dot_pos++;
 	int_part = ft_atoi(line);
 	float_part = (dot_pos != line_len) ? ft_atoi(line + dot_pos) : 0;
-	res = int_part + (double)float_part / (pow(10, count_num(float_part)));
+	while (line[line_len - 1] < '0' || line[line_len] > '9')
+		line_len--;
+	res = int_part + (double)float_part / (pow(10, line_len - dot_pos));
 	if (res > 0 && res < 1 && line[0] == '-')
 		res *= -1;
 	return (res);
