@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:15:06 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:16:13 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,8 @@ typedef struct	s_rotation_matrix
 
 struct	s_fig
 {
-	cl_int		fig_type;
-	t_shape		shape;
+	cl_int				fig_type;
+	t_shape				shape;
 
 	cl_double3			color; //+ pallete to buttons 
 	cl_int				specular; // -1 is off 0 - 1000
@@ -380,7 +380,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig);
+int			ft_edit(t_fig *fig, t_rt *rt);
 
 # include "parse.h"
 # include "mymath.h"

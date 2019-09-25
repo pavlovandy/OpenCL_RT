@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 15:02:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:05:21 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:16:35 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ int			set_global_and_local_item_size(t_cl *cl, t_rt *rt)
 int			set_up_memory(t_rt *rt, t_cl *cl)
 {
 	cl_int	ret;
-	int		i;
 
 	rt->filters.colors = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
 	rt->filters.buff = ft_memalloc(sizeof(cl_double3) * rt->pov.w * rt->pov.h);
