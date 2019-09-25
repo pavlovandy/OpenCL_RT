@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 16:54:35 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/19 14:26:00 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/25 14:39:32 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int		read_texture(char	*file_name, t_envi *envi)
 	envi->txt = tmp;
 	
 	if (envi->txt == 0)
-		return (error_message(RED"couldnt reallocate for some reason"COLOR_OFF));
+		return (error_message(RED"couldn't reallocate for some reason"COLOR_OFF));
 	i = -1;
 	pixels = (Uint8*)surr->pixels;
 	while (++i < surr->w * surr->h)

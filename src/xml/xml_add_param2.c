@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_add_param2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 00:50:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 22:43:57 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:23:28 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ int	add_for_all_obj3(const char *str, t_scene *scene, int i, const char *tag)
 	}
 	else if (ft_strequ(tag, "txt_scale") && ft_get_3param(2, str, &dot, NULL))
 	{
-		
 		scene->obj[i].txt_scale.s[0] = dot.s[0];
 		scene->obj[i].txt_scale.s[1] = dot.s[1];
-	}else
+	}
+	else
 		return (0);
 	return (1);
 }
+
 int	add_for_all_obj2(const char *str, t_scene *scene, int i, const char *tag)
 {
 	cl_double	one_dot;
@@ -45,15 +46,21 @@ int	add_for_all_obj2(const char *str, t_scene *scene, int i, const char *tag)
 	else if (ft_strequ(tag, "rotation") && ft_get_3param(3, str, &dot, NULL))
 		scene->obj[i].rotation_martix = build_rotation_matrix_form_angles(scene->obj[i].rotation = (cl_double3)dot);
 	else if (ft_strequ(tag, "ior") && ft_get_3param(1, str, NULL, &one_dot))
+	{
+		printf("ior: %.4f [NOT RIGHT]\n", one_dot);//
+		if (one_dot < MIN_IOR|| one_dot > MAX_IOR)
+			return (error_message(RED"XML: 1.0004 <= ior <= 2"COLOR_OFF));
 		scene->obj[i].ior = one_dot;
+	}
 	else if (ft_strequ(tag, "transp_map_no") && ft_get_3param(1, str, NULL, &one_dot))
 		scene->obj[i].transparancy_map_no = (cl_int)one_dot;
 	else if (add_for_all_obj3(str, scene, i, tag))
 		return (1);
 	else
-		return(0);
+		return (0);
 	return (1);
 }
+
 int	add_for_all_obj(const char *str, t_scene *scene, int i, const char *tag)
 {
 	cl_double	one_dot;

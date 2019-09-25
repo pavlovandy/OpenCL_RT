@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+!-- This is a comment
+	RT		: width, heigth.
+	spher	: centre, radius, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
+	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
+	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
+	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no.
+	light	: type, position, intensity.
+	cam		: position.
+--
+<RT width = "1200" heigth = "1200">
+	<plane>
+		<dot>0 0 0</dot>
+		<normal>0 0 1</normal>
+		<RGB>0 255 255</RGB>
+		<transparency>0</transparency>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.0</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>1 1</txt_scale>
+	</plane>
+	<spher>
+		<centre>0 0 -2</centre>
+		<radius>1</radius>
+		<RGB>185 25 25</RGB>
+		<transparency>1</transparency>
+		<reflective>0.004</reflective>////0.004///
+		<specular>20</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.0004</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>1 1</txt_scale>
+	</spher>
+	<plane>
+	</plane>
+	<light>
+		<type> point </type>
+		<position> 0 1 -4 </position>
+		<intensity> 1 1 1 </intensity>
+	</light>
+	<light>
+		<type> ambient </type>
+		<intensity> 0.1 0.1 0.1 </intensity>
+	</light>
+	<cam>
+		<position> 0 1 -9 </position>
+	</cam>
+</RT>

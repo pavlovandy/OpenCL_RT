@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/24 23:54:20 by anri             ###   ########.fr       */
+/*   Updated: 2019/09/25 15:21:20 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
 # define CLAMP(a, mi,ma)		MIN(MAX(a,mi),ma)
-# define MIN_IOR 1.01;
+# define MIN_IOR 1.0004
+# define MAX_IOR 2.0
 # define D	0.1
 
 # define BIG_VALUE 1000000
@@ -174,24 +175,29 @@ typedef struct	s_rotation_matrix
 	cl_double3		e3;
 }				t_rotation_matrix;
 
+/*
+**	figure's parametres:
+**	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
+*/
+
 struct	s_fig
 {
 	cl_int		fig_type;
 	t_shape		shape;
 
-	cl_double3	color; //+ pallete to buttons 
-	cl_int		specular; // -1 is off 0 - 1000
-	cl_double	reflective; // 0 - 1
-	cl_double	trans; //+ 0 - 1
-	cl_double3	rotation;	//+ no edit
+	cl_double3			color; //+ pallete to buttons 
+	cl_int				specular; // -1 is off 0 - 1000
+	cl_double			reflective; // 0 - 1
+	cl_double			trans; //+ 0 - 1
+	cl_double3			rotation;	//+ no edit
 	t_rotation_matrix	rotation_martix;	//+
-	cl_double	ior;	//+ MIN_IOR - 2
-	cl_int		noise; //+ -1 - 1
-	cl_int		text_no; //+ -1 if off find out
-	cl_int		normal_map_no; // -1 if off 6 find out
-	cl_int		transparancy_map_no;	//+ find out
-	cl_double2	txt_offset;	//+ no edit
-	cl_double2	txt_scale;	//+ no edit
+	cl_double			ior;	//+ MIN_IOR - 2
+	cl_int				noise; //+ -1 - 1
+	cl_int				text_no; //+ -1 if off find out
+	cl_int				normal_map_no; // -1 if off 6 find out
+	cl_int				transparancy_map_no;	//+ find out
+	cl_double2			txt_offset;	//+ no edit
+	cl_double2			txt_scale;	//+ no edit
 
 	cl_int			cutting;  //add to parser. default 0	---done
 	t_plane_data	cutting_plane;  //add to parser. if cutting = 0 unused	---done

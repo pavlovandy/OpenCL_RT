@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_add_param_help.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 18:30:23 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 04:39:25 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/25 14:47:25 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int		ft_get_3param(int i, const char *str, cl_double3 *dot, \
 	{
 		if (str[n] == '\n' || str[n] == '\t')
 		{
-			ft_putendl(RED"XML : Only space between paramrams"COLOR_OFF);
+			ft_putendl(RED"XML : Only space between params"COLOR_OFF);
 			return (0);
 		}
 		n++;
