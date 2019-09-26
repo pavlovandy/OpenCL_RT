@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:40:07 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 19:38:19 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,11 @@ typedef struct	s_rotation_matrix
 
 typedef struct	s_cube
 {
-	cl_int			no;
-	cl_double3		cent;
-	cl_double3		rotation;
+	cl_int				no;
+	cl_double3			cent;
+	cl_double3			rotation;
 	t_rotation_matrix	rotation_matrix;
-	cl_double		dist;
+	cl_double			dist;
 }				t_cube;
 
 struct	s_fig
