@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 17:34:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 22:20:28 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 15:30:11 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	exit_parse(mxml_node_t *tree, FILE *fp, char *str)
 	mxmlDelete(tree);
 	return (1);
 }
+
+
 
 int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 {
@@ -44,6 +46,10 @@ int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 				return (1);
 			son = mxmlGetNextSibling(son);
 		}
+		if (mxmlGetElement(node) != NULL && ft_strequ(mxmlGetElement(node), \
+		"rectangle") && !check_rectangle_in_plane(scene->obj[index[0]].shape.rectangle))
+			
+			return (error_message(RED"XML: bad rectangle"COLOR_OFF));
 		node = mxmlGetNextSibling(node);
 	}
 	scene->count_obj = index[0] + 1;

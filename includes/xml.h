@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 22:44:11 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:52:50 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	ft_create_spher(t_scene *scene, int i, t_filters *filter);
 void	ft_creat_light(t_scene *scene, int l);
 void	ft_create_all(t_scene *scene, int i, t_filters *filter);
 void	ft_create_disk(t_scene *scene, int i, t_filters *filter);
+void	ft_create_triangle(t_scene *scene, int i, t_filters *filter);
+void	ft_create_rectangle(t_scene *scene, int i, t_filters *filter);
+void	ft_create_ellipse(t_scene *scene, int i, t_filters *filter);
 
 /*
 **	Add ++ add_param(position, radius, normal, dir, tang, type) to figure
@@ -46,6 +49,8 @@ int		ft_add_tanget(const char *str, t_scene *scene, int i);
 int		ft_add_type_light(t_scene *scene, int l, char *str);
 int		ft_add_mmin_mmax(const char *str, t_scene *scene, int i, const char *tag);
 int		ft_add_move_dir(const char *str, t_rt *rt, int i);
+int		ft_add_v(const char *str, t_scene *scene, int i, const char *tag);
+int		ft_add_distance(const char *str, t_scene *scene, int i);
 
 /*
 **	Add ++ add_param(color, specular, reflection) to figure

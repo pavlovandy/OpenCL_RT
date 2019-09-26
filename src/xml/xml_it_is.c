@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 22:44:37 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:52:56 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_is_param2(mxml_node_t *node, t_rt *rt, int i, const char *name)
 
 	scene = &rt->scene;
 		if (ft_strequ(name, "mmin") || ft_strequ(name, "mmax"))
-			return(ft_add_mmin_mmax(mxmlGetOpaque(node), scene, i, name));
+			return (ft_add_mmin_mmax(mxmlGetOpaque(node), scene, i, name));
 		else if (ft_strequ(name, "transparency") || ft_strequ(name, "specular") || \
 		ft_strequ(name, "cut_normal") || ft_strequ(name, "texture") || \
 		ft_strequ(name, "bump") || ft_strequ(name, "cutting") || \
@@ -78,9 +78,12 @@ int	ft_is_param2(mxml_node_t *node, t_rt *rt, int i, const char *name)
 		ft_strequ(name, "txt_scale"))
 			return (add_for_all_obj(mxmlGetOpaque(node), scene, i, name));
 		else if (ft_strequ(name, "move_dir"))
-			return(ft_add_move_dir(mxmlGetOpaque(node), rt, i));
-
-		
+			return (ft_add_move_dir(mxmlGetOpaque(node), rt, i));
+		else if (ft_strequ(name, "v0") || ft_strequ(name, "v1") || \
+			ft_strequ(name, "v2") || ft_strequ(name, "v3"))
+			return (ft_add_v(mxmlGetOpaque(node), scene, i, name));
+		else if (ft_strequ(name, "distance"))
+			return (ft_add_distance(mxmlGetOpaque(node), scene, i));
 		return (0);
 }
 
@@ -115,6 +118,12 @@ int	ft_is_obj2(const char *str, t_scene *scene, int *il, t_rt *rt)
 {
 	if (ft_strequ(str, "disk"))
 		ft_create_disk(scene, il[0], &rt->filters);
+	else if (ft_strequ(str, "triangle"))
+		ft_create_triangle(scene, il[0], &rt->filters);
+	else if (ft_strequ(str, "rectangle"))
+		ft_create_rectangle(scene, il[0], &rt->filters);
+	else if (ft_strequ(str, "ellipse"))
+		ft_create_ellipse(scene, il[0], &rt->filters);
 	else
 		return (0);
 	return (1);

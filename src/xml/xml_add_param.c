@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 19:57:10 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:40:02 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ int	add_position2(const char *str, t_scene *scene, int i, const char *tag)
 	if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == DISK && \
 		ft_get_3param(3, str, &dot, NULL))
 		scene->obj[i].shape.disk.cent = (cl_double3)dot;
+	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == ELLIPSE && \
+		ft_get_3param(3, str, &dot, NULL))
+		scene->obj[i].shape.ellipse.cent = (cl_double3)dot;
 	else
 		return (0);
 	return (1);
@@ -67,6 +70,8 @@ int	ft_add_radius(const char *str, t_scene *scene, int i)
 		scene->obj[i].shape.cylin.radius = (cl_double)one_dot;
 	else if (scene->obj[i].fig_type == DISK)
 		scene->obj[i].shape.disk.radius = (cl_double)one_dot;
+	else if (scene->obj[i].fig_type == ELLIPSE)
+		scene->obj[i].shape.ellipse.radius_sum = (cl_double)one_dot;
 	else
 	{
 		ft_putendl(RED"XML : invalid param(radius have spher/cylin)"COLOR_OFF);
@@ -89,6 +94,8 @@ int	ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag)
 		scene->obj[i].shape.cylin.dir = ft_normalize((cl_double3)dot);
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CONE)
 		scene->obj[i].shape.cone.dir = ft_normalize((cl_double3)dot);
+	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == ELLIPSE)
+		scene->obj[i].shape.ellipse.dir = ft_normalize((cl_double3)dot);
 	else
 	{
 		if (ft_strequ(tag, "normal"))

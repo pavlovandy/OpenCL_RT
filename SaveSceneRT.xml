@@ -1,34 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RT>
-	<spher>
-		<centre>0.3 2.4 -0.2</centre>
-		<radius>1</radius>
+	<disk>
+		<centre>10 0 0</centre>
+	</disk>
+	<rectangle>
+		<v0>-2 3 0.0</v0>
+		<v1>6 -5 0</v1>
+		<v2>-1 -2 0</v2>
+		<v3>-5 3 0</v3>
 		<RGB>255 0 0</RGB>
 		<transparency>0</transparency>
 		<reflective>0</reflective>
 		<specular>-1</specular>
-		<texture>0</texture>
-		<bump>1</bump>
+		<texture>-1</texture>
+		<bump>-1</bump>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
-		<rotation>1.6 0 0</rotation>
-		<ior>1.010000</ior>
+		<ior>1.000400</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
-	</spher>
+		<move_dir>0 0 0.1</move_dir>
+	</rectangle>
 	<light>
 		<type>point</type>
-		<position>0 1 -4</position>
-		<intensity>4 4 4</intensity>
+		<position>1 4 10</position>
+		<intensity>5 5 5</intensity>
 	</light>
 	<light>
-		<type>ambient</type>
-		<intensity>0.1 0.1 0.1</intensity>
+		<type>point</type>
+		<position>0 1 10</position>
+		<intensity>5 5 5</intensity>
+	</light>
+	<light>
+		<type>point</type>
+		<position>10 1 -5</position>
+		<intensity>5 5 5</intensity>
+	</light>
+	<light>
+		<type>point</type>
+		<position>10 10 -5</position>
+		<intensity>5 5 5</intensity>
 	</light>
 	<cam>
-		<position>-0.6 3.5 -3.-7</position>
+		<position>0.7 0 -13.-2</position>
 	</cam>
 
 </RT>
