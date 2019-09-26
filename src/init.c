@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 19:14:01 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 13:38:27 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ static int	init_pov(t_pov *pov)
 	pov->d = D;
 	pov->vw = 1.155 * D;
 	pov->vh = pov->vw * pov->h / pov->w;
-
 	pov->coord = (cl_double3){{0, 0, 0}};
 	pov->dir = (cl_double3){{0, 0, 0}};
-
 	pov->cx = cos(pov->dir.s[0]);
 	pov->sx = sin(pov->dir.s[0]);
 	pov->cy = cos(pov->dir.s[1]);
@@ -38,7 +36,6 @@ int			init_start_params(t_rt *rt)
 	rt->envi.txt_count = 0;
 	rt->envi.txt = 0;
 	rt->edi.chosen_obj = -1;
-
 	init_pov(&rt->pov);
 	rt->filters.motion = 0;
 	i = -1;
@@ -64,5 +61,5 @@ int			read_textures(t_rt *rt)
 		return (error_message(RED"texture failure"COLOR_OFF));
 	if (read_texture("envi/123.png", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
-	return (0);	
+	return (0);
 }
