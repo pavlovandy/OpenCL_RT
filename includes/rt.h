@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 14:44:24 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:18:51 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@
 # define BIG_VALUE 1000000
 # define COUNT_BUTT 3
 # define RENDER_ITARATION 20
-# define MAX_TEXTURE_COUNT 10
+# define MAX_TEXTURE_COUNT 20
 
 typedef	struct s_fig	t_fig;
 typedef	struct s_sdl	t_sdl;
@@ -156,15 +156,15 @@ typedef struct	s_cylin_data
 
 typedef union	u_shape
 {
-	t_sphere_data	sphere;
-	t_cone_data		cone;
-	t_plane_data	plane;
-	t_cylin_data	cylin;
+	t_sphere_data		sphere;
+	t_cone_data			cone;
+	t_plane_data		plane;
+	t_cylin_data		cylin;
 	t_rectangle_data	rectangle;
-	t_triangle_data	triangle;
-	t_torus_data	torus;
-	t_ellipse_data	ellipse;
-	t_disk_data		disk;
+	t_triangle_data		triangle;
+	t_torus_data		torus;
+	t_ellipse_data		ellipse;
+	t_disk_data			disk;
 }				t_shape;
 
 typedef struct	s_rotation_matrix
@@ -194,10 +194,10 @@ struct	s_fig
 	cl_int				fig_type;
 	t_shape				shape;
 
-	cl_double3			color; //+ pallete to buttons 
+	cl_double3			color; //+ pallete to buttons
 	cl_int				specular; // -1 is off 0 - 1000
 	cl_double			reflective; // 0 - 1
-	cl_double			trans; //+ 0 - 1
+	cl_double			trans;//+ 0 - 1
 	cl_double3			rotation;//+ no edit
 	t_rotation_matrix	rotation_martix;//+
 	cl_double			ior;
@@ -285,16 +285,16 @@ typedef struct	s_cl
 
 typedef struct	s_txt_params
 {
-	cl_int		w;
-	cl_int		h;
-	cl_int		start_pos;
+	cl_ulong		w;
+	cl_ulong		h;
+	cl_ulong		start_pos;
 }				t_txt_params;
 
 typedef struct	s_envi
 {
 	cl_int			txt_count; //number of textures
 	cl_uint			*txt; //could be uint16 : rgb565. to save more space for kernel
-	int				textures_size; //the sumary size of all textures
+	cl_ulong		textures_size; //the sumary size of all textures
 	t_txt_params	txt_par[MAX_TEXTURE_COUNT]; //w, h and start point for each texture in txt array
 }				t_envi;
 
@@ -319,7 +319,7 @@ typedef struct	s_obj_movement
 
 typedef struct	s_filters
 {
-	int		motion;
+	int			motion;
 	cl_double3	*colors;
 	cl_uint		*buff;
 	cl_float	*zbuff;
