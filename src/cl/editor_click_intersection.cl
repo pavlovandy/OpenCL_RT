@@ -9,7 +9,7 @@ __kernel void	click_kernel(__global t_scene *scene,
 	double3	direction;
 
 	direction = normalize(canvas_to_viewport(x - pov.w /2 , y - pov.h / 2, pov.w, pov.h, pov));
-	direction = rotate_camera(direction, pov);
+	direction = new_basis(direction, pov.pov_rm);
 
 	t_obj_and_dist	obj_and_dist = check_closest_inter(pov.coord, direction, scene, 1, BIG_VALUE);
 	*id = obj_and_dist.obj;

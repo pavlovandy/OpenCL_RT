@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/09/26 15:53:49 by yruda            ###   ########.fr       */
+=======
+/*   Updated: 2019/09/26 16:20:48 by apavlov          ###   ########.fr       */
+>>>>>>> f9a97bba6dbb9a92f1b7ea70e2c42975eda96ef6
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +25,7 @@ static int	init_pov(t_pov *pov)
 	pov->vh = pov->vw * pov->h / pov->w;
 	pov->coord = (cl_double3){{0, 0, 0}};
 	pov->dir = (cl_double3){{0, 0, 0}};
-	pov->cx = cos(pov->dir.s[0]);
-	pov->sx = sin(pov->dir.s[0]);
-	pov->cy = cos(pov->dir.s[1]);
-	pov->sy = sin(pov->dir.s[1]);
+	pov->pov_rm = build_rotation_matrix_form_angles(pov->dir);
 	return (0);
 }
 
