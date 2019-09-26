@@ -5,12 +5,13 @@
 	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
 	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
 	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no.
+	disk	: centre, normal, 
 	light	: type, position, intensity.
 	cam		: position.
 --
 <RT width = "1200" heigth = "1200">
 	<plane>
-		<dot>0 0 2</dot>
+		<dot>0 0 10</dot>
 		<normal>0 0 1</normal>
 		<RGB>0 255 255</RGB>
 		<transparency>0</transparency>
@@ -27,15 +28,31 @@
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
 	</plane>
-	<cone>
-		<vertex>0 3 -2</vertex>
-		<dir>1 1 0</dir>
-		<angle>30</angle>
-		<RGB>185 25 25</RGB> -->
-		<transparency>0.5</transparency>
+	<disk>
+		<centre>0 0 0</centre>
+		<normal>0 1 0</normal>
+		<radius>3</radius>
+		<RGB>200 255 255</RGB>
+		<transparency>0</transparency>
+		<reflective>0</reflective>
+		<specular>100</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<rotation>0 0 0</rotation>
+		<ior>1.0</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>1 1</txt_scale>
+	</disk>
+	<spher>
+		<centre>0 0 0</centre>
+		<radius>1.5</radius>
+		<RGB>185 25 25</RGB>
+		<transparency>0</transparency>
 		<reflective>0.004</reflective>
 		<specular>20</specular>
-		<texture>-1</texture>
+		<texture>0</texture>
 		<bump>-1</bump>
 		<cutting>0</cutting>
 		<cut_dot>0 0.3 -0.3</cut_dot>
@@ -45,13 +62,11 @@
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
-	</cone>
-	<plane>
-	</plane>
+   	</spher>
 	<light>
 		<type> point </type>
-		<position> 0 4 -4 </position>
-		<intensity> 1 1 1 </intensity>
+		<position> -3 3 0 </position>
+		<intensity> 1 1 2 </intensity>
 	</light>
 	<light>
 		<type> ambient </type>
