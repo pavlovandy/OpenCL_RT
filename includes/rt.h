@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:09:25 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 20:11:40 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define MAX_NEGATIVE_OBJ_COUNT 5
+# define MAX_CUB_COUNT 5
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
@@ -253,6 +254,8 @@ struct	s_scene
 	t_light			light[MAX_LIGHTING_COUNT];
 	cl_int			count_neg_obj; //default 0	---done
 	t_negative_fig	neg_obj[MAX_NEGATIVE_OBJ_COUNT];
+	t_cube			cubs[MAX_CUB_COUNT];
+	cl_int			count_cubs;
 };
 
 typedef struct	s_cl
