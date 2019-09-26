@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 17:27:18 by myuliia           #+#    #+#             */
-/*   Updated: 2019/09/25 17:29:15 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:15:12 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,6 @@ void		add_filter(t_rt *rt)
 	Uint32	*pixel;
 	// t_fil *f_tmp;
 	Uint32	*hsv;
-	t_color array_filter[80];
 	int i;
 	int k;
 	
