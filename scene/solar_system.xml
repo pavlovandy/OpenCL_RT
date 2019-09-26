@@ -11,13 +11,13 @@
 --
 <RT width = "1200" heigth = "1200">
 	<plane>
-		<dot>0 0 10</dot>
+		<dot>0 0 20</dot>
 		<normal>0 0 1</normal>
 		<RGB>0 255 255</RGB>
 		<transparency>0</transparency>
 		<reflective>0</reflective>
-		<specular>1000</specular>
-		<texture>-1</texture>
+		<specular>0</specular>
+		<texture>6</texture>
 		<bump>-1</bump>
 		<cutting>0</cutting>
 		<cut_dot>0 0.3 -0.3</cut_dot>
@@ -28,45 +28,29 @@
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
 	</plane>
-	<disk>
-		<centre>0 0 0</centre>
-		<normal>0 1 0</normal>
-		<radius>3</radius>
-		<RGB>200 255 255</RGB>
-		<transparency>0</transparency>
-		<reflective>0</reflective>
-		<specular>100</specular>
-		<texture>-1</texture>
-		<bump>-1</bump>
-		<cutting>0</cutting>
-		<rotation>0 0 0</rotation>
-		<ior>1.0</ior>
-		<transp_map_no>-1</transp_map_no>
-		<txt_offset>0 0</txt_offset>
-		<txt_scale>1 1</txt_scale>
-	</disk>
 	<spher>
-		<centre>0 0 0</centre>
+		<centre>0 0 5</centre>
 		<radius>1.5</radius>
 		<RGB>185 25 25</RGB>
 		<transparency>0</transparency>
 		<reflective>0.004</reflective>
 		<specular>20</specular>
-		<texture>0</texture>
+		<texture>4</texture>
 		<bump>-1</bump>
 		<cutting>0</cutting>
 		<cut_dot>0 0.3 -0.3</cut_dot>
 		<cut_normal>0.7 0.7 0</cut_normal>
-		<rotation>0 0 0</rotation>
+		<rotation>1 0 0</rotation>
 		<ior>1.004000</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
    	</spher>
+	
 	<light>
 		<type> point </type>
-		<position> -3 3 0 </position>
-		<intensity> 1 1 2 </intensity>
+		<position> -5 5  5 </position>
+		<intensity> 6 6 5 </intensity>
 	</light>
 	<light>
 		<type> ambient </type>

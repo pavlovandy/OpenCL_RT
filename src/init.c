@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 13:38:27 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 14:17:40 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ int			init_start_params(t_rt *rt)
 int			read_textures(t_rt *rt)
 {
 	if (read_texture("envi/8k_earth_daymap.jpg", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/sun.jpg", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/mars.jpg", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/neptune.jpg", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/saturn.jpg", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/saturn_ring_alpha.png", &rt->envi))
+		return (error_message(RED"texture failure"COLOR_OFF));
+	if (read_texture("envi/stars_milky_way.jpg", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
 	if (read_texture("envi/waffles.jpg", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
