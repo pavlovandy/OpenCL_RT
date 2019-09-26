@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 20:50:15 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:38:43 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,5 @@ int		main(int argc, char **argv)
 	there_will_be_loop(&rt);
 	close_sdl(&rt.sdl);
 	freed_up_memory(&rt.cl, &rt);
-	system("leaks RT");
 	return (0);
 }
