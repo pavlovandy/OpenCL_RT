@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 00:50:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/25 15:39:24 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 17:54:29 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	add_for_all_obj2(const char *str, t_scene *scene, int i, const char *tag)
 		scene->obj[i].rotation_martix = build_rotation_matrix_form_angles(scene->obj[i].rotation = (cl_double3)dot);
 	else if (ft_strequ(tag, "ior") && ft_get_3param(1, str, NULL, &one_dot))
 	{
-		printf("ior: %.4f\n", one_dot);//
 		if (one_dot < MIN_IOR|| one_dot > MAX_IOR)
 			return (error_message(RED"XML: 1.0004 <= ior <= 2"COLOR_OFF));
 		scene->obj[i].ior = one_dot;
