@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 13:41:02 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 18:36:02 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
 # ifdef __APPLE__
 # define WIN_WIDTH		800
 # define WIN_HEIGHT		600
@@ -63,7 +63,7 @@
 # define BIG_VALUE 1000000
 # define COUNT_BUTT 3
 # define RENDER_ITARATION 20
-# define MAX_TEXTURE_COUNT 10
+# define MAX_TEXTURE_COUNT 20
 
 typedef	struct s_fig	t_fig;
 typedef	struct s_sdl	t_sdl;
@@ -221,17 +221,14 @@ struct	s_sdl
 
 struct	s_pov
 {
-	cl_double3	coord;
-	cl_double3	dir;
-	double		cx;
-	double		cy;
-	double		sx;
-	double		sy;
-	cl_double	d;
-	cl_double	vh;
-	cl_double	vw;
-	cl_int		w;
-	cl_int		h;
+	cl_double3			coord;
+	cl_double3			dir;
+	t_rotation_matrix	pov_rm;
+	cl_double			d;
+	cl_double			vh;
+	cl_double			vw;
+	cl_int				w;
+	cl_int				h;
 };
 
 typedef struct	s_light
@@ -288,16 +285,16 @@ typedef struct	s_cl
 
 typedef struct	s_txt_params
 {
-	cl_int		w;
-	cl_int		h;
-	cl_int		start_pos;
+	cl_ulong		w;
+	cl_ulong		h;
+	cl_ulong		start_pos;
 }				t_txt_params;
 
 typedef struct	s_envi
 {
 	cl_int			txt_count; //number of textures
 	cl_uint			*txt; //could be uint16 : rgb565. to save more space for kernel
-	int				textures_size; //the sumary size of all textures
+	cl_ulong		textures_size; //the sumary size of all textures
 	t_txt_params	txt_par[MAX_TEXTURE_COUNT]; //w, h and start point for each texture in txt array
 }				t_envi;
 
@@ -322,7 +319,7 @@ typedef struct	s_obj_movement
 
 typedef struct	s_filters
 {
-	int		motion;
+	int			motion;
 	cl_double3	*colors;
 	cl_uint		*buff;
 	cl_float	*zbuff;

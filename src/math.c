@@ -6,28 +6,11 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:51 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 16:26:04 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 14:29:40 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rt.h"
-
-cl_double3	ft_rotate_camera(cl_double3 direction, t_pov pov) //should be replaced with rotate_xyz() declarated below
-{
-	double new_x;
-	double new_y;
-	double new_z;
-
-	new_x = direction.s[0] * pov.cy + direction.s[2] * pov.sy;
-	new_z = -direction.s[0] * pov.sy + direction.s[2] * pov.cy;
-	direction.s[0] = new_x;
-	direction.s[2] = new_z;
-	new_y = direction.s[1] * pov.cx + direction.s[2] * pov.sx;
-	new_z = -direction.s[1] * pov.sx + direction.s[2] * pov.cx;
-	direction.s[1] = new_y;
-	direction.s[2] = new_z;
-	return (direction);
-}
 
 cl_double2	*reverse_matrix_2x2(cl_double2 *src)
 {
@@ -49,24 +32,6 @@ cl_double2	*reverse_matrix_2x2(cl_double2 *src)
 double		det_matrix_2x2(cl_double2 *src)
 {
 	return (src[0].s[0] * src[1].s[1] - src[1].s[0] * src[0].s[1]);
-}
-
-cl_double3	ft_rotate_reverse_camera(cl_double3 direction, t_pov pov)
-{
-	double new_x;
-	double new_y;
-	double new_z;
-
-	new_y = direction.s[1] * pov.cx - direction.s[2] * pov.sx;
-	new_z = direction.s[1] * pov.sx + direction.s[2] * pov.cx;
-	direction.s[1] = new_y;
-	direction.s[2] = new_z;
-	new_x = direction.s[0] * pov.cy - direction.s[2] * pov.sy;
-	new_z = direction.s[0] * pov.sy + direction.s[2] * pov.cy;
-	direction.s[0] = new_x;
-	direction.s[2] = new_z;
-
-	return (direction);
 }
 
 cl_double3	add_double3(cl_double3 a, cl_double3 b)
@@ -179,7 +144,7 @@ int				check_rectangle_in_plane(t_rectangle_data rectange)
 	
 	if (comp_real(dot(n, rectange.v3) + h, 0, 0.01))
 		return (1);
-	return (0); 
+	return (0);
 }
 
 t_rotation_matrix build_rotation_matrix_for_dir(cl_double3 dir)
@@ -202,4 +167,14 @@ t_rotation_matrix build_rotation_matrix_for_dir(cl_double3 dir)
 	rm.e2 = ft_normalize(rm.e2);
 	rm.e3 = ft_normalize(rm.e3);
 	return (rm);
+}
+
+cl_double3	new_basis(cl_double3 point, t_rotation_matrix m)
+{
+	cl_double3		res;
+
+	res.s[0] = m.e1.s[0] * point.s[0] + m.e1.s[1] * point.s[1] + m.e1.s[2] * point.s[2];
+	res.s[1] = m.e2.s[0] * point.s[0] + m.e2.s[1] * point.s[1] + m.e2.s[2] * point.s[2];
+	res.s[2] = m.e3.s[0] * point.s[0] + m.e3.s[1] * point.s[1] + m.e3.s[2] * point.s[2];
+	return (res);
 }

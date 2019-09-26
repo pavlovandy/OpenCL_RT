@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 16:09:56 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:39:05 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static int	init_pov(t_pov *pov)
 	pov->vh = pov->vw * pov->h / pov->w;
 	pov->coord = (cl_double3){{0, 0, 0}};
 	pov->dir = (cl_double3){{0, 0, 0}};
-	pov->cx = cos(pov->dir.s[0]);
-	pov->sx = sin(pov->dir.s[0]);
-	pov->cy = cos(pov->dir.s[1]);
-	pov->sy = sin(pov->dir.s[1]);
+	pov->pov_rm = build_rotation_matrix_form_angles(pov->dir);
 	return (0);
 }
 

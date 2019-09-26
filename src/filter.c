@@ -6,123 +6,12 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 17:27:18 by myuliia           #+#    #+#             */
-/*   Updated: 2019/09/26 16:01:11 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:44:34 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rt.h"
 #include "../includes/filter.h"
-
-Uint32		*hsv_to_rgb(Uint32 *hsv, Uint32 *rgb)
-{
-	float r, g, b, h, s, v;
-	h = hsv[0] / 256.0;
-	s = hsv[1] / 256.0;
-	v = hsv[2] / 256.0;
-
-	if(s == 0)
-	{
-		r = g = b = v;
-		// b = v;
-		// g = b;
-		// r = g; //??
-	}
-	else
-    {
-		float f, p, q, t;
-		int i;
-		h *= 6;
-		i = (int)(floor(h));
-		f = h - i;
-		p = v * (1 - s);
-		q = v * (1 - (s * f));
-		t = v * (1 - (s * (1 - f)));
-		switch(i)
-		{
-			case 0: r = v; g = t; b = p; break;
-			case 1: r = q; g = v; b = p; break;
-			case 2: r = p; g = v; b = t; break;
-			case 3: r = p; g = q; b = v; break;
-			case 4: r = t; g = p; b = v; break;
-			case 5: r = v; g = p; b = q; break;
-		}
-	}
-	rgb[0] = (int)(r * 255.0);
-    rgb[1] = (int)(g * 255.0);
-    rgb[2] = (int)(b * 255.0);
-	return (rgb);
-}
-	
-Uint32		*rgb_to_hsv(Uint32 *rgb, Uint32 *hsv)
-{
-	float r, g, b, h = 0, s, v;
-	float min_color;
-
-	r = rgb[0];
-	g = rgb[1];
-	b = rgb[2];
-	v = MAX(r, MAX(g, b));
-	min_color = MIN(r, MIN(g, b));
-	float delta = v - min_color;
-	if (v == 0.0)
-		s = 0;
-	else
-		s = delta / v;
-	if (s == 0)
-		h = 0.0;
-	else
-	{
-		if (b == v)
-			h = (g - b) / delta;
-		else if (g == v)
-			h = 2 + (b - r) / delta;
-		else if (b == v)
-			h = 4 + (r - g) / delta;
-		h *= 60;
-		if (h < 0.0)
-			h = h + 360;
-	}
-	
-	hsv[0] = h;
-	hsv[1] = s;
-	hsv[2] = v / 255;
-		
-		
-	return (hsv);
-	
-	/*
-	r = rgb[0] / 255.0;
-	g = rgb[1] / 255.0;
-	b = rgb[2] / 255.0;
-	max_color = MAX(r, MAX(g, b));
-	min_color = MIN(r, MIN(g, b));
-	v = max_color;
-	if (max_color == 0.0)
-		s = 0;
-	else
-		s = (max_color - min_color) / max_color;
-	if (s == 0)
-	{
-		h = 0; // try change
-	}
-	else
-	{
-		if (r == max_color)
-			h = (g - b) / (max_color - min_color);
-		else if (g == max_color)
-			h = 2.0 + (b - r) / (max_color - min_color);
-		else if (b == max_color)
-			h = 4.0 + (r - g) / (max_color - min_color);
-		h /= 6.0;
-		if (h < 0)
-			h++;
-	}
-	hsv[0] = (int)(h * 255.0);
-	hsv[1] = (int)(s * 255.0);
-	hsv[2] = (int)(v * 255.0);
-	return (hsv);
-	*/
-}
 
 t_color		int_to_rgb_arr(t_color array_filtr, Uint32 pixel)
 {
@@ -244,6 +133,7 @@ int			parallax(const float z)
 	int			result;
 
 	result = eye_separ * ((1.0 - z * mu) / (2.0 - z * mu)) + 0.5;
+	printf("%f \n", ((1.0 - z * mu) / (2.0 - z * mu)) + 0.5);
 	return (result);
 }
 
@@ -255,7 +145,7 @@ void		add_filter(t_rt *rt)
 	Uint32	*pixel;
 	// t_fil *f_tmp;
 	Uint32	*hsv;
-	t_color array_filter[80];
+	// t_color array_filter[80];
 	int i;
 	int k;
 	
@@ -268,23 +158,21 @@ void		add_filter(t_rt *rt)
 		int_to_rgb(f, pixel[i]);
 		// rgb_tmp = int_to_rgb(rgb_tmp, pixel[i]);
 		
-        /* BLUR*/
-		if ((i % 2 == 0) && (i < (rt->sdl.win_sur->w * rt->sdl.win_sur->h - 20)))
-		{
-			k = -1;
-			while (++k < 10)
-				f->array_filtr[k] = int_to_rgb_arr(f->array_filtr[k], pixel[i + k]);
-		}
-		// blur(f, f->array_filtr);
-		
-		// if (rt->filters.zbuff[i] < 5)
+/* BLUR*/
+		// if ((i % 2 == 0) && (i < (rt->sdl.win_sur->w * rt->sdl.win_sur->h - 20)))
 		// {
-		// 	f->rgb.b = 255;
+		// 	k = -1;
+		// 	while (++k < 10)
+		// 		f->array_filtr[k] = int_to_rgb_arr(f->array_filtr[k], pixel[i + k]);
 		// }
+		// blur(f, f->array_filtr);
+/* BLUR*/
+		
+	
 		// if (rt->filters.zbuff[i] < 10 && rt->filters.zbuff[i] > 5)
 		// {
-			// f->rgb.r = 0;
-			// f->rgb.g = 0;
+			// f->rgb.r = f->rgb.b;
+			// f->rgb.g = f->rgb.b;
 			// // f->rgb.g = (rt->filters.zbuff[i] * 10);
 			// f->rgb.b = 255 - (rt->filters.zbuff[i] * 10);
 			// if (f->rgb.b > 255)
@@ -297,12 +185,12 @@ void		add_filter(t_rt *rt)
 		// }
 
 		
-		/***** STEREOSCOPYC ********/
+/***** STEREOSCOPYC ********/
 		// int		kki, j, par;
 		// t_vector same;
-		// size_t		more[100] = 0;
+		// size_t		more[100];
 		
-		// if ((i % 2) != 0) {
+		// //if ((i % 2) != 0) {
 		// f->rgb.r = (double)(rand() % 256);
 		// f->rgb.g = (double)((rand()%256)*(sin(i*2*M_PI/200)+1)/2);
 		// f->rgb.b = (double)(rand() % 256);// }
@@ -314,11 +202,12 @@ void		add_filter(t_rt *rt)
 		// 	while (++kki < rt->sdl.win_sur->w)
 		// 	{
 		// 		par = parallax(rt->filters.zbuff[i]);
+		// 		printf("par: %f\n", i+j*3);
 		// 	}
 		// }
-		    // framebuffer[(i+j*width)*3 + 0] 
+		   // framebuffer[(i+j*width)*3 + 0] 
 		
-		/***** STEREOSCOPYC ********/
+/***** STEREOSCOPYC ********/
 
 	
 
@@ -345,3 +234,23 @@ void		add_filter(t_rt *rt)
 		// if (i == 123456)
 		// 	printf("2 RGB    %u  %u  %u\n2 HSV    %u  %u  %u\n\n", rgb[0], rgb[1], rgb[2], hsv[0], hsv[1], hsv[2]);
 }
+/****
+ <plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<transparency>143567890987687654</transparency>
+		<specular>1345678987654647890876543</specular>
+		<texture>-0987654325467589</texture>
+		<bump>-09876543345678</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>1 1</txt_scale>
+	</plane>
+ * **/

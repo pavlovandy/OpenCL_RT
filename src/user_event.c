@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 19:14:12 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 18:25:40 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	translate(t_rt *rt)
 		translate_vector.s[1] += TRANSLATE_SPEED;
 	if (keyboard_state[SDL_SCANCODE_LCTRL])
 		translate_vector.s[1] -= TRANSLATE_SPEED;
-	translate_vector = ft_rotate_camera(translate_vector, rt->pov);
+	translate_vector = new_basis(translate_vector, rt->pov.pov_rm);
 	rt->pov.coord = add_double3(rt->pov.coord, translate_vector);
 	if (vector_len(translate_vector) != 0)
 		return (1);
@@ -47,10 +47,7 @@ int			rotation(t_rt *rt) //sometimes its must rotate z coordinate also
 		return (0);
 	rt->pov.dir.s[0] += (y) * ROTATION_SPEED;
 	rt->pov.dir.s[1] += (x) * ROTATION_SPEED;
-	rt->pov.cx = cos(rt->pov.dir.s[0] / 180 * M_PI);
-	rt->pov.sx = sin(rt->pov.dir.s[0] / 180 * M_PI);
-	rt->pov.cy = cos(rt->pov.dir.s[1] / 180 * M_PI);
-	rt->pov.sy = sin(rt->pov.dir.s[1] / 180 * M_PI);
+	rt->pov.pov_rm = build_rotation_matrix_form_angles(rt->pov.dir);
 	return (1);
 }
 
@@ -74,6 +71,7 @@ int		move_fig(t_rt *rt)
 	int		x;
 	int		y;
 	t_fig	*obj;
+	cl_double3	*dot;
 	cl_int	ret;
 	int		g_x;
 	int		g_y;
@@ -89,16 +87,10 @@ int		move_fig(t_rt *rt)
 		obj = rt->scene.obj + rt->edi.chosen_obj;
 		dir_len = vector_len(canvas_to_viewport(g_x, g_y, rt->pov));	
 		cl_double3	dir = (cl_double3){{x * rt->pov.vh / (rt->pov.w * dir_len), (-y) * rt->pov.vw / (rt->pov.h * dir_len), 0}};
-		dir = ft_rotate_camera(dir, rt->pov);
+		dir = new_basis(dir, rt->pov.pov_rm);
 
-		if (obj->fig_type == SPHERE)
-			cool_little_function(rt, &obj->shape.sphere.cent, dir);	
-		else if (obj->fig_type == CONE)
-			cool_little_function(rt, &obj->shape.cone.vertex, dir);
-		else if (obj->fig_type == PLANE)
-			cool_little_function(rt, &obj->shape.plane.dot, dir);
-		else if (obj->fig_type == CYLIN)
-			cool_little_function(rt, &obj->shape.cylin.dot, dir);
+		dot = get_obj_dot(obj);
+		cool_little_function(rt, dot, dir);
 
 		ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 		if (ret != CL_SUCCESS)

@@ -9,12 +9,28 @@
 	cam		: position.
 --
 <RT width = "800" heigth = "600">
-
 	<plane>
 		<dot>0 0 10</dot>
-		<normal>0 1 0</normal>
+		<normal>3 1 1</normal>
 		<RGB>0 255 255</RGB>
-		<transparency>0.7</transparency>
+		<reflective>0</reflective>
+		<transparency>143567890987687654</transparency>
+		<specular>1</specular>
+		<texture>-09</texture>
+		<bump>-09</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>1 1</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
 		<reflective>0</reflective>
 		<specular>1000</specular>
 		<texture>-1</texture>
@@ -23,10 +39,10 @@
 		<cut_dot>0 0.3 -0.3</cut_dot>
 		<cut_normal>0.7 0.7 0</cut_normal>
 		<rotation>0 0 0</rotation>
-		<ior>1.0</ior>
+		<ior>1.1</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
-		<txt_scale>1 1</txt_scale>
+		<txt_scale>2 2</txt_scale>
 	</plane>
 	<cone>
 		<vertex> -5 3 5</vertex>
@@ -60,6 +76,6 @@
 		<intensity> 0.2 0.1 0.1 </intensity>
 	</light>
 	<cam>
-		<position> 0 1 -9 </position>
+		<position> 0 1 -55 </position>
 	</cam>
 </RT>
