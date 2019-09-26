@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:26 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:54:04 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 19:51:16 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "rt.h"
 
-#define ROTATION_SPEED	-0.02	
+#define ROTATION_SPEED	-0.002	
 #define TRANSLATE_SPEED 0.1
 
 cl_double3	rotate_z(cl_double3 v, double angle);

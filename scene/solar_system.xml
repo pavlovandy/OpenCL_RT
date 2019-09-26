@@ -23,7 +23,7 @@
 		<cut_dot>0 0.3 -0.3</cut_dot>
 		<cut_normal>0.7 0.7 0</cut_normal>
 		<rotation>0 0 0</rotation>
-		<ior>1.0</ior>
+		<ior>1.004</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>

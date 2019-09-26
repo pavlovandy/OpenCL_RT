@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:32:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 22:17:00 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:10:31 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int			is_frst_ltag(const char *str)
 {
 	if (ft_strequ(str, "spher") || ft_strequ(str, "plane") || \
 		ft_strequ(str, "cone") || ft_strequ(str, "cylin") || \
-			ft_strequ(str, "light") || ft_strequ(str, "cam"))
+		ft_strequ(str, "light") || ft_strequ(str, "cam") || \
+		ft_strequ(str, "rectangle") || ft_strequ(str, "triangle") || \
+		ft_strequ(str, "disk") || ft_strequ(str, "ellipse"))
 		return (1);
 	return (0);
 }
@@ -36,7 +38,9 @@ int			is_param_ltag(const char *str)
 		ft_strequ(str, "cut_dot") || ft_strequ(str, "cut_normal") ||
 		ft_strequ(str, "rotation") || ft_strequ(str, "ior") || \
 		ft_strequ(str, "transp_map_no") || ft_strequ(str, "txt_offset") || \
-		ft_strequ(str, "txt_scale") || ft_strequ(str, "move_dir"))
+		ft_strequ(str, "txt_scale") || ft_strequ(str, "move_dir") || \
+		ft_strequ(str, "v0") || ft_strequ(str, "v1") || ft_strequ(str, "v2") || \
+		ft_strequ(str, "v3"))
 		return (1);
 	return (0);
 }

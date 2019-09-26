@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:09:58 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 22:55:23 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:05:33 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,54 @@ mxml_node_t	*ft_write_cone(t_cone_data cone, mxml_node_t *data)
 	ft_write_param(cone.mmin, node, (const char *)"mmin");
 	ft_write_param(cone.tangent * 180 / 3.14, node, (const char *)"angle");
 	return (node);
+}
+
+mxml_node_t	*ft_write_triangle(t_triangle_data triangle, mxml_node_t *data)
+{
+	mxml_node_t *node;
+
+	node = mxmlNewElement(data, "triangle");
+	ft_write_3param(triangle.v0, node, (const char *)"v0");
+	ft_write_3param(triangle.v1, node, (const char *)"v1");
+	ft_write_3param(triangle.v2, node, (const char *)"v2");
+	return (node);
+	
+}
+
+mxml_node_t	*ft_write_disk(t_disk_data disk, mxml_node_t *data)
+{
+	mxml_node_t *node;
+
+	node = mxmlNewElement(data, "disk");
+	ft_write_3param(disk.cent, node, (const char *)"centre");
+	ft_write_3param(disk.normal, node, (const char *)"normal");
+	ft_write_param(disk.radius, node, (const char *)"radius");
+	return (node);
+}
+
+mxml_node_t	*ft_write_rectangle(t_rectangle_data rectangle, mxml_node_t *data)
+{
+	mxml_node_t *node;
+
+	node = mxmlNewElement(data, "rectangle");
+	ft_write_3param(rectangle.v0, node, (const char *)"v0");
+	ft_write_3param(rectangle.v1, node, (const char *)"v1");
+	ft_write_3param(rectangle.v2, node, (const char *)"v2");
+	ft_write_3param(rectangle.v3, node, (const char *)"v3");
+	return (node);
+	
+}
+
+mxml_node_t	*ft_write_ellipse(t_ellipse_data elipse, mxml_node_t *data)
+{
+	mxml_node_t *node;
+
+	node = mxmlNewElement(data, "ellipse");
+	ft_write_3param(elipse.cent, node, (const char *)"centre");
+	ft_write_3param(elipse.dir, node, (const char *)"dir");
+	ft_write_param(elipse.dist_btwn_cent, node, (const char *)"distance");
+	ft_write_param(elipse.radius_sum, node, (const char *)"radius");
+	return (node);
 	
 }
 
@@ -70,6 +118,14 @@ void	ft_write_to_xml(t_fig fig, mxml_node_t *data, t_obj_movement *filter)
 		node = ft_write_cylin(fig.shape.cylin, data);
 	else if (fig.fig_type == CONE)
 		node = ft_write_cone(fig.shape.cone, data);
+	else if (fig.fig_type == RECTANGLE)
+		node = ft_write_rectangle(fig.shape.rectangle, data);
+	else if (fig.fig_type == TRIANGLE)
+		node = ft_write_triangle(fig.shape.triangle, data);
+	else if (fig.fig_type == ELLIPSE)
+		node = ft_write_ellipse(fig.shape.ellipse, data);
+	else if (fig.fig_type == DISK)
+		node = ft_write_disk(fig.shape.disk, data);
 	else
 		return ;
 	ft_write_all(fig, node, filter);

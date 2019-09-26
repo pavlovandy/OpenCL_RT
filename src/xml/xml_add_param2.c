@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_add_param2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 00:50:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 17:54:29 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 19:11:01 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ int	add_for_all_obj3(const char *str, t_scene *scene, int i, const char *tag)
 	return (1);
 }
 
-int	add_for_all_obj2(const char *str, t_scene *scene, int i, const char *tag)
+int	add_for_all_obj2(const char *str, t_rt *rt, int i, const char *tag)
 {
 	cl_double	one_dot;
 	cl_double3	dot;
-
+	t_scene		*scene;
+	
+	scene = &rt->scene;
 	if (ft_strequ(tag, "cutting") && ft_get_3param(1, str, NULL, &one_dot))
 		scene->obj[i].cutting = (cl_int)one_dot;
 	else if (ft_strequ(tag, "cut_dot") && ft_get_3param(3, str, &dot, NULL))
@@ -48,10 +50,10 @@ int	add_for_all_obj2(const char *str, t_scene *scene, int i, const char *tag)
 	else if (ft_strequ(tag, "ior") && ft_get_3param(1, str, NULL, &one_dot))
 	{
 		if (one_dot < MIN_IOR|| one_dot > MAX_IOR)
-			return (error_message(RED"XML: 1.0004 <= ior <= 2"COLOR_OFF));
+			return (!error_message(RED"XML: 1.0004 <= ior <= 2"COLOR_OFF));
 		scene->obj[i].ior = one_dot;
 	}
-	else if (ft_strequ(tag, "transp_map_no") && ft_get_3param(1, str, NULL, &one_dot))
+	else if (ft_strequ(tag, "transp_map_no") && ft_get_3param(1, str, NULL, &one_dot) && rt->envi.txt_count > ft_atoi(str))
 		scene->obj[i].transparancy_map_no = (cl_int)one_dot;
 	else if (add_for_all_obj3(str, scene, i, tag))
 		return (1);
@@ -60,29 +62,31 @@ int	add_for_all_obj2(const char *str, t_scene *scene, int i, const char *tag)
 	return (1);
 }
 
-int	add_for_all_obj(const char *str, t_scene *scene, int i, const char *tag)
+int	add_for_all_obj(const char *str, t_rt *rt, int i, const char *tag)
 {
 	cl_double	one_dot;
+	t_scene		*scene;
 
-	if (add_for_all_obj2(str, scene, i, tag))
+	scene = &rt->scene;
+	if (add_for_all_obj2(str, rt, i, tag))
 		return (1);
 	if (!ft_get_3param(1, str, NULL, &one_dot))
 		return (0);
 	else if (ft_strequ(tag, "specular") && (one_dot < -1 || one_dot > 1000))
-		return (error_message(RED"XML: -1 <= specular <= 1000"COLOR_OFF));
+		return (!error_message(RED"XML: -1 <= specular <= 1000"COLOR_OFF));
 	else if (ft_strequ(tag, "reflective") && (one_dot < 0 || one_dot > 1))
-		return (error_message(RED"XML: 0 <= reflective <= 1"COLOR_OFF));
+		return (!error_message(RED"XML: 0 <= reflective <= 1"COLOR_OFF));
 	else if (ft_strequ(tag, "transparency") && (one_dot < 0 || one_dot > 1))
-		return (error_message(RED"XML: 0 <= transparency <= 1"COLOR_OFF));
+		return (!error_message(RED"XML: 0 <= transparency <= 1"COLOR_OFF));
 	else if (ft_strequ(tag, "specular"))
 		scene->obj[i].specular = (cl_int)ft_atoi(str);
 	else if (ft_strequ(tag, "reflective"))
 		scene->obj[i].reflective = (cl_double)one_dot;
 	else if (ft_strequ(tag, "transparency"))
 		scene->obj[i].trans = (cl_double)one_dot;
-	else if (ft_strequ(tag, "texture"))
+	else if (ft_strequ(tag, "texture") && rt->envi.txt_count > ft_atoi(str))
 		scene->obj[i].text_no = (cl_int)ft_atoi(str);
-	else if (ft_strequ(tag, "bump"))
+	else if (ft_strequ(tag, "bump") && rt->envi.txt_count > ft_atoi(str))
 		scene->obj[i].normal_map_no = (cl_int)ft_atoi(str);
 	else
 		return (0);
