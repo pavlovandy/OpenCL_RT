@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 20:11:40 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 22:07:48 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,16 +288,16 @@ typedef struct	s_cl
 
 typedef struct	s_txt_params
 {
-	cl_ulong		w;
-	cl_ulong		h;
-	cl_ulong		start_pos;
+	cl_int		w;
+	cl_int		h;
+	cl_int		start_pos;
 }				t_txt_params;
 
 typedef struct	s_envi
 {
 	cl_int			txt_count; //number of textures
 	cl_uint			*txt; //could be uint16 : rgb565. to save more space for kernel
-	cl_ulong		textures_size; //the sumary size of all textures
+	cl_int			textures_size; //the sumary size of all textures
 	t_txt_params	txt_par[MAX_TEXTURE_COUNT]; //w, h and start point for each texture in txt array
 }				t_envi;
 
