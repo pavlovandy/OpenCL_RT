@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/26 16:44:02 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:09:03 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ cl_double3		*get_obj_dot(t_fig *fig)
 	else if (fig->fig_type == CONE)
 		return (&fig->shape.cone.vertex);
 	else if (fig->fig_type == CYLIN)
-		return (&fig->shape.cylin.dot);	
+		return (&fig->shape.cylin.dot);
 	else if (fig->fig_type == TORUS)
 		return (&fig->shape.torus.cent);
 	else if (fig->fig_type == ELLIPSE)

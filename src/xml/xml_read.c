@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 17:34:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 15:30:11 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:53:45 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,28 @@ int	exit_parse(mxml_node_t *tree, FILE *fp, char *str)
 	return (1);
 }
 
-
+int		ft_check_count(int o, int i, int n)
+{
+	if (o > MAX_OBJ_COUNT)
+	{
+		ft_putstr(RED"XML: max obj is "COLOR_OFF);
+		ft_putnbr(MAX_OBJ_COUNT);
+		return(error_message(RED" SORRY !"COLOR_OFF));
+	}
+	if (i > MAX_LIGHTING_COUNT)
+	{
+		ft_putstr(RED"XML: max light is "COLOR_OFF);
+		ft_putnbr(MAX_OBJ_COUNT);
+		return(error_message(RED" SORRY !"COLOR_OFF));
+	}
+	if (n > MAX_NEGATIVE_OBJ_COUNT)
+	{
+		ft_putstr(RED"XML: max neg_obj is "COLOR_OFF);
+		ft_putnbr(MAX_OBJ_COUNT);
+		return(error_message(RED" SORRY !"COLOR_OFF));
+	}
+	return (0);
+}
 
 int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 {
@@ -34,6 +55,8 @@ int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 	index[2] = -1;
 	while (node != NULL)
 	{
+		if (ft_check_count(index[0], index[1], index[2]))
+			return (1);
 		son = mxmlGetFirstChild(node);
 		if (mxmlGetElement(node) != NULL && !(what_is = \
 			ft_is_obj(mxmlGetElement(node), scene, index, rt)))

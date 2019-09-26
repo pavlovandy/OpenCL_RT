@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:55:18 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 17:55:47 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:23:00 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ft_add_distance(const char *str, t_scene *scene, int i)
 {
 	cl_double	one_dot;
 
-	if (!ft_get_3param(3, str, NULL, &one_dot))
+	if (!ft_get_3param(1, str, NULL, &one_dot))
 		return (0);
 	if (scene->obj[i].fig_type == ELLIPSE)
 		if (one_dot > 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 16:54:35 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 14:39:32 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 16:52:46 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	*ft_realloc(void *p, size_t new_size, size_t prev_size)
 	res = 0;
 	res = ft_memalloc(new_size);
 	if (!res)
-		return (0);
+		exit(error_message(RED"malloc is that you?"COLOR_OFF));
 	if (!p)
 		return (res);
 	copy_of_p = (unsigned char*)p;
@@ -95,8 +95,8 @@ int		read_texture(char	*file_name, t_envi *envi)
 	SDL_Surface	*surr;
 	cl_uint		*tmp;
 	Uint8		*pixels;
-	int			i;
-	int			new_size;
+	cl_ulong	i;
+	cl_ulong	new_size;
 
 	surr = load_tex(file_name, SDL_PIXELFORMAT_ARGB32);
 
@@ -104,18 +104,20 @@ int		read_texture(char	*file_name, t_envi *envi)
 	envi->txt_par[envi->txt_count].h = surr->h;
 	envi->txt_par[envi->txt_count].start_pos = envi->textures_size;
 
-	new_size = envi->textures_size + surr->w * surr->h;
+	new_size = envi->textures_size + (cl_ulong)surr->w * surr->h;
 	tmp = (cl_uint*)ft_realloc(envi->txt, sizeof(cl_uint) * new_size, sizeof(cl_uint) * envi->textures_size);
+	if (!tmp)
+		exit(0);
 	if (envi->txt)
 		free(envi->txt);
 	envi->txt = tmp;
 	
 	if (envi->txt == 0)
 		return (error_message(RED"couldn't reallocate for some reason"COLOR_OFF));
-	i = -1;
+	i = 0;
 	pixels = (Uint8*)surr->pixels;
-	while (++i < surr->w * surr->h)
-		envi->txt[envi->txt_par[envi->txt_count].start_pos + i] = (pixels[i * 4] << 24) + (pixels[i * 4 + 1] << 16) + (pixels[i * 4 + 2] << 8) + pixels[i * 4 + 3];
+	while (i < (cl_ulong)surr->w * surr->h)
+		{envi->txt[envi->txt_par[envi->txt_count].start_pos + i] = (pixels[i * 4] << 24) + (pixels[i * 4 + 1] << 16) + (pixels[i * 4 + 2] << 8) + pixels[i * 4 + 3]; i++;}
 	SDL_FreeSurface(surr);
 
 	envi->textures_size = new_size;

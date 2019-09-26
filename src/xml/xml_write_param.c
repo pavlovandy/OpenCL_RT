@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:13:18 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 16:46:59 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:30:43 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*double_to_char(double nbr)
 		free(second);
 	}else
 		first = ft_itoa((int)nbr);
+	if (nbr < 0)
+		nbr = -nbr;
 	nbr -= (long long)nbr;
 	tmp = first;
 	if (nbr != 0)

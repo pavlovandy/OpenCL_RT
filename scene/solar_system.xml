@@ -5,18 +5,19 @@
 	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
 	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
 	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no.
+	disk	: centre, normal, 
 	light	: type, position, intensity.
 	cam		: position.
 --
 <RT width = "1200" heigth = "1200">
 	<plane>
-		<dot>0 0 2</dot>
+		<dot>0 0 20</dot>
 		<normal>0 0 1</normal>
 		<RGB>0 255 255</RGB>
 		<transparency>0</transparency>
 		<reflective>0</reflective>
-		<specular>1000</specular>
-		<texture>-1</texture>
+		<specular>0</specular>
+		<texture>6</texture>
 		<bump>-1</bump>
 		<cutting>0</cutting>
 		<cut_dot>0 0.3 -0.3</cut_dot>
@@ -28,29 +29,28 @@
 		<txt_scale>1 1</txt_scale>
 	</plane>
 	<spher>
-		<centre>0 0 -2</centre>
-		<radius>1</radius>
+		<centre>0 0 5</centre>
+		<radius>1.5</radius>
 		<RGB>185 25 25</RGB>
-		<transparency>1</transparency>
-		<reflective>0.004</reflective>////0.004///
+		<transparency>0</transparency>
+		<reflective>0.004</reflective>
 		<specular>20</specular>
-		<texture>-1</texture>
+		<texture>4</texture>
 		<bump>-1</bump>
 		<cutting>0</cutting>
 		<cut_dot>0 0.3 -0.3</cut_dot>
 		<cut_normal>0.7 0.7 0</cut_normal>
-		<rotation>0 0 0</rotation>
+		<rotation>1 0 0</rotation>
 		<ior>1.004000</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
-	</spher>
-	<plane>
-	</plane>
+   	</spher>
+	
 	<light>
 		<type> point </type>
-		<position> 0 4 -4 </position>
-		<intensity> 1 1 1 </intensity>
+		<position> -5 5  5 </position>
+		<intensity> 6 6 5 </intensity>
 	</light>
 	<light>
 		<type> ambient </type>

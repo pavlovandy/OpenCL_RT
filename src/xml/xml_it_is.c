@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 17:52:56 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:40:47 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_is_cam(mxml_node_t *node, t_pov *pov, int what_is)
 		return (1);
 	if (ft_strequ(mxmlGetElement(node), "position"))
 		return (ft_add_cam_dot(mxmlGetOpaque(node), pov));
+	if (ft_strequ(mxmlGetElement(node), "dir"))
+		return(ft_add_cam_dir(mxmlGetOpaque(node), pov));
 	else
 		return (error_message(RED"XML: invalid tag for cam"COLOR_OFF));
 }
@@ -76,7 +78,7 @@ int	ft_is_param2(mxml_node_t *node, t_rt *rt, int i, const char *name)
 		ft_strequ(name, "rotation") || ft_strequ(name, "ior") || \
 		ft_strequ(name, "transp_map_no") || ft_strequ(name, "txt_offset") || \
 		ft_strequ(name, "txt_scale"))
-			return (add_for_all_obj(mxmlGetOpaque(node), scene, i, name));
+			return (add_for_all_obj(mxmlGetOpaque(node), rt, i, name));
 		else if (ft_strequ(name, "move_dir"))
 			return (ft_add_move_dir(mxmlGetOpaque(node), rt, i));
 		else if (ft_strequ(name, "v0") || ft_strequ(name, "v1") || \

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:32:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 14:39:27 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:10:31 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int			is_frst_ltag(const char *str)
 	if (ft_strequ(str, "spher") || ft_strequ(str, "plane") || \
 		ft_strequ(str, "cone") || ft_strequ(str, "cylin") || \
 		ft_strequ(str, "light") || ft_strequ(str, "cam") || \
-		ft_strequ(str, "rectangle") || ft_strequ(str, "rectangle"))
+		ft_strequ(str, "rectangle") || ft_strequ(str, "triangle") || \
+		ft_strequ(str, "disk") || ft_strequ(str, "ellipse"))
 		return (1);
 	return (0);
 }

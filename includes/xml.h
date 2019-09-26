@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 17:52:50 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:40:39 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_create_disk(t_scene *scene, int i, t_filters *filter);
 void	ft_create_triangle(t_scene *scene, int i, t_filters *filter);
 void	ft_create_rectangle(t_scene *scene, int i, t_filters *filter);
 void	ft_create_ellipse(t_scene *scene, int i, t_filters *filter);
+int		ft_add_cam_dir(const char *str, t_pov *pov);
 
 /*
 **	Add ++ add_param(position, radius, normal, dir, tang, type) to figure
@@ -55,7 +56,7 @@ int		ft_add_distance(const char *str, t_scene *scene, int i);
 /*
 **	Add ++ add_param(color, specular, reflection) to figure
 */
-int		add_for_all_obj(const char *str, t_scene *scene, int i, const char *tag);
+int		add_for_all_obj(const char *str, t_rt *rt, int i, const char *tag);
 int		ft_add_rgb(const char *str, t_scene *scene, int i);
 int		ft_get_3param(int i, const char *str, cl_double3 *dot, cl_double *one_dot);
 
