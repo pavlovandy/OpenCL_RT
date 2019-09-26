@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 19:46:59 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/26 12:04:59 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,15 @@ typedef struct	s_rotation_matrix
 **	
 */
 
+typedef struct	s_cube
+{
+	cl_int			no;
+	cl_double3		cent;
+	cl_double3		rotation;
+	t_rotation_matrix	rotation_matrix;
+	cl_double		dist;
+}				t_cube;
+
 struct	s_fig
 {
 	cl_int				fig_type;
@@ -201,6 +210,7 @@ struct	s_fig
 
 	cl_int				cutting;  //add to parser. default 0	---done
 	t_plane_data		cutting_plane;  //add to parser. if cutting = 0 unused	---done
+	cl_int				complex_fig;  //is in the complex sturct
 };
 
 struct	s_sdl
