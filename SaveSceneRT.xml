@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RT>
 	<ellipse>
-		<centre>3.8 -4 0</centre>
+		<centre>3.9 -3.6 0.6</centre>
 		<dir>0 0 1</dir><distance>1.5</distance>
 		<radius>2</radius>
 		<RGB>255 0 0</RGB>
 		<transparency>0</transparency>
 		<reflective>0</reflective>
 		<specular>-1</specular>
-		<texture>-1</texture>
+		<texture>0</texture>
 		<bump>-1</bump>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
@@ -18,6 +18,9 @@
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
 	</ellipse>
+	<negative_spher>
+		
+	</negative_spher>
 	<light>
 		<type>point</type>
 		<position>1 4 10</position>
@@ -39,8 +42,8 @@
 		<intensity>5 5 5</intensity>
 	</light>
 	<cam>
-		<position>3 -0.7 -31.6</position>
-		<dir>3.0 -5.5 0</dir>
+		<position>9.8 -3.4 -8.6</position>
+		<dir>0.2 -0.6 -2.4</dir>
 	</cam>
 
 </RT>
