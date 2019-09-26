@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:25:40 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:57:18 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,19 @@ int			rotation(t_rt *rt) //sometimes its must rotate z coordinate also
 {
 	int				x;
 	int				y;
+	cl_double3		rotate_vector;
+	
 
 	SDL_GetRelativeMouseState(&x, &y);
 	if (x == 0 && y == 0)
 		return (0);
-	rt->pov.dir.s[0] += (y) * ROTATION_SPEED;
-	rt->pov.dir.s[1] += (x) * ROTATION_SPEED;
-	rt->pov.pov_rm = build_rotation_matrix_form_angles(rt->pov.dir);
+	rotate_vector.s[0] = (y) * ROTATION_SPEED;
+	rotate_vector.s[1] = (x) * ROTATION_SPEED;
+	rotate_vector.s[2] = 0;
+
+	rt->pov.pov_rm = rotate_matrix_of_rotation(rt->pov.pov_rm, rotate_vector);
+	rt->pov.dir = find_angles_from_rotation_matrix(rt->pov.pov_rm);
+	
 	return (1);
 }
 

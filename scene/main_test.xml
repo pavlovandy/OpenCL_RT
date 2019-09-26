@@ -15,6 +15,24 @@
 		<RGB>0 255 255</RGB>
 		<reflective>0</reflective>
 		<transparency>143567890987687654</transparency>
+		<specular>1345678987654647890876543</specular>
+		<texture>2</texture>
+		<bump>-09</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>1 1</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<transparency>143567890987687654</transparency>
 		<specular>1</specular>
 		<texture>-09</texture>
 		<bump>-09</bump>
@@ -26,6 +44,227 @@
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
+	</plane>
+	<plane>
+		<dot>0 0 10</dot>
+		<normal>3 1 1</normal>
+		<RGB>0 255 255</RGB>
+		<reflective>0</reflective>
+		<specular>1000</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0.3 -0.3</cut_dot>
+		<cut_normal>0.7 0.7 0</cut_normal>
+		<rotation>0 0 0</rotation>
+		<ior>1.1</ior>
+		<transp_map_no>-1</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>2 2</txt_scale>
 	</plane>
 	<plane>
 		<dot>0 0 10</dot>
@@ -70,6 +309,18 @@
 		<type> point </type>
 		<position> 0 1 -4 </position>
 		<intensity> 2 2 2 </intensity>
+	</light>
+	<light>
+		<type> ambient </type>
+		<intensity> 0.2 0.1 0.1 </intensity>
+	</light>
+	<light>
+		<type> ambient </type>
+		<intensity> 0.2 0.1 0.1 </intensity>
+	</light>
+	<light>
+		<type> ambient </type>
+		<intensity> 0.2 0.1 0.1 </intensity>
 	</light>
 	<light>
 		<type> ambient </type>

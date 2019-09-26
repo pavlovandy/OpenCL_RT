@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 17:27:18 by myuliia           #+#    #+#             */
-/*   Updated: 2019/09/26 18:44:34 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:58:50 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void		add_filter(t_rt *rt)
 	Uint32	*hsv;
 	// t_color array_filter[80];
 	int i;
-	int k;
+	// int k;
 	
 	i = -1;
 	pixel = (Uint32 *)rt->sdl.win_sur->pixels;

@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:24:14 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 19:01:43 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,8 @@ int		main(int argc, char **argv)
 
 	if (init_start_params(&rt))
 		return (error_message(RED"couldnt init params"COLOR_OFF));
+	if (read_textures(&rt))
+		return (1);
 	if (argc == 2)
 	{
 		if (ft_parse_xml(argv[1], &rt.scene, &rt.pov, &rt))
@@ -178,8 +180,6 @@ int		main(int argc, char **argv)
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
 	if (init_but(&rt))
-		return (1);
-	if (read_textures(&rt))
 		return (1);
 	if (init_cl(&rt.cl))
 		return (1);

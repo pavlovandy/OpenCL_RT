@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:36:02 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:58:13 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct	s_cone_data
 	cl_double	mmin; //add to parser. inf = -BIG_VALUE	---done
 }				t_cone_data;
 
-typedef struct	s_rectangle_data //add to parser
+typedef struct	s_rectangle_data //add to parser	---done
 {
 	cl_double3	v0;
 	cl_double3	v1;
@@ -138,7 +138,7 @@ typedef struct	s_ellipse_data
 	cl_double	radius_sum; // > 0
 }				t_ellipse_data;
 
-typedef struct	s_triangle_data  //add to parser
+typedef struct	s_triangle_data  //add to parser	---done
 {
 	cl_double3	v0;
 	cl_double3	v1;

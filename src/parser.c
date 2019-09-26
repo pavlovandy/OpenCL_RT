@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 16:54:35 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 16:03:25 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:52:46 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	*ft_realloc(void *p, size_t new_size, size_t prev_size)
 	res = 0;
 	res = ft_memalloc(new_size);
 	if (!res)
-		return (0);
+		exit(error_message(RED"malloc is that you?"COLOR_OFF));
 	if (!p)
 		return (res);
 	copy_of_p = (unsigned char*)p;
@@ -95,8 +95,8 @@ int		read_texture(char	*file_name, t_envi *envi)
 	SDL_Surface	*surr;
 	cl_uint		*tmp;
 	Uint8		*pixels;
-	cl_ulong			i;
-	cl_ulong			new_size;
+	cl_ulong	i;
+	cl_ulong	new_size;
 
 	surr = load_tex(file_name, SDL_PIXELFORMAT_ARGB32);
 
@@ -105,7 +105,6 @@ int		read_texture(char	*file_name, t_envi *envi)
 	envi->txt_par[envi->txt_count].start_pos = envi->textures_size;
 
 	new_size = envi->textures_size + (cl_ulong)surr->w * surr->h;
-	//envi->txt = (cl_uint*)realloc(envi->txt, sizeof(cl_uint) * new_size);
 	tmp = (cl_uint*)ft_realloc(envi->txt, sizeof(cl_uint) * new_size, sizeof(cl_uint) * envi->textures_size);
 	if (!tmp)
 		exit(0);
