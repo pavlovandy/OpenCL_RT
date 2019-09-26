@@ -8,7 +8,7 @@
 	light	: type, position, intensity.
 	cam		: position.
 --
-<RT width = "1200" heigth = "1200">
+<RT width = "700" heigth = "700">
 	<plane>
 		<dot>0 0 2</dot>
 		<normal>0 0 1</normal>
@@ -37,7 +37,7 @@
 		<specular>20</specular>
 		<texture>-1</texture>
 		<bump>-1</bump>
-		<cutting>0</cutting>
+		<cutting>1</cutting>
 		<cut_dot>0 0.3 -0.3</cut_dot>
 		<cut_normal>0.7 0.7 0</cut_normal>
 		<rotation>0 0 0</rotation>

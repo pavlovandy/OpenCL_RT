@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:11:01 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 18:14:03 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int			read_textures(t_rt *rt)
 		return (error_message(RED"texture failure"COLOR_OFF));
 	if (read_texture("envi/mars.jpg", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
-	if (read_texture("envi/neptune.jpg", &rt->envi))
-		return (error_message(RED"texture failure"COLOR_OFF));
-	if (read_texture("envi/saturn.jpg", &rt->envi))
-		return (error_message(RED"texture failure"COLOR_OFF));
-	if (read_texture("envi/saturn_ring_alpha.png", &rt->envi))
-		return (error_message(RED"texture failure"COLOR_OFF));
-	if (read_texture("envi/stars_milky_way.jpg", &rt->envi))
-		return (error_message(RED"texture failure"COLOR_OFF));
+	// if (read_texture("envi/neptune.jpg", &rt->envi))
+	// 	return (error_message(RED"texture failure"COLOR_OFF));
+	// if (read_texture("envi/saturn.jpg", &rt->envi))
+	// 	return (error_message(RED"texture failure"COLOR_OFF));
+	// if (read_texture("envi/saturn_ring_alpha.png", &rt->envi))
+	// 	return (error_message(RED"texture failure"COLOR_OFF));
+	// if (read_texture("envi/stars_milky_way.jpg", &rt->envi))
+	// 	return (error_message(RED"texture failure"COLOR_OFF));
 	if (read_texture("envi/waffles.jpg", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
 	if (read_texture("envi/perforated_2.jpg", &rt->envi))
