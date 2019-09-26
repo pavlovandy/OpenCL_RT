@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 17:27:18 by myuliia           #+#    #+#             */
-/*   Updated: 2019/09/25 17:29:15 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 15:22:13 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void		filter_greyscale(t_fil *f)
 	f->rgb.b = f->rgb.r;
 }
 
-void		motion_blur(t_fil *f, t_color *array_filter)
+void		blur(t_fil *f, t_color *array_filter)
 {
 	f->rgb.r = (array_filter[0].r + array_filter[1].r + array_filter[2].r + \
 	array_filter[3].r + array_filter[4].r + array_filter[5].r + array_filter[6].r \
@@ -235,6 +235,16 @@ void		motion_blur(t_fil *f, t_color *array_filter)
 	f->rgb.b = (array_filter[0].b + array_filter[1].b + array_filter[2].b + \
 	array_filter[3].b + array_filter[4].b + array_filter[5].b + array_filter[6].b \
 	+ array_filter[7].b + array_filter[8].b) / 9;
+}
+
+int			parallax(const float z)
+{
+	const float eye_separ = 400;
+	const float mu = 0.33;
+	int			result;
+
+	result = eye_separ * ((1.0 - z * mu) / (2.0 - z * mu)) + 0.5;
+	return (result);
 }
 
 void		add_filter(t_rt *rt)
@@ -258,26 +268,57 @@ void		add_filter(t_rt *rt)
 		int_to_rgb(f, pixel[i]);
 		// rgb_tmp = int_to_rgb(rgb_tmp, pixel[i]);
 		
+        /* BLUR*/
 		if ((i % 2 == 0) && (i < (rt->sdl.win_sur->w * rt->sdl.win_sur->h - 20)))
 		{
 			k = -1;
 			while (++k < 10)
 				f->array_filtr[k] = int_to_rgb_arr(f->array_filtr[k], pixel[i + k]);
 		}
-		motion_blur(f, f->array_filtr);
+		// blur(f, f->array_filtr);
 		
-		// f->rgb.r = (double)rand() * sin(0.7654);
-		// f->rgb.g = (double)rand();
+		// if (rt->filters.zbuff[i] < 5)
+		// {
+		// 	f->rgb.b = 255;
+		// }
+		// if (rt->filters.zbuff[i] < 10 && rt->filters.zbuff[i] > 5)
+		// {
+			f->rgb.r = 0;
+			f->rgb.g = 0;
+			// f->rgb.g = (rt->filters.zbuff[i] * 10);
+			f->rgb.b = 255 - (rt->filters.zbuff[i] * 10);
+			if (f->rgb.b > 255)
+				f->rgb.b = 0;
+			if (f->rgb.b < 0)
+				f->rgb.b = 0;
+			if (f->rgb.g > 200)
+				f->rgb.g = 0;
+
+		// }
 
 		
-
+		/***** STEREOSCOPYC ********/
+		// int		kki, j, par;
+		// t_vector same;
+		// size_t		more[100] = 0;
+		
 		// if ((i % 2) != 0) {
-		f->rgb.r = (double)(rand() % 256);
-		f->rgb.g = (double)(rand() % 256);
-		f->rgb.b = (double)(rand() % 256);// }
+		// f->rgb.r = (double)(rand() % 256);
+		// f->rgb.g = (double)((rand()%256)*(sin(i*2*M_PI/200)+1)/2);
+		// f->rgb.b = (double)(rand() % 256);// }
 		
-		// if ((i / rt->sdl.win_sur->w) > 10 && (i / rt->sdl.win_sur->w) < 100)
-			// f->rgb.g = (double)rand() * sin(0.3);
+		// j = -1;
+		// while (++j < rt->sdl.win_sur->h)
+		// {
+		// 	kki = -1;
+		// 	while (++kki < rt->sdl.win_sur->w)
+		// 	{
+		// 		par = parallax(rt->filters.zbuff[i]);
+		// 	}
+		// }
+		    // framebuffer[(i+j*width)*3 + 0] 
+		
+		/***** STEREOSCOPYC ********/
 
 	
 
