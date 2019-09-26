@@ -46,7 +46,6 @@
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
    	</spher>
-	
 	<light>
 		<type> point </type>
 		<position> -5 5  5 </position>

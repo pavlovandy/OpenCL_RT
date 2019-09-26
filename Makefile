@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+         #
+#    By: yruda <yruda@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/26 13:16:10 by apavlov          ###   ########.fr        #
+#    Updated: 2019/09/26 18:06:22 by yruda            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
 		xml/xml_read.c xml/xml_create_obj.c xml/xml_add_param.c \
 		xml/xml_add_param_help.c xml/xml_add_light.c xml/xml_create_cam.c xml/xml_it_is.c \
 		xml/xml_save.c xml/xml_write_obj.c xml/xml_write_other.c xml/xml_write_param.c \
-		xml/xml_add_param2.c button/init_but.c button/action_but.c editor/check_edit.c \
-		xml/xml_create_obj2.c filter.c
+		xml/xml_add_param2.c button/init_but.c button/action_but.c \
+		xml/xml_create_obj2.c filter.c \
+		editor/editor_main.c editor/change_colors.c
 
 HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h functions.h
 

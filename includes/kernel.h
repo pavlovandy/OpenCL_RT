@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kernel.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 14:38:02 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 19:33:35 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct	s_fig
 	t_shape				shape;
 
 	double3				color;
+	int					color_index;
 	int					specular;
 	double				reflective;
 	double				trans;

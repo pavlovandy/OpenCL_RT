@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_create_obj.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 16:47:05 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 21:41:52 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:40:47 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_create_all(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].color = (cl_double3){{255, 0, 0}};
+	scene->obj[i].color_index = -1;
 	scene->obj[i].specular = (cl_int)-1;
 	scene->obj[i].reflective = (cl_double)0;
 	scene->obj[i].trans = (cl_double) 0;
