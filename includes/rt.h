@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 12:04:59 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:17:28 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,6 +356,9 @@ int			init_cl(t_cl *cl);
 int			create_program_and_kernels(t_cl *cl);
 int			set_up_memory(t_rt *rt, t_cl *cl);
 int			freed_up_memory(t_cl *cl, t_rt *rt);
+int			set_global_and_local_item_size(t_cl *cl, t_rt *rt);
+int			read_cl_files(char	**source_str, t_cl *cl);
+int			build_program(t_cl *cl);
 
 /*
 **	SDL		stuff
