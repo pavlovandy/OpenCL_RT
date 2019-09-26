@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/24 23:20:46 by anri             ###   ########.fr       */
+/*   Updated: 2019/09/26 13:43:24 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ cl_double3		*get_obj_dot(t_fig *fig)
 	else if (fig->fig_type == CONE)
 		return (&fig->shape.cone.vertex);
 	else if (fig->fig_type == CYLIN)
-		return (&fig->shape.cylin.dot);	
+		return (&fig->shape.cylin.dot);
 	else if (fig->fig_type == TORUS)
 		return (&fig->shape.torus.cent);
 	else if (fig->fig_type == ELLIPSE)

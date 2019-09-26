@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 13:17:28 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 14:44:24 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
+# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
 # ifdef __APPLE__
 # define WIN_WIDTH		800
 # define WIN_HEIGHT		600
@@ -221,17 +221,14 @@ struct	s_sdl
 
 struct	s_pov
 {
-	cl_double3	coord;
-	cl_double3	dir;
-	double		cx;
-	double		cy;
-	double		sx;
-	double		sy;
-	cl_double	d;
-	cl_double	vh;
-	cl_double	vw;
-	cl_int		w;
-	cl_int		h;
+	cl_double3			coord;
+	cl_double3			dir;
+	t_rotation_matrix	pov_rm;
+	cl_double			d;
+	cl_double			vh;
+	cl_double			vw;
+	cl_int				w;
+	cl_int				h;
 };
 
 typedef struct	s_light

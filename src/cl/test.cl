@@ -335,7 +335,7 @@ __kernel void	test_kernel(__global t_scene *scene,
 	double3	color;
 
 	direction = normalize(canvas_to_viewport(x - pov.w /2 , y - pov.h / 2, pov.w, pov.h, pov));
-	direction = rotate_camera(direction, pov);
+	direction =	new_basis(direction, pov.pov_rm);
 	color = ray_trace(pov.coord, direction, scene, 0.1, BIG_VALUE, texture, txt_params, &zbuff);
 	color = trim_color(color);
 	

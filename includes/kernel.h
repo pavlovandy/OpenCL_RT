@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 13:24:18 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 14:38:02 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,10 +159,7 @@ typedef struct	s_pov
 {
 	double3				coord;
 	double3				dir;
-	double				cx;
-	double				cy;
-	double				sx;
-	double				sy;
+	t_rotation_matrix	pov_rm;
 	double				d;
 	double				vh;
 	double				vw;
@@ -236,10 +233,7 @@ double3		beers_law(double distance, double3 obj_absorb);
 
 
 //rotation
-double3		rotate_camera(double3 direction, t_pov pov);
-double3		rotate_x(double3 v, double angle);
-double3		rotate_y(double3 v, double angle);
-double3		rotate_z(double3 v, double angle);
+double3	new_basis(double3 point, t_rotation_matrix m);
 
 //intersections
 double2		intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
