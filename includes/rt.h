@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:29:13 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:41:02 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef	struct s_scene	t_scene;
 typedef	struct s_rt		t_rt;
 typedef	struct s_pov	t_pov;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double)*4)));
-
 
 enum	e_but
 {
@@ -157,15 +156,15 @@ typedef struct	s_cylin_data
 
 typedef union	u_shape
 {
-	t_sphere_data	sphere;
-	t_cone_data		cone;
-	t_plane_data	plane;
-	t_cylin_data	cylin;
+	t_sphere_data		sphere;
+	t_cone_data			cone;
+	t_plane_data		plane;
+	t_cylin_data		cylin;
 	t_rectangle_data	rectangle;
-	t_triangle_data	triangle;
-	t_torus_data	torus;
-	t_ellipse_data	ellipse;
-	t_disk_data		disk;
+	t_triangle_data		triangle;
+	t_torus_data		torus;
+	t_ellipse_data		ellipse;
+	t_disk_data			disk;
 }				t_shape;
 
 typedef struct	s_rotation_matrix
@@ -178,29 +177,40 @@ typedef struct	s_rotation_matrix
 /*
 **	figure's parametres:
 **	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
+**	
 */
+
+typedef struct	s_cube
+{
+	cl_int			no;
+	cl_double3		cent;
+	cl_double3		rotation;
+	t_rotation_matrix	rotation_matrix;
+	cl_double		dist;
+}				t_cube;
 
 struct	s_fig
 {
 	cl_int				fig_type;
 	t_shape				shape;
 
-	cl_double3			color; //+ pallete to buttons 
+	cl_double3			color; //+ pallete to buttons
 	cl_int				specular; // -1 is off 0 - 1000
 	cl_double			reflective; // 0 - 1
-	cl_double			trans; //+ 0 - 1
-	cl_double3			rotation;	//+ no edit
-	t_rotation_matrix	rotation_martix;	//+
+	cl_double			trans;//+ 0 - 1
+	cl_double3			rotation;//+ no edit
+	t_rotation_matrix	rotation_martix;//+
 	cl_double			ior;
-	cl_int				noise; //+ -1 - 1
-	cl_int				text_no; //+ -1 if off find out
-	cl_int				normal_map_no; // -1 if off 6 find out
-	cl_int				transparancy_map_no;	//+ find out
-	cl_double2			txt_offset;	//+ no edit
-	cl_double2			txt_scale;	//+ no edit
+	cl_int				noise;//+ -1 - 1
+	cl_int				text_no;//+ -1 if off find out
+	cl_int				normal_map_no;// -1 if off 6 find out
+	cl_int				transparancy_map_no;//+ find out
+	cl_double2			txt_offset;//+ no edit
+	cl_double2			txt_scale;//+ no edit
 
-	cl_int			cutting;  //add to parser. default 0	---done
-	t_plane_data	cutting_plane;  //add to parser. if cutting = 0 unused	---done
+	cl_int				cutting;  //add to parser. default 0	---done
+	t_plane_data		cutting_plane;  //add to parser. if cutting = 0 unused	---done
+	cl_int				complex_fig;  //is in the complex sturct
 };
 
 struct	s_sdl
@@ -336,8 +346,8 @@ struct	s_rt
 **	Init
 */
 
-int		init_start_params(t_rt *rt);
-int		read_textures(t_rt *rt);
+int			init_start_params(t_rt *rt);
+int			read_textures(t_rt *rt);
 
 /*
 **	CL		stuff
@@ -345,7 +355,10 @@ int		read_textures(t_rt *rt);
 int			init_cl(t_cl *cl);
 int			create_program_and_kernels(t_cl *cl);
 int			set_up_memory(t_rt *rt, t_cl *cl);
-int			freed_up_memory(t_cl *cl);
+int			freed_up_memory(t_cl *cl, t_rt *rt);
+int			set_global_and_local_item_size(t_cl *cl, t_rt *rt);
+int			read_cl_files(char	**source_str, t_cl *cl);
+int			build_program(t_cl *cl);
 
 /*
 **	SDL		stuff
@@ -380,7 +393,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig, t_rt *rt);
+int			ft_edit(t_fig *fig);
 
 void		add_filter(t_rt *rt);
 

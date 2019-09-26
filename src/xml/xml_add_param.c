@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_add_param.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 19:57:10 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/25 21:38:47 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag)
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CYLIN)
 		scene->obj[i].shape.cylin.dir = ft_normalize((cl_double3)dot);
 	else if (ft_strequ(tag, "dir") && scene->obj[i].fig_type == CONE)
-		scene->obj[i].shape.cone.dir = ft_normalize((cl_double3)dot);
+		scene->obj[i].shape.cone.dir = ft_normalize((cl_double3)dot);//додати матрицю поворотів для кожної фігури
 	else
 	{
 		if (ft_strequ(tag, "normal"))

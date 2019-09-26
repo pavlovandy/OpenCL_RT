@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 17:27:18 by myuliia           #+#    #+#             */
-/*   Updated: 2019/09/26 15:22:13 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:01:11 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,16 +283,16 @@ void		add_filter(t_rt *rt)
 		// }
 		// if (rt->filters.zbuff[i] < 10 && rt->filters.zbuff[i] > 5)
 		// {
-			f->rgb.r = 0;
-			f->rgb.g = 0;
-			// f->rgb.g = (rt->filters.zbuff[i] * 10);
-			f->rgb.b = 255 - (rt->filters.zbuff[i] * 10);
-			if (f->rgb.b > 255)
-				f->rgb.b = 0;
-			if (f->rgb.b < 0)
-				f->rgb.b = 0;
-			if (f->rgb.g > 200)
-				f->rgb.g = 0;
+			// f->rgb.r = 0;
+			// f->rgb.g = 0;
+			// // f->rgb.g = (rt->filters.zbuff[i] * 10);
+			// f->rgb.b = 255 - (rt->filters.zbuff[i] * 10);
+			// if (f->rgb.b > 255)
+			// 	f->rgb.b = 0;
+			// if (f->rgb.b < 0)
+			// 	f->rgb.b = 0;
+			// if (f->rgb.g > 200)
+			// 	f->rgb.g = 0;
 
 		// }
 

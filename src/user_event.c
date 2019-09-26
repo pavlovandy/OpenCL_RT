@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 16:42:56 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/25 19:14:12 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int			user_events(t_rt *rt)
 			move = 0;
 		else if (rt->edi.chosen_obj != -1)
 		{
-				if ((changes += ft_edit(rt->scene.obj + rt->edi.chosen_obj, rt)))
+				if ((changes += ft_edit(rt->scene.obj + rt->edi.chosen_obj)))
 				{
 					ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 					if (ret != CL_SUCCESS)

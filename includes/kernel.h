@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/25 17:08:10 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:24:18 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,22 @@ typedef struct	s_triangle_data
 	double3				v2;
 }				t_triangle_data;
 
+typedef struct	s_rotation_matrix
+{
+	double3				e1;
+	double3				e2;
+	double3				e3;
+}				t_rotation_matrix;
+
+typedef struct	s_cube
+{
+	int			no;
+	double3		cent;
+	double3		rotation;
+	t_rotation_matrix	rotation_matrix;
+	double		dist;
+}				t_cube;
+
 typedef struct	s_cylin_data
 {
 	double3				dir;
@@ -115,13 +131,6 @@ typedef union	u_shape
 	t_disk_data			disk;
 }				t_shape;
 
-typedef struct	s_rotation_matrix
-{
-	double3				e1;
-	double3				e2;
-	double3				e3;
-}				t_rotation_matrix;
-
 typedef struct	s_fig
 {
 	int					fig_type;
@@ -143,6 +152,7 @@ typedef struct	s_fig
 
 	int					cutting;
 	t_plane_data		cutting_plane;
+	int					complex_fig;
 }				t_fig;
 
 typedef struct	s_pov
@@ -235,6 +245,7 @@ double3		rotate_z(double3 v, double angle);
 double2		intersect_sphere(double3 eye, double3 dir, t_sphere_data sphere);
 double2		intersect_plane(double3 eye, double3 dir, t_plane_data plane);
 double2		intersect_cylin(double3 eye, double3 dir, t_cylin_data cylin);
+double2		intersect_ellipse(double3 eye, double3 dir, t_ellipse_data ellipse);
 double2		intersect_cone(double3 eye, double3 dir, t_cone_data cone);
 double2		intersect_triangle(double3 eye, double3 dir, t_triangle_data triangle);
 double2		intersect_rectangle(double3 eye, double3 dir, t_rectangle_data rectangle);
@@ -244,7 +255,12 @@ double3		get_obj_dot(t_fig fig);
 double2		cut_result_with_personal_planes(double2 prev, t_fig fig, double3 eye, double3 dir);
 double2		cut_with_sphere(double2 prev, double3 *point, t_sphere_data sphere);
 double2		cut_with_plane(double2 prev, double3 *point, t_plane_data plane);
-//double2		cut_with_cylin(double2 prev, double3 *point, t_cylin_data cylin);
+double2		cut_with_cylin(double2 prev, double3 *point, t_negative_fig cylin);
+double2		cut_result_with_negative_obj(double2 prev, __global t_scene *scene, double3 eye, double3 dir);
+void				cut_4_roots(double3 eye, double3 dir, double4 res, \
+								__global t_scene *scene, int *closest_obj, \
+								double *closest_dist, double mini, \
+								double maxi, t_fig fig, int fig_no);
 
 double3		calculate_normal(t_fig fig, double3 intersect_point, t_raytrace_tree curr_node);
 t_obj_and_dist		check_closest_inter(double3 eye, double3 dir, \

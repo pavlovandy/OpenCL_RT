@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 15:20:20 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:00:23 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,22 @@ int			render_scene(t_rt *rt)
 	i = -1;
 	// while (++i < rt->pov.w * rt->pov.h)
 	// 	pixels[i] = ((int)((CLAMP(rt->filters.zbuff[i], 0.0, 50.0) / 50.0) * 255)) << 16;
+	//add_filter(rt);
+
+	
+
+	// while (++i < rt->pov.w * rt->pov.h)
+	// {
+	// 	double dist = CLAMP(rt->filters.zbuff[i], 0.0, 50.0) / 50.0;
+	// 	cl_double3	color = (cl_double3){{(pixels[i] >> 16) & 0xff, (pixels[i] >> 8) & 0xff, (pixels[i]) & 0xff}};
+	// 	color.s[0] = color.s[0] * exp(-10 * dist);
+	// 	color.s[1] = color.s[1] * exp(-10 * dist);
+	// 	color.s[2] = color.s[2] * exp(-10 * dist);
+	// 	pixels[i] = ((int)color.s[0] << 16) + ((int)color.s[1] << 8) + (int)color.s[2];
+	// }
+
+
+
 	add_filter(rt);
 	apply_surface(rt->sdl.win_sur, rt);
 	SDL_UpdateWindowSurface(rt->sdl.win);
