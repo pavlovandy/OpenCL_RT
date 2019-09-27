@@ -6,13 +6,13 @@
 #    By: yruda <yruda@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/27 17:23:57 by yruda            ###   ########.fr        #
+#    Updated: 2019/09/27 17:33:57 by yruda            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-FLAGS =  -Wall -Wextra #-g -fsanitize=address #-Werror
+FLAGS =  -Wall -Wextra -g #-fsanitize=address #-Werror
 NAME = RT
 
 SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \

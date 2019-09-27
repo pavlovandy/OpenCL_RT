@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:09:19 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 15:08:42 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ int	add_position2(const char *str, t_scene *scene, int i, const char *tag)
 {
 	cl_double3	dot;
 
-	if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == DISK && \
-		ft_get_3param(3, str, &dot, NULL))
+	if (!ft_get_3param(3, str, &dot, NULL))
+		return (0);
+	if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == DISK)
 		scene->obj[i].shape.disk.cent = (cl_double3)dot;
-	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == ELLIPSE && \
-		ft_get_3param(3, str, &dot, NULL))
+	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == ELLIPSE)
 		scene->obj[i].shape.ellipse.cent = (cl_double3)dot;
+	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == RECTANGLE && \
+			scene->obj[i].complex_fig != -1)
+			scene->cubs[scene->obj[i].complex_fig].cent = (cl_double3)dot;
 	else
 		return (0);
 	return (1);

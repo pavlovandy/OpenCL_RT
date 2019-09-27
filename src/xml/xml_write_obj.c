@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:09:58 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 17:05:33 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 16:39:51 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,26 @@ mxml_node_t	*ft_write_ellipse(t_ellipse_data elipse, mxml_node_t *data)
 	ft_write_param(elipse.dist_btwn_cent, node, (const char *)"distance");
 	ft_write_param(elipse.radius_sum, node, (const char *)"radius");
 	return (node);
-	
 }
 
-void	ft_write_to_xml(t_fig fig, mxml_node_t *data, t_obj_movement *filter)
+mxml_node_t	*ft_write_cube(t_cube cube, mxml_node_t *data)
 {
 	mxml_node_t *node;
 
+	node = mxmlNewElement(data, "cube");
+	ft_write_3param(cube.cent, node, (const char *)"centre");
+	ft_write_param(cube.dist, node, (const char *)"distance");
+	ft_write_3param(cube.rotation, node, (const char *)"cub_rotation");
+	return (node);
+	
+}
+
+void	ft_write_to_xml(t_scene *scene, mxml_node_t *data, t_obj_movement *filter, int *i)
+{
+	mxml_node_t *node;
+	t_fig fig;
+
+	fig = scene->obj[*i];
 	if (fig.fig_type == SPHERE)
 		node = ft_write_spher(fig.shape.sphere, data);
 	else if (fig.fig_type == PLANE)
@@ -118,7 +131,7 @@ void	ft_write_to_xml(t_fig fig, mxml_node_t *data, t_obj_movement *filter)
 		node = ft_write_cylin(fig.shape.cylin, data);
 	else if (fig.fig_type == CONE)
 		node = ft_write_cone(fig.shape.cone, data);
-	else if (fig.fig_type == RECTANGLE)
+	else if (fig.fig_type == RECTANGLE && fig.complex_fig == -1)
 		node = ft_write_rectangle(fig.shape.rectangle, data);
 	else if (fig.fig_type == TRIANGLE)
 		node = ft_write_triangle(fig.shape.triangle, data);
@@ -126,6 +139,11 @@ void	ft_write_to_xml(t_fig fig, mxml_node_t *data, t_obj_movement *filter)
 		node = ft_write_ellipse(fig.shape.ellipse, data);
 	else if (fig.fig_type == DISK)
 		node = ft_write_disk(fig.shape.disk, data);
+	else if (fig.fig_type == RECTANGLE && fig.complex_fig != -1)
+		{
+			node = ft_write_cube(scene->cubs[fig.complex_fig], data);
+			*i = *i + 5;
+		}
 	else
 		return ;
 	ft_write_all(fig, node, filter);

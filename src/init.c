@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 20:01:48 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 17:26:06 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,15 @@ int			init_start_params(t_rt *rt)
 	rt->edi.chosen_obj = -1;
 	init_pov(&rt->pov);
 	rt->filters.motion = 0;
+	rt->filters.index_filter = 0;
 	i = -1;
 	while (++i < MAX_OBJ_COUNT)
 	{
 		rt->filters.obj_movement[i].move = 0;
 		rt->filters.obj_movement[i].dir = (cl_double3){{0, 0, 0}};
 	}
+	if (read_textures(rt))
+		return (1);
 	return (0);
 }
 

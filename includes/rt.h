@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:02:51 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 17:33:22 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,7 @@ typedef struct	s_filters
 	cl_uint		*buff;
 	cl_float	*zbuff;
 	t_obj_movement	obj_movement[MAX_OBJ_COUNT];
+	int			index_filter;
 }				t_filters;
 
 
@@ -395,9 +396,10 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig, t_rt *rt, SDL_Event	ev);
+int			ft_edit(t_fig *fig, SDL_Event	ev);
 
 void		add_filter(t_rt *rt);
+void		change_filters(t_rt *rt, SDL_Event ev);
 
 # include "parse.h"
 # include "mymath.h"

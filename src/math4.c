@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 18:48:48 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:52:17 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 16:00:19 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,13 @@ int				check_rectangle_in_plane(t_rectangle_data rectange)
 	v1 = minus_double3(rectange.v1, rectange.v0);
 	v2 = minus_double3(rectange.v2, rectange.v0);
 	n = cross(v1, v2);
-	h = -n.s[0] * v1.s[0] - n.s[1] * v1.s[1] - n.s[2] * v1.s[2];
+	h = -n.s[0] * rectange.v1.s[0] - n.s[1] * rectange.v1.s[1] - n.s[2] * rectange.v1.s[2];
 	
-	if (comp_real(dot(n, rectange.v3) + h, 0, 0.01))
+	printf("%f\n", dot(n, rectange.v3) + h);
+	if (comp_real(dot(n, rectange.v3) + h, 0, 1))
+	{
 		return (1);
+	}
+	printf("%f\n", dot(n, rectange.v3) + h);
 	return (0);
 }
