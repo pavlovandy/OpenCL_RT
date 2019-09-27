@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 16:54:35 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:17:17 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 18:17:28 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			read_file(char *file_name, char **file_text)
 	ret = 0;
 	*file_text = 0;
 	tmp = 0;
-	while ((ret = read(fd, buf, BUFFER_SIZE -1)) > 0)
+	while ((ret = read(fd, buf, BUFFER_SIZE - 1)) > 0)
 	{
 		buf[ret] = 0;
 		if (*file_text != 0)
@@ -61,11 +61,11 @@ SDL_Surface	*load_tex(char *path, Uint32 format)
 	return (texture);
 }
 
-void	*ft_realloc(void *p, size_t new_size, size_t prev_size)
+void		*ft_realloc(void *p, size_t new_size, size_t prev_size)
 {
 	unsigned char	*res;
 	unsigned char	*copy_of_p;
-	size_t	i;
+	size_t			i;
 
 	res = 0;
 	res = ft_memalloc(new_size);
@@ -82,20 +82,23 @@ void	*ft_realloc(void *p, size_t new_size, size_t prev_size)
 	return ((void*)res);
 }
 
-int		read_texture(char	*file_name, t_envi *envi)
+static void	make_it_simple(t_envi *envi, )
+{
+	
+}
+
+int			read_texture(char *file_name, t_envi *envi)
 {
 	SDL_Surface	*surr;
 	cl_uint		*tmp;
 	Uint8		*pixels;
-	int		i;
-	int		new_size;
+	int			i;
+	int			new_size;
 
 	surr = load_tex(file_name, SDL_PIXELFORMAT_ARGB32);
-
 	envi->txt_par[envi->txt_count].w = surr->w;
 	envi->txt_par[envi->txt_count].h = surr->h;
 	envi->txt_par[envi->txt_count].start_pos = envi->textures_size;
-
 	new_size = envi->textures_size + surr->w * surr->h;
 	tmp = (cl_uint*)ft_realloc(envi->txt, sizeof(cl_uint) * new_size, sizeof(cl_uint) * envi->textures_size);
 	if (!tmp)
@@ -103,7 +106,6 @@ int		read_texture(char	*file_name, t_envi *envi)
 	if (envi->txt)
 		free(envi->txt);
 	envi->txt = tmp;
-	
 	if (envi->txt == 0)
 		return (error_message(RED"couldn't reallocate for some reason"COLOR_OFF));
 	i = -1;
@@ -111,7 +113,6 @@ int		read_texture(char	*file_name, t_envi *envi)
 	while (++i < surr->w * surr->h)
 		envi->txt[envi->txt_par[envi->txt_count].start_pos + i] = (pixels[i * 4] << 24) + (pixels[i * 4 + 1] << 16) + (pixels[i * 4 + 2] << 8) + pixels[i * 4 + 3];
 	SDL_FreeSurface(surr);
-
 	envi->textures_size = new_size;
 	envi->txt_count++;
 	return (0);
