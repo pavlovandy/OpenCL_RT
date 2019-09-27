@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:32:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:34:10 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 23:31:28 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int			is_param_ltag(const char *str)
 		ft_strequ(str, "rotation") || ft_strequ(str, "ior") || \
 		ft_strequ(str, "transp_map_no") || ft_strequ(str, "txt_offset") || \
 		ft_strequ(str, "txt_scale") || ft_strequ(str, "move_dir") || \
-		ft_strequ(str, "v0") || ft_strequ(str, "v1") || ft_strequ(str, "v2") || \
-		ft_strequ(str, "v3") || ft_strequ(str, "distance") || \
+		ft_strequ(str, "v0") || ft_strequ(str, "v1") || ft_strequ(str, "v2") \
+		|| ft_strequ(str, "v3") || ft_strequ(str, "distance") || \
 		ft_strequ(str, "cub_rotation"))
 		return (1);
 	return (0);
@@ -86,7 +86,7 @@ int			ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt)
 		ft_write_light(scene->light[i], data);
 	i = -1;
 	while (++i < scene->count_neg_obj)
-			ft_write_neg(scene->neg_obj[i], data);
+		ft_write_neg(scene->neg_obj[i], data);
 	ft_write_cam(pov, data);
 	if ((fp = fopen(name_file, "w")) == NULL)
 		return (error_message(RED"XML: file to save can't open"COLOR_OFF));

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:49:04 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 23:29:52 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,18 @@ int		ft_check_count(int o, int i, int n, int c);
 **	Add ++ xml write to xml file
 */
 
-int		ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt);
-void	ft_write_to_xml(t_scene *scene, mxml_node_t *data, t_obj_movement *filter, int *i);
-void	ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter);
-void	ft_write_3param(cl_double3 param, mxml_node_t *node, const char *name);
-void	ft_write_param(cl_double param, mxml_node_t *node, const char *name);
-void	ft_write_cam(t_pov pov, mxml_node_t *data);
-void	ft_write_light(t_light light, mxml_node_t *data);
+int			ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt);
+void		ft_write_to_xml(t_scene *scene, mxml_node_t *data, t_obj_movement *filter, int *i);
+void		ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter);
+void		ft_write_3param(cl_double3 param, mxml_node_t *node, const char *name);
+void		ft_write_param(cl_double param, mxml_node_t *node, const char *name);
+void		ft_write_cam(t_pov pov, mxml_node_t *data);
+void		ft_write_light(t_light light, mxml_node_t *data);
+mxml_node_t	*ft_write_cube(t_cube cube, mxml_node_t *data, int *i);
+mxml_node_t	*ft_write_ellipse(t_ellipse_data elipse, mxml_node_t *data);
+mxml_node_t	*ft_write_rectangle(t_rectangle_data rectangle, mxml_node_t *data);
+mxml_node_t	*ft_write_disk(t_disk_data disk, mxml_node_t *data);
+mxml_node_t	*ft_write_triangle(t_triangle_data triangle, mxml_node_t *data);
 
 /*
 **	Add ++ xml width & heigth

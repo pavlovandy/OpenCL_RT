@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 12:22:48 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:16:03 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:36:49 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_add_w_h(t_pov *pov, mxml_node_t *rt)
 		}
 	if (mxmlElementGetAttr(rt, "heigth") != NULL)
 		if (ft_get_3param(1, mxmlElementGetAttr(rt, "heigth"), NULL, &h))
-		{	
+		{
 			if (h > 0 && h < 3000)
 				pov->h = h;
 			else

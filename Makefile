@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yruda <yruda@student.42.fr>                +#+  +:+       +#+         #
+#    By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/27 17:58:28 by yruda            ###   ########.fr        #
+#    Updated: 2019/09/27 23:30:26 by ozhyhadl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
 		xml/xml_add_param2.c button/init_but.c button/action_but.c \
 		xml/xml_create_obj2.c filter_main.c filter.c xml/xml_add_param3.c xml/xml_cub.c xml/xml_create_negative.c\
 		editor/editor_main.c editor/change_colors.c editor/shapes_rotations.c \
-		editor/ft_clamp.c
+		editor/ft_clamp.c xml/xml_it_is2.c xml/xml_parse.c xml/xml_write_obj2.c
 
 HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h functions.h filter.h
 
