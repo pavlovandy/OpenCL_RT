@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/27 17:42:06 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 20:20:39 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,10 @@ cl_double3		get_obj_dir(t_fig fig)
 	else if (fig.fig_type == DISK)
 		return (fig.shape.disk.normal);
 	return (fig.rotation);
+}
+
+cl_double3	canvas_to_viewport(int x, int y, t_pov pov)
+{
+	return ((cl_double3){{(double)x * pov.vw / pov.w, \
+								-(double)y * pov.vh / pov.h, (double)pov.d}});
 }

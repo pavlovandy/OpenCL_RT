@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yruda <yruda@student.42.fr>                +#+  +:+       +#+         #
+#    By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/27 17:58:28 by yruda            ###   ########.fr        #
+#    Updated: 2019/09/27 21:03:12 by apavlov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 FLAGS =  -Wall -Wextra -g #-fsanitize=address #-Werror
 NAME = RT
 
-SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
+SRC =	main.c init_cl.c user_events2.c init_sdl.c output.c parser.c render.c user_event.c \
 		math.c math2.c math3.c math4.c init.c mouse_events.c functions.c init_cl2.c init_cl3.c\
 		xml/xml_read.c xml/xml_create_obj.c xml/xml_add_param.c \
 		xml/xml_add_param_help.c xml/xml_add_light.c xml/xml_create_cam.c xml/xml_it_is.c \

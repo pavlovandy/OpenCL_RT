@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:56:16 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 20:32:46 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,6 +390,9 @@ int			render_scene(t_rt *rt);
 **	User
 */
 int			there_will_be_loop(t_rt *rt);
+int			move_fig(t_rt *rt);
+int			mouse_events(t_rt *rt, Uint8 button, int x, int y);
+int			user_events(t_rt *rt);
 /*
 **	Button
 */
