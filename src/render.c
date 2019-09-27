@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 15:25:02 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 16:51:39 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void		move_obj_a_little(t_rt *rt)
 		if (move.move)
 		{
 			dot = get_obj_dot(rt->scene.obj + i);
-			*dot = add_double3(*dot, move.dir);
+			if (dot)
+				*dot = add_double3(*dot, move.dir);
 		}
 	}
 	ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
@@ -143,27 +144,6 @@ int			render_scene(t_rt *rt)
 			return (error_message(RED"Oops"COLOR_OFF));		
 		clFinish(rt->cl.command_queue);		
 	}
-	
-	i = -1;
-	// while (++i < rt->pov.w * rt->pov.h)
-	// 	pixels[i] = ((int)((CLAMP(rt->filters.zbuff[i], 0.0, 50.0) / 50.0) * 255)) << 16;
-	//add_filter(rt);
-
-	
-
-	// while (++i < rt->pov.w * rt->pov.h)
-	// {
-	// 	double dist = CLAMP(rt->filters.zbuff[i], 0.0, 50.0) / 50.0;
-	// 	cl_double3	color = (cl_double3){{(pixels[i] >> 16) & 0xff, (pixels[i] >> 8) & 0xff, (pixels[i]) & 0xff}};
-	// 	color.s[0] = color.s[0] * exp(-10 * dist);
-	// 	color.s[1] = color.s[1] * exp(-10 * dist);
-	// 	color.s[2] = color.s[2] * exp(-10 * dist);
-	// 	pixels[i] = ((int)color.s[0] << 16) + ((int)color.s[1] << 8) + (int)color.s[2];
-	// }
-
-
-
-
 	apply_surface(rt->sdl.win_sur, rt);
 	SDL_UpdateWindowSurface(rt->sdl.win);
 	return (0);
