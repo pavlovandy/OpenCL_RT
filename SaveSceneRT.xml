@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RT>
+<<<<<<< HEAD
 	<plane>
 		<dot>1 -1 10</dot>
 		<normal>0 1 0</normal>
@@ -22,6 +23,14 @@
 		<radius>1</radius>
 		<RGB>139 0 139</RGB>
 		<transparency>0.7</transparency>
+=======
+	<cube>
+		<centre>0 0 2</centre>
+		<distance>1</distance>
+		<cub_rotation>0 0 0</cub_rotation>
+		<RGB>210 45 0</RGB>
+		<transparency>0</transparency>
+>>>>>>> 88f5334309d9356b3594cc19d452d9787962c097
 		<reflective>0</reflective>
 		<specular>-1</specular>
 		<texture>-1</texture>
@@ -29,6 +38,7 @@
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
+<<<<<<< HEAD
 		<rotation>1.6 0 0</rotation>
 		<ior>1.000400</ior>
 		<transp_map_no>-1</transp_map_no>
@@ -149,4 +159,7 @@
 		<dir>0 0 0</dir>
 	</cam>
 
+=======
+	</cube>
+>>>>>>> 88f5334309d9356b3594cc19d452d9787962c097
 </RT>

@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   ft_clamp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 23:16:07 by anri              #+#    #+#             */
-/*   Updated: 2019/09/27 18:40:07 by yruda            ###   ########.fr       */
+/*   Created: 2019/09/27 17:21:53 by yruda             #+#    #+#             */
+/*   Updated: 2019/09/27 17:22:50 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNCTIONS_H
-# define FUNCTIONS_H
+#include "../../includes/rt.h"
 
-# include "rt.h"
+double	ft_clamp(double s, double min, double max)
+{
+	double t;
 
-cl_double3		*get_obj_dot(t_fig *fig);
-cl_double3		get_obj_dir(t_fig fig);
-void			ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, t_filters *filter);
-
-#endif
+	t = s;
+	if (s <= min)
+		t = min;
+	else if (s >= max)
+		t = max;
+	return (t);
+}

@@ -29,9 +29,6 @@
 		<transparency>0.7</transparency>
 	</spher>
 	<light>
-		<type> point </type>
-		<position> 0 1 -4 </position>
-		<intensity> 2 2 2 </intensity>
 	</light>
 	<light>
 		<type> point </type>
@@ -47,6 +44,7 @@
 		<type> ambient </type>
 		<intensity> 0.2 0.1 0.1 </intensity>
 	</light>
+
 	<cam>
 		<position>3.9 -1.4 -5.6</position>
 		<dir>-0.4 0.5 0.8</dir>
