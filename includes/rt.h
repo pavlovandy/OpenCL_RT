@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 22:07:48 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 16:20:41 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,16 +178,17 @@ typedef struct	s_rotation_matrix
 /*
 **	figure's parametres:
 **	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
+**	specular - (-1) is off; [0 - 1000]
 **	
 */
 
 typedef struct	s_cube
 {
-	cl_int			no;
-	cl_double3		cent;
-	cl_double3		rotation;
+	cl_int				no;
+	cl_double3			cent;
+	cl_double3			rotation;
 	t_rotation_matrix	rotation_matrix;
-	cl_double		dist;
+	cl_double			dist;
 }				t_cube;
 
 struct	s_fig
@@ -196,7 +197,8 @@ struct	s_fig
 	t_shape				shape;
 
 	cl_double3			color; //+ pallete to buttons
-	cl_int				specular; // -1 is off 0 - 1000
+	cl_int				color_index;
+	cl_int				specular;
 	cl_double			reflective; // 0 - 1
 	cl_double			trans;//+ 0 - 1
 	cl_double3			rotation;//+ no edit
@@ -393,7 +395,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig);
+int			ft_edit(t_fig *fig, t_rt *rt, SDL_Event	ev);
 
 void		add_filter(t_rt *rt);
 

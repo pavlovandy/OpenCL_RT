@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:54:57 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 20:01:48 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int			read_textures(t_rt *rt)
 {
 	if (read_texture("envi/8k_earth_daymap.jpg", &rt->envi))
 		return (error_message(RED"texture failure"COLOR_OFF));
-	if (read_texture("envi/sun.jpg", &rt->envi))
-		return (error_message(RED"texture failure"COLOR_OFF));
-	if (read_texture("envi/mars.jpg", &rt->envi))
-		return (error_message(RED"texture failure"COLOR_OFF));
+	// if (read_texture("envi/sun.jpg", &rt->envi))
+	// 	return (error_message(RED"texture failure"COLOR_OFF));
+	// if (read_texture("envi/mars.jpg", &rt->envi))
+	// 	return (error_message(RED"texture failure"COLOR_OFF));
 	// if (read_texture("envi/neptune.jpg", &rt->envi))
 	// 	return (error_message(RED"texture failure"COLOR_OFF));
 	// if (read_texture("envi/saturn.jpg", &rt->envi))
