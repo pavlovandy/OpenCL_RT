@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:34:06 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:42:30 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int			render_scene(t_rt *rt)
 			return (error_message(RED"Oops"COLOR_OFF));		
 		clFinish(rt->cl.command_queue);		
 	}
+	add_filter(rt);
 	apply_surface(rt->sdl.win_sur, rt);
 	SDL_UpdateWindowSurface(rt->sdl.win);
 	return (0);
