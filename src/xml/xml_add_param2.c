@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 00:50:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 21:04:47 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 00:27:45 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	add_for_all_obj3(const char *str, t_rt *rt, int i, const char *tag)
 {
 	cl_double3	dot;
 	t_scene		*scene;
+	cl_double	one_dot;
 
 	scene = &rt->scene;
 	dot.s[1] = -10;
@@ -33,6 +34,8 @@ int	add_for_all_obj3(const char *str, t_rt *rt, int i, const char *tag)
 		scene->obj[i].text_no = (cl_int)ft_atoi(str);
 	else if (ft_strequ(tag, "bump") && rt->envi.txt_count > ft_atoi(str))
 		scene->obj[i].normal_map_no = (cl_int)ft_atoi(str);
+	else if (ft_strequ(tag, "noise") && ft_get_3param(1, str, NULL, &one_dot))
+		scene->obj[i].noise = one_dot;
 	else
 		return (0);
 	return (1);
@@ -62,8 +65,6 @@ int	add_for_all_obj2(const char *str, t_rt *rt, int i, const char *tag)
 	else if (ft_strequ(tag, "transp_map_no") && \
 	ft_get_3param(1, str, NULL, &one_dot) && rt->envi.txt_count > ft_atoi(str))
 		scene->obj[i].transparancy_map_no = (cl_int)one_dot;
-	else if (ft_strequ(tag, "noise") && ft_get_3param(1, str, NULL, &one_dot))
-		scene->obj[i].noise = one_dot;
 	else
 		return (add_for_all_obj3(str, rt, i, tag));
 	return (1);

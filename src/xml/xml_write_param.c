@@ -3,51 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   xml_write_param.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:13:18 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:10:27 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/28 00:35:12 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
-
-char	*double_to_char(double nbr)
-{
-	char	*first;
-	char	*second;
-	char	*tmp;
-
-	if (nbr < 0)
-	{
-		nbr = -nbr;
-		first = ft_strjoin("-",(second = ft_itoa((int)nbr)));
-		free(second);
-	}else
-		first = ft_itoa((int)nbr);
-
-	if (nbr < 0)
-		nbr = -nbr;
-	nbr -= (long long)nbr;
-	tmp = first;
-	if (nbr != 0.0)
-	{
-		first = ft_strjoin(first, ".");
-		ft_strdel(&tmp);
-	}
-	while (nbr != 0.0)
-	{
-		nbr = round(nbr * 10.0);
-		second = ft_itoa((int)nbr);
-		tmp = first;
-		first = ft_strjoin(first, second);
-	
-		ft_strdel(&tmp);
-		ft_strdel(&second);
-		nbr -= (long long)nbr;
-	}
-	return (first);
-}
 
 void	ft_write_param(cl_double param, mxml_node_t *node, const char *name)
 {
@@ -82,10 +45,11 @@ void	ft_write_2param(cl_double2 param, mxml_node_t *node, const char *name)
 	ft_strdel(&tmp);
 }
 
-void	ft_write_big_double(cl_double param, mxml_node_t *node, const char *name)
+void	ft_write_big_double(cl_double param, mxml_node_t *node, \
+		const char *name)
 {
 	node = mxmlNewElement(node, name);
-		mxmlNewReal(node, param);
+	mxmlNewReal(node, param);
 }
 
 void	ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter)
@@ -102,7 +66,8 @@ void	ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter)
 	if (fig.fig_type == SPHERE)
 		ft_write_3param(fig.rotation, node, "rotation");
 	ft_write_big_double(fig.ior, node, (const char *)"ior");
-	ft_write_param((cl_double)fig.transparancy_map_no, node, (const char *)"transp_map_no");
+	ft_write_param((cl_double)fig.transparancy_map_no, node,\
+	(const char *)"transp_map_no");
 	ft_write_2param(fig.txt_offset, node, "txt_offset");
 	ft_write_2param(fig.txt_scale, node, "txt_scale");
 	if (filter->move != 0)

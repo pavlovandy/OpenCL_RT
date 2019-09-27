@@ -22,71 +22,6 @@
 		<txt_scale>0.6 0.6</txt_scale>
 		<ior>1.1</ior>
 	</cube>
-<<<<<<< HEAD
-	<plane>
-		<dot>0 0 2</dot>
-		<normal>0 0 1</normal>
-		<RGB>0 255 255</RGB>
-		<transparency>0</transparency>
-		<reflective>0</reflective>
-		<specular>1000</specular>
-		<texture>-1</texture>
-		<bump>-1</bump>
-		<cutting>0</cutting>
-		<cut_dot>0 0.3 -0.3</cut_dot>
-		<cut_normal>0.7 0.7 0</cut_normal>
-		<rotation>0 0 0</rotation>
-		<ior>1.0004</ior>
-		<transp_map_no>-1</transp_map_no>
-		<txt_offset>0 0</txt_offset>
-		<txt_scale>1 1</txt_scale>
-	</plane>
-	<cone>
-		<vertex>0 3 -2</vertex>
-		<dir>1 1 0</dir>
-		<angle>30</angle>
-		<RGB>185 25 25</RGB> -->
-		<transparency>0.5</transparency>
-		<reflective>0.004</reflective>
-		<specular>20</specular>
-		<texture>-1</texture>
-		<bump>-1</bump>
-		<cutting>0</cutting>
-		<cut_dot>0 0.3 -0.3</cut_dot>
-		<cut_normal>0.7 0.7 0</cut_normal>
-		<rotation>0 0 0</rotation>
-		<mmin>-5</mmin>
-		<mmax>5</mmax>
-		<ior>1.004000</ior>
-		<transp_map_no>-1</transp_map_no>
-		<txt_offset>0 0</txt_offset>
-		<txt_scale>1 1</txt_scale>
-	</cone>
-	<cube>
-		<centre>0 0 2</centre>
-		<distance>1</distance>
-		<cub_rotation>0 0 0</cub_rotation>
-		<RGB>210 45 0</RGB>
-		<transparency>0</transparency>
-		<reflective>0</reflective>
-		<specular>-1</specular>
-		<texture>-1</texture>
-		<bump>-1</bump>
-		<cutting>0</cutting>
-		<cut_dot>0 0 0</cut_dot>
-		<cut_normal>0 1 1</cut_normal>
-	</cube>
-	<plane>
-	</plane>
-	<light>
-		<type> point </type>
-		<position> 0 4 -4 </position>
-		<intensity> 1 1 1 </intensity>
-	</light>
-	<light>
-		<type> ambient </type>
-		<intensity> 0.1 0.1 0.1 </intensity>
-=======
 	<spher>
 		<RGB> 255 255 255 </RGB>
 		<radius>1</radius>
@@ -99,7 +34,6 @@
 		<type> point </type>
 		<position> 5 -4 1 </position>
 		<intensity> 2 2 2 </intensity>
->>>>>>> fa83ed49903f06fbfc90477c41aace4169b7b9e8
 	</light>
 	<light>
 		<type> point </type>
