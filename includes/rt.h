@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:33:22 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 17:56:16 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,12 @@ typedef struct	s_rotation_matrix
 
 /*
 **	figure's parametres:
-**	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
+**
 **	specular - (-1) is off; [0 - 1000]
+**	reflective - [0 - 1]
+**	trans - transparency [0 - 1]
+**	rotation - rotation of the texture
+**	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
 **	cutting - if cutting = 0, then no cutting plane
 */
 
@@ -199,10 +203,10 @@ struct	s_fig
 	cl_double3			color;
 	cl_int				color_index;
 	cl_int				specular;
-	cl_double			reflective;// 0 - 1
-	cl_double			trans;//+ 0 - 1
-	cl_double3			rotation;//+ no edit
-	t_rotation_matrix	rotation_martix;//+
+	cl_double			reflective;
+	cl_double			trans;
+	cl_double3			rotation;
+	t_rotation_matrix	rotation_martix;
 	cl_double			ior;
 	cl_int				noise;//+ -1 - 1
 	cl_int				text_no;//+ -1 if off find out
@@ -396,7 +400,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig, SDL_Event	ev);
+int			ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev);
 
 void		add_filter(t_rt *rt);
 void		change_filters(t_rt *rt, SDL_Event ev);
@@ -406,5 +410,6 @@ void		change_filters(t_rt *rt, SDL_Event ev);
 # include "xml.h"
 # include "editor.h"
 # include "functions.h"
+# include "filter.h"
 
 #endif
