@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_read.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 17:34:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 17:32:26 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 18:48:51 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 		while (son != NULL)
 		{
 			if (mxmlGetElement(son) != NULL && ((ft_is_param(son, rt, \
-			index[0], what_is) && (ft_is_light(son, scene, index[1], what_is) \
-			&& ft_is_cam(son, pov, what_is))) || ft_check_child(son)))
+			index[0], what_is) && ft_is_negative(son, scene, index[2], what_is) && \
+			(ft_is_light(son, scene, index[1], what_is) && \
+			ft_is_cam(son, pov, what_is))) || ft_check_child(son)))
 				return (1);
 			son = mxmlGetNextSibling(son);
 		}

@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RT>
 <<<<<<< HEAD
+	<cube>
+		<centre>0 0 2</centre>
+		<distance>1</distance>
+		<cub_rotation>0 0 0</cub_rotation>
+		<RGB>210 45 0</RGB>
+		<transparency>0</transparency>
+		<reflective>0</reflective>
+		<specular>-1</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0 0</cut_dot>
+		<cut_normal>0 1 1</cut_normal>
+=======
+<<<<<<< HEAD
 	<plane>
 		<dot>0 0 2</dot>
 		<normal>0.10 0 -0.3</normal>
@@ -66,10 +81,30 @@
 		<rotation>1.6 0 0</rotation>
 =======
 >>>>>>> 2e6cf4d7594f3e703dcff9adbc9b837fded45247
+>>>>>>> b8476f957002c8eea378620bbefeb44e5fb0fac0
 		<ior>1.000400</ior>
 		<transp_map_no>-1</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>1 1</txt_scale>
+<<<<<<< HEAD
+	</cube>
+	<light>
+		<type>point</type>
+		<position>0 1 -4</position>
+		<intensity>4 4 4</intensity>
+	</light>
+	<light>
+		<type>ambient</type>
+		<intensity>0.1 0.1 0.1</intensity>
+	</light>
+	<negative_spher>
+		<centre>0 0 1</centre>
+		<radius>1</radius>
+	</negative_spher>
+	<cam>
+		<position>0 1 -9</position>
+		<dir>0 0 0</dir>
+=======
 	</ellipse>
 	<negative_spher>
 =======
@@ -118,6 +153,7 @@
 		<position>0 0 -8</position>
 		<dir>0 0 0</dir>
 >>>>>>> 1feefc5d9d4f146722556d2a64dc0efeaef837a6
+>>>>>>> b8476f957002c8eea378620bbefeb44e5fb0fac0
 	</cam>
 
 </RT>
