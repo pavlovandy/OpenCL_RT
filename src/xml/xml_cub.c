@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 19:41:54 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:20:32 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:48:59 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, t_filters *filter) /
 		if (scene->obj[i].complex_fig == cub)
 		{
 			scene->obj[i].shape.rectangle = set_rectangles(v, r);
-			scene->obj[i].rotation_martix = build_rotation_matrix_for_dir(get_obj_dir(scene->obj[i]));
+			scene->obj[i].rotation_martix = build_rotation_matrix_for_rectangles(get_obj_dir(scene->obj[i]),\
+							 scene->obj[i].shape.rectangle);
 			if (fig != NULL)
 				rewrite_rectangle_data(scene->obj + i, fig);
 			if (filter != NULL)

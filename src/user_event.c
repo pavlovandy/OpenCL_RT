@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:07:07 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:44:16 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,14 @@ int			user_events(t_rt *rt)
 	{
 		if (ev.type == SDL_KEYDOWN)
 		{
+			if (ev.key.keysym.sym == SDLK_1 || ev.key.keysym.sym == SDLK_2 ||
+			ev.key.keysym.sym == SDLK_3 || ev.key.keysym.sym == SDLK_4 ||
+			ev.key.keysym.sym == SDLK_5 || ev.key.keysym.sym == SDLK_6)
+			{
+				change_filters(rt, ev);
+				changes++;
+			}
+			
 			if (ev.key.keysym.sym == SDLK_ESCAPE)
 			{
 				// system("leaks -q RT");

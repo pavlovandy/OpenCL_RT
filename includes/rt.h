@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 16:20:41 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 17:56:16 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,9 +177,13 @@ typedef struct	s_rotation_matrix
 
 /*
 **	figure's parametres:
-**	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
+**
 **	specular - (-1) is off; [0 - 1000]
-**	
+**	reflective - [0 - 1]
+**	trans - transparency [0 - 1]
+**	rotation - rotation of the texture
+**	ior - Index of refraction [1.0004 - 2.0] or [MIN_IOR - MAX_IOR]
+**	cutting - if cutting = 0, then no cutting plane
 */
 
 typedef struct	s_cube
@@ -196,23 +200,23 @@ struct	s_fig
 	cl_int				fig_type;
 	t_shape				shape;
 
-	cl_double3			color; //+ pallete to buttons
+	cl_double3			color;
 	cl_int				color_index;
 	cl_int				specular;
-	cl_double			reflective; // 0 - 1
-	cl_double			trans;//+ 0 - 1
-	cl_double3			rotation;//+ no edit
-	t_rotation_matrix	rotation_martix;//+
+	cl_double			reflective;
+	cl_double			trans;
+	cl_double3			rotation;
+	t_rotation_matrix	rotation_martix;
 	cl_double			ior;
 	cl_int				noise;//+ -1 - 1
 	cl_int				text_no;//+ -1 if off find out
 	cl_int				normal_map_no;// -1 if off 6 find out
 	cl_int				transparancy_map_no;//+ find out
-	cl_double2			txt_offset;//+ no edit
-	cl_double2			txt_scale;//+ no edit
+	cl_double2			txt_offset;
+	cl_double2			txt_scale;
 
-	cl_int				cutting;  //add to parser. default 0	---done
-	t_plane_data		cutting_plane;  //add to parser. if cutting = 0 unused	---done
+	cl_int				cutting;
+	t_plane_data		cutting_plane;  //add to parser. 	---done
 	cl_int				complex_fig;  //is in the complex sturct
 };
 
@@ -329,6 +333,7 @@ typedef struct	s_filters
 	cl_uint		*buff;
 	cl_float	*zbuff;
 	t_obj_movement	obj_movement[MAX_OBJ_COUNT];
+	int			index_filter;
 }				t_filters;
 
 
@@ -395,14 +400,16 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig, t_rt *rt, SDL_Event	ev);
+int			ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev);
 
 void		add_filter(t_rt *rt);
+void		change_filters(t_rt *rt, SDL_Event ev);
 
 # include "parse.h"
 # include "mymath.h"
 # include "xml.h"
 # include "editor.h"
 # include "functions.h"
+# include "filter.h"
 
 #endif
