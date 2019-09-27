@@ -2,7 +2,7 @@
 <RT>
 	<plane>
 		<dot>0 0 2</dot>
-		<normal>0 0 1</normal>
+		<normal>0.10 0 -0.3</normal>
 		<RGB>0 255 255</RGB>
 		<transparency>0</transparency>
 		<reflective>0</reflective>
@@ -18,10 +18,10 @@
 		<txt_scale>1 1</txt_scale>
 	</plane>
 	<cylin>
-		<dot>-0.6 2.2 -2</dot>
-		<dir>0.7 0.1 0.7</dir>
-		<mmax>0.3</mmax>
-		<mmin>-0.3</mmin>
+		<dot>0 3 -2</dot>
+		<dir>0.7 0.7 0</dir>
+		<mmax>0.1</mmax>
+		<mmin>-0.1</mmin>
 		<RGB>185 25 25</RGB>
 		<transparency>0.5</transparency>
 		<reflective>0.0</reflective>
@@ -37,8 +37,8 @@
 		<txt_scale>1 1</txt_scale>
 	</cylin>
 	<plane>
-		<dot>0 0 0</dot>
-		<normal>0 1 0</normal>
+		<dot>0.1 -0.2 0</dot>
+		<normal>0.5 -0.7 0.5</normal>
 		<RGB>255 0 0</RGB>
 		<transparency>0</transparency>
 		<reflective>0</reflective>

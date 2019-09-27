@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 18:02:40 by yruda             #+#    #+#             */
-/*   Updated: 2019/09/26 18:44:41 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 17:28:07 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,31 @@ void	change_texture(t_fig *fig)
 
 void	change_colours(t_fig *fig)
 {
-	cl_double3  colours[5];
+	cl_double3	colours[6];
 
 	fig->color_index = (fig->color_index <= 4 && fig->color_index >= -1) ?
 		fig->color_index + 1 : 0;
-	colours[0] = (cl_double3){{255, 0, 0}};
-	colours[1] = (cl_double3){{0, 255, 0}};
-	colours[2] = (cl_double3){{0, 255, 0}};
-	colours[3] = (cl_double3){{0, 0, 255}};
-	colours[4] = (cl_double3){{255, 0, 0}};
-	fig->color = colours[fig->color_index + 1];
+	colours[0] = (cl_double3){{249, 162, 108}};
+	colours[1] = (cl_double3){{238, 69, 64}};
+	colours[2] = (cl_double3){{199, 44, 65}};
+	colours[3] = (cl_double3){{128, 19, 54}};
+	colours[4] = (cl_double3){{81, 10, 50}};
+	colours[5] = (cl_double3){{0, 255, 255}};
+	fig->color = colours[fig->color_index];
+}
+
+void	visual_effects_editor(t_fig *fig, const Uint8 *k_s)
+{
+	if (k_s[SDL_SCANCODE_T] && k_s[87])
+		fig->trans = ft_clamp(fig->trans + 0.04, 0, 1);
+	else if (k_s[SDL_SCANCODE_T] && k_s[86])
+		fig->trans = ft_clamp(fig->trans - 0.04, 0, 1);
+	else if (k_s[SDL_SCANCODE_I] && k_s[87])
+		fig->ior = ft_clamp(fig->ior + 0.04, MIN_IOR, MAX_IOR);
+	else if (k_s[SDL_SCANCODE_I] && k_s[86])
+		fig->ior = ft_clamp(fig->ior - 0.04, MIN_IOR, MAX_IOR);
+	else if (k_s[SDL_SCANCODE_V] && k_s[86])
+		fig->reflective = ft_clamp(fig->reflective - 0.04, 0.0, 1.0);
+	else if (k_s[SDL_SCANCODE_V] && k_s[87])
+		fig->reflective = ft_clamp(fig->reflective + 0.04, 0.0, 1.0);
 }
