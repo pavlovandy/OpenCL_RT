@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_add_param_help.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 18:30:23 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/25 15:39:14 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 19:27:51 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ double	str_to_double(char *line)
 	return (res);
 }
 
-int		ft_del_split(char ***split, cl_double3 *dot, cl_double *one_dot, int count)
+int		ft_del_split(char ***split, cl_double3 *dot, cl_double \
+		*one_dot, int count)
 {
 	int i;
 
-
 	if (dot != NULL && *split != NULL && count == 2)
-	*dot = (cl_double3){{str_to_double((*split)[0]), \
+		*dot = (cl_double3){{str_to_double((*split)[0]), \
 		str_to_double((*split)[1]), 0}};
 	else if (dot != NULL && *split != NULL)
 		*dot = (cl_double3){{str_to_double((*split)[0]), \
@@ -121,5 +121,3 @@ int		ft_get_3param(int i, const char *str, cl_double3 *dot, \
 		return (ft_del_split(&split, dot, one_dot, i));
 	return (0);
 }
-
-

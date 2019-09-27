@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:14:38 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:38:41 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 23:32:35 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_write_cam(t_pov pov, mxml_node_t *data)
 
 void	ft_write_neg(t_negative_fig neg, mxml_node_t *data)
 {
-		mxml_node_t *node;
+	mxml_node_t *node;
 
 	node = mxmlNewElement(data, "negative_spher");
 	ft_write_3param(neg.shape.sphere.cent, node, (const char *)"centre");

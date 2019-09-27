@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:39:38 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 14:51:08 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:46:40 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_create_disk(t_scene *scene, int i, t_filters *filter)
 	scene->obj[i].fig_type = (cl_int)DISK;
 	scene->obj[i].shape.disk.cent = (cl_double3){{0, 0, 0}};
 	scene->obj[i].shape.disk.normal = (cl_double3){{0, 0, 1}};
-	scene->obj[i].shape.disk.radius = (cl_double)1;
+	scene->obj[i].shape.disk.radius = 1;
 	ft_create_all(scene, i, filter);
 }
 
@@ -43,9 +43,9 @@ void	ft_create_rectangle(t_scene *scene, int i, t_filters *filter)
 void	ft_create_ellipse(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].fig_type = (cl_int)ELLIPSE;
-	scene->obj[i].shape.ellipse.cent= (cl_double3){{0, 0, 0}};
+	scene->obj[i].shape.ellipse.cent = (cl_double3){{0, 0, 0}};
 	scene->obj[i].shape.ellipse.dir = (cl_double3){{0, 0, 1}};
-	scene->obj[i].shape.ellipse.radius_sum = (cl_double)2;
-	scene->obj[i].shape.ellipse.dist_btwn_cent = (cl_double)1.5;
+	scene->obj[i].shape.ellipse.radius_sum = 2;
+	scene->obj[i].shape.ellipse.dist_btwn_cent = 1.5;
 	ft_create_all(scene, i, filter);
 }

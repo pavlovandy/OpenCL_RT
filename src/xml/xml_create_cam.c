@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_create_cam.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 12:22:48 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:15:12 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 23:59:19 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_add_w_h(t_pov *pov, mxml_node_t *rt)
 		}
 	if (mxmlElementGetAttr(rt, "heigth") != NULL)
 		if (ft_get_3param(1, mxmlElementGetAttr(rt, "heigth"), NULL, &h))
-		{	
+		{
 			if (h > 0 && h < 3000)
 				pov->h = h;
 			else

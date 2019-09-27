@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 21:35:34 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/28 00:15:14 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	user_events_keydown(t_rt *rt, SDL_Event ev, \
 		SDL_SetRelativeMouseMode(*rotations);
 		SDL_GetRelativeMouseState(NULL, NULL);
 	}
-	else if (ev.key.keysym.sym == SDLK_TAB && (changes = 1))
+	else if (ev.key.keysym.sym == SDLK_TAB && (*changes = 1))
 		rt->filters.info = !rt->filters.info;
 	else if (ev.key.keysym.sym == SDLK_m)
 	{
@@ -106,7 +106,7 @@ int			user_events(t_rt *rt)
 	static int	rotations = 0;
 	static int	move = 0;
 
-	changes += changes_norm(rt, &rotations, &move);
+	changes = changes_norm(rt, &rotations, &move);
 	while (SDL_PollEvent(&ev))
 	{
 		if (ev.type == SDL_KEYDOWN)

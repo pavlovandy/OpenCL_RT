@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/27 22:11:11 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 00:08:55 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rt.h"
 
-cl_double3		*get_obj_dot(t_fig *fig)
+cl_double3			*get_obj_dot(t_fig *fig)
 {
 	if (fig->fig_type == SPHERE)
 		return (&fig->shape.sphere.cent);
@@ -31,7 +31,8 @@ cl_double3		*get_obj_dot(t_fig *fig)
 	return (0);
 }
 
-t_rotation_matrix	build_rotation_matrix_for_rectangles(cl_double3 normal, t_rectangle_data r)
+t_rotation_matrix	build_rotation_matrix_for_rectangles(\
+cl_double3 normal, t_rectangle_data r)
 {
 	t_rotation_matrix	rm;
 
@@ -42,12 +43,12 @@ t_rotation_matrix	build_rotation_matrix_for_rectangles(cl_double3 normal, t_rect
 	return (rm);
 }
 
-cl_double3 normal_for_triangle_or_rectangle(t_fig fig)
+cl_double3			normal_for_triangle_or_rectangle(t_fig fig)
 {
-	t_triangle_data t;
-	t_rectangle_data r;
-	cl_double3		v0;
-	cl_double3		v1;
+	t_triangle_data		t;
+	t_rectangle_data	r;
+	cl_double3			v0;
+	cl_double3			v1;
 
 	if (fig.fig_type == TRIANGLE)
 	{
@@ -65,7 +66,7 @@ cl_double3 normal_for_triangle_or_rectangle(t_fig fig)
 	}
 }
 
-cl_double3		get_obj_dir(t_fig fig)
+cl_double3			get_obj_dir(t_fig fig)
 {
 	if (fig.fig_type == SPHERE)
 		return (fig.rotation);
@@ -74,7 +75,7 @@ cl_double3		get_obj_dir(t_fig fig)
 	else if (fig.fig_type == CONE)
 		return (fig.shape.cone.dir);
 	else if (fig.fig_type == CYLIN)
-		return (fig.shape.cylin.dir);	
+		return (fig.shape.cylin.dir);
 	else if (fig.fig_type == TORUS)
 		return (fig.shape.torus.cent);
 	else if (fig.fig_type == ELLIPSE)
@@ -88,7 +89,23 @@ cl_double3		get_obj_dir(t_fig fig)
 	return (fig.rotation);
 }
 
-cl_double3	canvas_to_viewport(int x, int y, t_pov pov)
+t_rectangle_data	set_rectangles(cl_double3 *v, int r)
+{
+	if (r == 0)
+		return ((t_rectangle_data){v[0], v[1], v[2], v[3]});
+	else if (r == 1)
+		return ((t_rectangle_data){v[0], v[3], v[7], v[4]});
+	else if (r == 2)
+		return ((t_rectangle_data){v[3], v[7], v[6], v[2]});
+	else if (r == 3)
+		return ((t_rectangle_data){v[6], v[2], v[1], v[5]});
+	else if (r == 4)
+		return ((t_rectangle_data){v[7], v[6], v[5], v[4]});
+	else
+		return ((t_rectangle_data){v[0], v[4], v[5], v[1]});
+}
+
+cl_double3		canvas_to_viewport(int x, int y, t_pov pov)
 {
 	return ((cl_double3){{(double)x * pov.vw / pov.w, \
 								-(double)y * pov.vh / pov.h, (double)pov.d}});
@@ -104,4 +121,5 @@ int			changes_norm(t_rt *rt, int *rotations, int *move)
 		changes += rotation(rt);
 	else if (*move)
 		changes += move_fig(rt);
+	return (changes);
 }
