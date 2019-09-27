@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/27 20:20:39 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 22:11:11 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,16 @@ cl_double3	canvas_to_viewport(int x, int y, t_pov pov)
 {
 	return ((cl_double3){{(double)x * pov.vw / pov.w, \
 								-(double)y * pov.vh / pov.h, (double)pov.d}});
+}
+
+int			changes_norm(t_rt *rt, int *rotations, int *move)
+{
+	int	changes;
+
+	changes = 0;
+	changes += translate(rt);
+	if (*rotations)
+		changes += rotation(rt);
+	else if (*move)
+		changes += move_fig(rt);
 }
