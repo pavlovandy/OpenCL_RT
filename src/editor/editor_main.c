@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:14:22 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 18:59:53 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int		ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev)
 	else if (k_s[SDL_SCANCODE_Y])
 		change_texture(fig);
 	else if (k_s[SDL_SCANCODE_N])
-		rotate_by_type(k_s, fig);
+		rotate_by_type(k_s, fig, &rt->scene);
 	else if (k_s[SDL_SCANCODE_C])
 		change_colours(fig);
 	else if (fig->fig_type == SPHERE)
@@ -124,5 +124,8 @@ int		ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev)
 		cylin_editor(fig, k_s, ev);
 	else
 		return (0);
+
+	if (fig->fig_type == RECTANGLE && fig->complex_fig > -1)
+		ft_fill_rectangle(&rt->scene, fig->complex_fig, fig, &rt->filters);
 	return (1);
 }

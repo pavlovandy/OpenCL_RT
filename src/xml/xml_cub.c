@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_cub.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 19:41:54 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 17:23:44 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 18:52:33 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,11 @@ void	ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, t_filters *filter) /
 							 scene->obj[i].shape.rectangle);
 			if (fig != NULL)
 				rewrite_rectangle_data(scene->obj + i, fig);
-			filter->obj_movement[i].move = 0;
-			filter->obj_movement[i].dir = (cl_double3){{0, 0, 0}};
+			if (filter != NULL)
+			{
+				filter->obj_movement[i].move = 0;
+				filter->obj_movement[i].dir = (cl_double3){{0, 0, 0}};
+			}
 			r++;
 		}
 	}
