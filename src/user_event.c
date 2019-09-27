@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 21:07:30 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 21:09:55 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ static void	user_events_keydown(t_rt *rt, SDL_Event ev, int *changes, int *rotat
 		*rotations = !(*rotations);
 		SDL_SetRelativeMouseMode(*rotations);
 		SDL_GetRelativeMouseState(NULL, NULL);
+	}
+	else if (ev.key.keysym.sym == SDLK_TAB)
+	{
+		rt->filters.info = !rt->filters.info;
+		changes++;
 	}
 	else if (ev.key.keysym.sym == SDLK_m)
 	{

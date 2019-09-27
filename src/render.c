@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:42:30 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 20:31:48 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,13 @@ int			render_scene(t_rt *rt)
 		clFinish(rt->cl.command_queue);		
 	}
 	add_filter(rt);
-	apply_surface(rt->sdl.win_sur, rt);
+	if (rt->filters.info == 0)
+		apply_surface(rt->sdl.win_sur, rt);
+	else if (rt->filters.info == 1)
+	{
+		SDL_BlitScaled(rt->filters.image, NULL,
+			rt->sdl.win_sur, &(SDL_Rect){0, 0, rt->pov.w, rt->pov.h});
+	}
 	SDL_UpdateWindowSurface(rt->sdl.win);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 20:32:46 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 21:10:16 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,8 @@ typedef struct	s_filters
 	cl_float	*zbuff;
 	t_obj_movement	obj_movement[MAX_OBJ_COUNT];
 	int			index_filter;
+	int			info;
+	SDL_Surface	*image;
 }				t_filters;
 
 
