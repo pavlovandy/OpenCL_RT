@@ -8,50 +8,7 @@
 	light	: type, position, intensity.
 	cam		: position.
 --
-<<<<<<< HEAD
-<RT width = "700" heigth = "500">
-	<plane>
-		<dot>0 0 10</dot>
-		<normal>3 1 1</normal>
-		<RGB>0 255 255</RGB>
-		<reflective>0</reflective>
-		<specular>1000</specular>
-		<texture>1</texture>
-		<bump>-1</bump>
-		<cutting>0</cutting>
-		<cut_dot>0 0.3 -0.3</cut_dot>
-		<cut_normal>0.7 0.7 0</cut_normal>
-		<rotation>0 0 0</rotation>
-		<ior>1.1</ior>
-		<transp_map_no>-1</transp_map_no>
-		<txt_offset>0 0</txt_offset>
-		<txt_scale>2 2</txt_scale>
-	</plane>
-	<cone>
-		<vertex> -5 3 5</vertex>
-	
-	</cone>
-	<spher>
-		<centre> 0 1 -2</centre>
-		<radius>1</radius>
-		<RGB>12 78 25</RGB>
-		<bump>-1</bump>
-	</spher>
-	<spher>
-		<centre> 3 2 0</centre>
-		<radius>1</radius>
-		<texture>0</texture>
-		<bump>-1</bump>
-	</spher>
-	<spher>
-		<centre> -2 2 2</centre>
-		<radius>1</radius>
-		<texture>1</texture>
-		<bump>1</bump>
-	</spher>
-=======
 <RT width = "1200" heigth = "1200">
->>>>>>> 590fa1d73f5e2a8f5c1f0b1bf9f635ec5e86ee45
 	<light>
 		<type> point </type>
 		<position> 0 1 -4 </position>
@@ -102,13 +59,21 @@
 	<cam>
 		<position> 0 1 -15 </position>
 	</cam>
-	<rectangle>
-		<v0> -1 1 0</v0>
-		<v1> -1 -1 0</v1>
-		<v2> 1 -1 0</v2>
-		<v3> 1 1 0 </v3>
-		
-		
-		
-	</rectangle>
+	<cube>
+		<centre> 0 0 0 </centre>
+		<distance> 2 </distance>
+		<cub_rotation> 1 2 3 </cub_rotation>
+		<transp_map_no> 8 </transp_map_no>
+		<txt_scale> 0.2 0.2 </txt_scale>
+	</cube>
+		<light>
+		<type> point </type>
+		<position> 0 20 -1 </position>
+		<intensity> 4 4 4 </intensity>
+	</light>
+		<light>
+		<type> point </type>
+		<position> 5 -5 -10 </position>
+		<intensity> 4 4 4 </intensity>
+	</light>
 </RT>

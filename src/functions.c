@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/27 17:26:03 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:42:06 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_rotation_matrix	build_rotation_matrix_for_rectangles(cl_double3 normal, t_rect
 	rm.e3 = ft_normalize(normal);
 	rm.e1 = ft_normalize(minus_double3(r.v1, r.v0));
 	rm.e2 = cross(rm.e3, rm.e1);
-	rm.e2 = ft_normalize(rm.e1);
+	rm.e2 = ft_normalize(rm.e2);
 	return (rm);
 }
 
