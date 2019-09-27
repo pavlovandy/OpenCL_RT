@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:29:00 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:44:16 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int			user_events(t_rt *rt)
 			move = 0;
 		else if (rt->edi.chosen_obj != -1)
 		{
-				if ((changes += ft_edit(rt->scene.obj + rt->edi.chosen_obj, ev)))
+				if ((changes += ft_edit(rt->scene.obj + rt->edi.chosen_obj, rt, ev)))
 				{
 					ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 					if (ret != CL_SUCCESS)
