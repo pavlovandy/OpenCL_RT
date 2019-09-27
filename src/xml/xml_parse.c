@@ -6,11 +6,20 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 23:22:16 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 23:22:51 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 00:18:55 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
+
+int	exit_parse(mxml_node_t *tree, FILE *fp, char *str)
+{
+	if (str != NULL)
+		error_message(str);
+	fclose(fp);
+	mxmlDelete(tree);
+	return (1);
+}
 
 int	ft_parse_xml(char *name_file, t_scene *scene, t_pov *pov, t_rt *rt)
 {

@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 18:19:41 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 22:48:17 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int			init_start_params(t_rt *rt)
 	init_pov(&rt->pov);
 	rt->filters.motion = 0;
 	rt->filters.index_filter = 0;
+	rt->filters.info = 0;
+	rt->filters.image = IMG_Load("./buttons/menu.jpg");
 	i = -1;
 	while (++i < MAX_OBJ_COUNT)
 	{

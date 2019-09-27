@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_add_param.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:53:00 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 22:44:27 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_add_radius(const char *str, t_scene *scene, int i)
 
 	if (!ft_get_3param(1, str, NULL, &one_dot))
 		return (1);
-	if (one_dot < 1)
+	if (one_dot < 0)
 		return (error_message(RED"XML: Radius must be >= 1"COLOR_OFF));
 	if (scene->obj[i].fig_type == SPHERE)
 		scene->obj[i].shape.sphere.radius = (cl_double)one_dot;

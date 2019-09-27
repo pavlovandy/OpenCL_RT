@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 23:29:52 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 00:19:24 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,19 @@ int		ft_create_negative_spher(t_scene *scene, int *il);
 */
 int		add_position(const char *str, t_scene *scene, int i, const char *tag);
 int		ft_add_radius(const char *str, t_scene *scene, int i);
-int		ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag);
+int		ft_add_normal_dir(const char *str, t_scene *scene, int i,
+		const char *tag);
 int		ft_add_tanget(const char *str, t_scene *scene, int i);
 int		ft_add_type_light(t_scene *scene, int l, char *str);
-int		ft_add_mmin_mmax(const char *str, t_scene *scene, int i, const char *tag);
+int		ft_add_mmin_mmax(const char *str, t_scene *scene, int i,
+		const char *tag);
 int		ft_add_move_dir(const char *str, t_rt *rt, int i);
 int		ft_add_v(const char *str, t_scene *scene, int i, const char *tag);
-int		ft_add_distance(const char *str, t_scene *scene, int i, t_filters *filter);
+int		ft_add_distance(const char *str, t_scene *scene, int i,
+		t_filters *filter);
 int		ft_is_negative(mxml_node_t *node, t_scene *scene, int i, int what_is);
-int		ft_add_rotation(const char *str, t_scene *scene, int i, t_filters *filter);
+int		ft_add_rotation(const char *str, t_scene *scene, int i,
+		t_filters *filter);
 void	ft_write_neg(t_negative_fig neg, mxml_node_t *data);
 
 /*
@@ -63,7 +67,8 @@ void	ft_write_neg(t_negative_fig neg, mxml_node_t *data);
 */
 int		add_for_all_obj(const char *str, t_rt *rt, int i, const char *tag);
 int		ft_add_rgb(const char *str, t_scene *scene, int i);
-int		ft_get_3param(int i, const char *str, cl_double3 *dot, cl_double *one_dot);
+int		ft_get_3param(int i, const char *str, cl_double3 *dot,
+		cl_double *one_dot);
 
 /*
 **	Add ++ add_param to cam
@@ -76,6 +81,7 @@ int		ft_check_count(int o, int i, int n, int c);
 **	Add ++ xml write to xml file
 */
 
+int			ft_read_xml(mxml_node_t *node, t_scene *scene, t_rt *rt);
 int			ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt);
 void		ft_write_to_xml(t_scene *scene, mxml_node_t *data, t_obj_movement *filter, int *i);
 void		ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter);

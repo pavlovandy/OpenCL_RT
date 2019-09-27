@@ -2,21 +2,27 @@
 !-- This is a comment
 	RT		: width, heigth.
 	spher	: centre, radius, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
-	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
-	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
-	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no.
+	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, transp_map_no, ior.
+	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, transp_map_no, ior.
+	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, transp_map_no.
 	light	: type, position, intensity.
 	cam		: position.
 --
-<RT width = "700" heigth = "500">
-	<cone>
-
-	
-	</cone>
+<RT width = "1000" heigth = "1000">
+	<plane>
+		<dot>1 -0.5 10</dot>
+		<normal>0 0 1</normal>
+		<RGB> 127 255 212 </RGB>
+	</plane>
 	<cube>
-
-
+		<RGB> 250 128 114 </RGB>
+		<centre>1 -0.5 0.5</centre>
+		<transparency>0.5</transparency>
+		<transp_map_no>2</transp_map_no>
+		<txt_scale>0.6 0.6</txt_scale>
+		<ior>1.1</ior>
 	</cube>
+<<<<<<< HEAD
 	<plane>
 		<dot>0 0 2</dot>
 		<normal>0 0 1</normal>
@@ -80,15 +86,33 @@
 	<light>
 		<type> ambient </type>
 		<intensity> 0.1 0.1 0.1 </intensity>
-	</light>
+=======
+	<spher>
+		<RGB> 255 255 255 </RGB>
+		<radius>1</radius>
+		<centre>1 -0.5 0.5</centre>
+		<transparency>0.7</transparency>
+	</spher>
 	<light>
 	</light>
 	<light>
-		<type>ambient</type>
-		<intensity>1 1 1</intensity>
+		<type> point </type>
+		<position> 5 -4 1 </position>
+		<intensity> 2 2 2 </intensity>
+>>>>>>> fa83ed49903f06fbfc90477c41aace4169b7b9e8
+	</light>
+	<light>
+		<type> point </type>
+		<position> -5 0 9 </position>
+		<intensity> 2 2 2 </intensity>
+	</light>
+	<light>
+		<type> ambient </type>
+		<intensity> 0.2 0.1 0.1 </intensity>
 	</light>
 
 	<cam>
-		<position> 0 1 -15 </position>
+		<position>3.9 -1.4 -5.6</position>
+		<dir>-0.4 0.5 0.8</dir>
 	</cam>
 </RT>

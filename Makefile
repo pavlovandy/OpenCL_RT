@@ -6,7 +6,7 @@
 #    By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/27 23:30:26 by ozhyhadl         ###   ########.fr        #
+#    Updated: 2019/09/28 00:01:00 by ozhyhadl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 FLAGS =  -Wall -Wextra -g #-fsanitize=address #-Werror
 NAME = RT
 
-SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
+SRC =	main.c init_cl.c user_events2.c init_sdl.c output.c parser.c render.c user_event.c \
 		math.c math2.c math3.c math4.c init.c mouse_events.c functions.c init_cl2.c init_cl3.c\
 		xml/xml_read.c xml/xml_create_obj.c xml/xml_add_param.c \
 		xml/xml_add_param_help.c xml/xml_add_light.c xml/xml_create_cam.c xml/xml_it_is.c \
@@ -25,7 +25,7 @@ SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
 		editor/editor_main.c editor/change_colors.c editor/shapes_rotations.c \
 		editor/ft_clamp.c xml/xml_it_is2.c xml/xml_parse.c xml/xml_write_obj2.c
 
-HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h functions.h filter.h
+HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h functions.h filter.h structures.h
 
 INC_DIR = ./includes/
 
