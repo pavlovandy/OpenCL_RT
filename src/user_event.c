@@ -6,13 +6,13 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 21:09:55 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 21:35:34 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rt.h"
 
-static int	translate(t_rt *rt)
+int			translate(t_rt *rt)
 {
 	const Uint8		*keyboard_state = SDL_GetKeyboardState(0);
 	cl_double3		translate_vector;
@@ -54,7 +54,8 @@ int			rotation(t_rt *rt)
 	return (1);
 }
 
-static void	user_events_keydown(t_rt *rt, SDL_Event ev, int *changes, int *rotations)
+static void	user_events_keydown(t_rt *rt, SDL_Event ev, \
+					int *changes, int *rotations)
 {
 	if (ev.key.keysym.sym == SDLK_1 || ev.key.keysym.sym == SDLK_2 ||
 	ev.key.keysym.sym == SDLK_3 || ev.key.keysym.sym == SDLK_4 ||
@@ -71,11 +72,8 @@ static void	user_events_keydown(t_rt *rt, SDL_Event ev, int *changes, int *rotat
 		SDL_SetRelativeMouseMode(*rotations);
 		SDL_GetRelativeMouseState(NULL, NULL);
 	}
-	else if (ev.key.keysym.sym == SDLK_TAB)
-	{
+	else if (ev.key.keysym.sym == SDLK_TAB && (changes = 1))
 		rt->filters.info = !rt->filters.info;
-		changes++;
-	}
 	else if (ev.key.keysym.sym == SDLK_m)
 	{
 		rt->filters.obj_movement[0].move = 1;
@@ -93,7 +91,8 @@ static void	road_to_editor(t_rt *rt, int *changes, SDL_Event ev)
 	{
 		if (((*changes) += ft_edit(rt->scene.obj + rt->edi.chosen_obj, rt, ev)))
 		{
-			ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
+			ret = clEnqueueWriteBuffer(rt->cl.command_queue, \
+rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 			if (ret != CL_SUCCESS)
 				exit(error_message(RED"Something went bad\n"COLOR_OFF));
 		}
@@ -107,12 +106,7 @@ int			user_events(t_rt *rt)
 	static int	rotations = 0;
 	static int	move = 0;
 
-	changes = 0;
-	changes += translate(rt);
-	if (rotations)
-		changes += rotation(rt);
-	else if (move)
-		changes += move_fig(rt);
+	changes += changes_norm(rt, &rotations, &move);
 	while (SDL_PollEvent(&ev))
 	{
 		if (ev.type == SDL_KEYDOWN)
@@ -126,7 +120,8 @@ int			user_events(t_rt *rt)
 			move = mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
 			SDL_GetRelativeMouseState(NULL, NULL);
 		}
-		else if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT)
+		else if (ev.type == SDL_MOUSEBUTTONUP \
+			&& ev.button.button == SDL_BUTTON_LEFT)
 			move = 0;
 		else
 			road_to_editor(rt, &changes, ev);
