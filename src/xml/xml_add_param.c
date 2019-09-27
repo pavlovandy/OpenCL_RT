@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 15:08:42 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:21:38 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	add_position2(const char *str, t_scene *scene, int i, const char *tag)
 		scene->obj[i].shape.ellipse.cent = (cl_double3)dot;
 	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == RECTANGLE && \
 			scene->obj[i].complex_fig != -1)
+		{
 			scene->cubs[scene->obj[i].complex_fig].cent = (cl_double3)dot;
+			ft_fill_rectangle(scene, scene->obj[i].complex_fig, &scene->obj[i], NULL);
+		}
 	else
 		return (0);
 	return (1);

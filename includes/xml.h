@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 16:34:13 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:31:38 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_create_rectangle(t_scene *scene, int i, t_filters *filter);
 void	ft_create_ellipse(t_scene *scene, int i, t_filters *filter);
 int		ft_add_cam_dir(const char *str, t_pov *pov);
 void	ft_create_cube(t_scene *scene, t_filters *filter, int *il);
+int		ft_create_negative_spher(t_scene *scene, int *il);
 
 /*
 **	Add ++ add_param(position, radius, normal, dir, tang, type) to figure
@@ -53,7 +54,9 @@ int		ft_add_mmin_mmax(const char *str, t_scene *scene, int i, const char *tag);
 int		ft_add_move_dir(const char *str, t_rt *rt, int i);
 int		ft_add_v(const char *str, t_scene *scene, int i, const char *tag);
 int		ft_add_distance(const char *str, t_scene *scene, int i, t_filters *filter);
+int		ft_is_negative(mxml_node_t *node, t_scene *scene, int i, int what_is);
 int		ft_add_rotation(const char *str, t_scene *scene, int i, t_filters *filter);
+void	ft_write_neg(t_negative_fig neg, mxml_node_t *data);
 
 /*
 **	Add ++ add_param(color, specular, reflection) to figure

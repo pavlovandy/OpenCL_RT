@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:32:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 16:40:07 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:34:10 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			is_frst_ltag(const char *str)
 		ft_strequ(str, "light") || ft_strequ(str, "cam") || \
 		ft_strequ(str, "rectangle") || ft_strequ(str, "triangle") || \
 		ft_strequ(str, "disk") || ft_strequ(str, "ellipse") || \
-		ft_strequ(str, "cube"))
+		ft_strequ(str, "cube") || ft_strequ(str, "negative_spher"))
 		return (1);
 	return (0);
 }
@@ -84,6 +84,9 @@ int			ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt)
 	i = -1;
 	while (++i < scene->count_light)
 		ft_write_light(scene->light[i], data);
+	i = -1;
+	while (++i < scene->count_neg_obj)
+			ft_write_neg(scene->neg_obj[i], data);
 	ft_write_cam(pov, data);
 	if ((fp = fopen(name_file, "w")) == NULL)
 		return (error_message(RED"XML: file to save can't open"COLOR_OFF));

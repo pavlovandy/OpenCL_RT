@@ -21,13 +21,11 @@
 	<cam>
 		<position> 0 1 -9 </position>
 	</cam>
-	<rectangle>
-		<v0> -1 1 0</v0>
-		<v1> -1 -1 0</v1>
-		<v2> 1 -1 0</v2>
-		<v3> 1 1 0 </v3>
-		
-		
-		
-	</rectangle>
+	<cube>
+		<centre> 0 0 2</centre>
+	</cube>
+	<negative_spher>
+		<centre>0 0 1</centre>
+		<radius>1</radius>
+	</negative_spher>
 </RT>
