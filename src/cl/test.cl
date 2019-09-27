@@ -104,34 +104,84 @@ double3	ft_noise1 (double2 coords)
 	return (color);
 }
 
-double3	ft_noise (double3 eye, double2 dir)
+double cos_interpole(double a, double b, double x)
 {
-
-	double3		color;
-	double3		oc = eye;
-	uint			u;
-	int			v;
-	
-	// if (dir[0])
-	// 	dir[0] = dir[0] ;
-	// oc[0] = random[get_global_id(0) % 5] + (get_global_id(0) << 4 >> 6);
-	// oc[1] = get_global_id(0) * random[get_global_id(0) % 5];
-	// u = ((sin(oc[0] * 2 * M_PI * 5) + 1) * 10000000) * 4;
-	// v = ((cos(oc[1] * 2 * M_PI * 5) + 1) * 10000000) * 4;
-	// if (v)
-	// 	u *= v;
-
-	uint seed = random[get_global_id(0) % 5] + get_global_id(0);
-	uint t = seed ^ (seed << 11);  
-	uint result = (int)random[get_global_id(0) % 5] ^ ((int)random[get_global_id(0) % 5] >> 19) ^ (t ^ (t >> 8));
-
-	u = result;
-	color = (double3){(u >> 16) & 0xFF, (u >> 8) & 0xFF, (u & 0xFF)};
-	color[2] = (color[0] + color[1] + color[2]) / 3.0;
-	color[1] = color[2];
-	color[0] = color[1];
-	return (color);
+	double	ft = x * 3.1415927;
+	double	f = (1 - cos(ft)) * 0.5;
+	return (a * (1 - f) + b * f);
 }
+
+double noise(int x, int y)
+{
+	int n = x + y * 57;
+	return (random[n % 100]);
+}
+
+double	intrapolate_noise(double2 coords)
+{
+	int int_x = (int)coords[0];
+	double f_x = coords[0] - int_x;
+	int int_y = (int)coords[1];
+	double f_y = coords[1] - int_y;
+	double v1 = noise(int_x, int_y);
+	double v2 = noise(int_x + 1, int_y);
+	double v3 = noise(int_x, int_y + 1);
+	double v4 = noise(int_x + 1, int_y + 1);
+	double i1 = cos_interpole(v1 , v2 , f_x);
+	double i2 = cos_interpole(v3 , v4 , f_x);
+	return (cos_interpole(i1 , i2 , f_y));
+}
+
+double3 ft_noise(double2 coords)
+{
+	double	total = 0;
+	double	p = 20;
+	int		i;
+	int		num_of_octaves = 5;
+	double frequency;
+	double amplitute;
+	
+	i = -1;
+	while (++i < num_of_octaves)
+	{
+		frequency = 2 * i;
+		amplitute = p * i;
+		total = total + intrapolate_noise(coords * frequency) * amplitute;
+	}
+	return (total);
+}			 
+
+    // x = (x<<13) ^ x;
+    // return ( 1.0 - ( (x * (x * x * 15731 + 789221) + 1376312589) & 7fffffff) / 1073741824.0);   
+
+// double3	ft_noise (double3 eye, double2 dir)
+// {
+
+// 	double3		color;
+// 	double3		oc = eye;
+// 	uint			u;
+// 	int			v;
+	
+// 	// if (dir[0])
+// 	// 	dir[0] = dir[0] ;
+// 	// oc[0] = random[get_global_id(0) % 5] + (get_global_id(0) << 4 >> 6);
+// 	// oc[1] = get_global_id(0) * random[get_global_id(0) % 5];
+// 	// u = ((sin(oc[0] * 2 * M_PI * 5) + 1) * 10000000) * 4;
+// 	// v = ((cos(oc[1] * 2 * M_PI * 5) + 1) * 10000000) * 4;
+// 	// if (v)
+// 	// 	u *= v;
+
+// 	uint seed = random[get_global_id(0) % 5] + get_global_id(0);
+// 	uint t = seed ^ (seed << 11);  
+// 	uint result = (int)random[get_global_id(0) % 5] ^ ((int)random[get_global_id(0) % 5] >> 19) ^ (t ^ (t >> 8));
+
+// 	u = result;
+// 	color = (double3){(u >> 16) & 0xFF, (u >> 8) & 0xFF, (u & 0xFF)};
+// 	color[2] = (color[0] + color[1] + color[2]) / 3.0;
+// 	color[1] = color[2];
+// 	color[0] = color[1];
+// 	return (color);
+// }
 
 double3	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
@@ -166,9 +216,14 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 	if (fig.text_no > -1)
 		pix_color = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.text_no], fig.text_no));
 	else if (fig.noise == 0)
-		pix_color = ft_noise(eye, texture_space_coords);
+	{
+		pix_color = ft_noise(texture_space_coords);
+		pix_color = (double3)(fabs(150 - pix_color[0]), 140 * (sin(pix_color[1] / 255 * 2 * M_PI) + 1), 100 * (cos(pix_color[2] / 255 * 2 * M_PI) + 1));
+	}
 	else if (fig.noise == 1)
-	pix_color = ft_noise1(texture_space_coords);
+	{
+		pix_color = ft_noise1(texture_space_coords);
+	}
 	else
 		pix_color = fig.color;
 

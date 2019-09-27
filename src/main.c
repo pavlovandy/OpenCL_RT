@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:26:09 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/28 01:10:59 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rt.h"
+	#include <time.h>
+#include <stdlib.h>
+
 
 int		main(int argc, char **argv)
 {
@@ -25,6 +28,7 @@ int		main(int argc, char **argv)
 	}
 	else
 		return (print_usage());
+	rt.scene.obj[0].noise = 0;
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
 	if (init_but(&rt))
