@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/26 18:09:03 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 17:04:14 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,20 @@ cl_double3		*get_obj_dot(t_fig *fig)
 		return (&fig->shape.torus.cent);
 	else if (fig->fig_type == ELLIPSE)
 		return (&fig->shape.ellipse.cent);
-	else if (fig->fig_type == TRIANGLE)
-		return (&fig->shape.triangle.v0);
-	else if (fig->fig_type == RECTANGLE)
-		return (&fig->shape.rectangle.v0);
 	else if (fig->fig_type == DISK)
 		return (&fig->shape.disk.cent);
 	return (0);
+}
+
+t_rotation_matrix	build_rotation_matrix_for_rectangles(cl_double3 normal, t_rectangle_data r)
+{
+	t_rotation_matrix	rm;
+
+	rm.e3 = ft_normalize(normal);
+	rm.e1 = ft_normalize(minus_double3(r.v1, r.v0));
+	rm.e2 = cross(rm.e3, rm.e1);
+	rm.e2 = ft_normalize(rm.e1);
+	return (rm);
 }
 
 cl_double3 normal_for_triangle_or_rectangle(t_fig fig)

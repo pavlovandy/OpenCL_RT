@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 16:20:24 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 17:07:07 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int		move_fig(t_rt *rt)
 	int		g_y;
 	double		dir_len;
 
-	
 	if (rt->edi.chosen_obj != -1)
 	{
 		SDL_GetRelativeMouseState(&x, &y);
@@ -96,7 +95,8 @@ int		move_fig(t_rt *rt)
 		dir = new_basis(dir, rt->pov.pov_rm);
 
 		dot = get_obj_dot(obj);
-		cool_little_function(rt, dot, dir);
+		if (dot)
+			cool_little_function(rt, dot, dir);
 
 		ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);
 		if (ret != CL_SUCCESS)
@@ -185,16 +185,11 @@ int			there_will_be_loop(t_rt *rt)
 	render_scene(rt);
 	while (1)
 	{
-		
 		if (user_events(rt))
 		{
-			/*There should be relinkage to OpenCL*/
 			ret = clSetKernelArg(rt->cl.rt_kernel, 2, sizeof(rt->pov), &rt->pov);
 			if (ret != CL_SUCCESS)
 				return (error_message(RED"clSetKernelArg(4) exception"COLOR_OFF));
-			/*__________________________________________________*/
-
-
 			render_scene(rt);
 		}
 	}
