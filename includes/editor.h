@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:59:59 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:28:05 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 18:23:58 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		change_colours(t_fig *fig);
 
 cl_double3	normal_direction_rotation(const Uint8 *k_s, cl_double3 n, double angle, t_fig *fig);
 cl_double3	vector_rotation(const Uint8 *k_s, cl_double3 n, double angle);
-void		rotate_by_type(const Uint8 *k_s, t_fig *fig);
+void		rotate_by_type(const Uint8 *k_s, t_fig *fig, t_scene *scene);
 double		ft_clamp(double s, double min, double max);
 void		visual_effects_editor(t_fig *fig, const Uint8 *k_s);
 

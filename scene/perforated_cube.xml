@@ -10,22 +10,20 @@
 --
 <RT width = "700" heigth = "500">
 	<cone>
-		<vertex> -5 3 5</vertex>
+
 	
 	</cone>
 	<cube>
-		<centre>0 0 0</centre>
+
 
 	</cube>
 	<light>
-		<type> point </type>
-		<position> 0 1 -4 </position>
-		<intensity> 2 2 2 </intensity>
 	</light>
 	<light>
-		<type> ambient </type>
-		<intensity> 0.2 0.1 0.1 </intensity>
+		<type>ambient</type>
+		<intensity>1 1 1</intensity>
 	</light>
+
 	<cam>
 		<position> 0 1 -15 </position>
 	</cam>
