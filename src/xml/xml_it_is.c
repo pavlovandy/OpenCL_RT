@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 16:52:23 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 17:20:19 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ int	ft_is_obj2(const char *str, t_scene *scene, int *il, t_rt *rt)
 	// {
 	// 	il[0] -= 1;
 	// 	il[2] += 1;
-	// 	ft_creat_light(scene, il[1]);
-	// 	return (2);
+	// 	ft_create_negative_spher(scene, il[1]);
+	// 	return (4);
 	// }
 	else
 		return (0);
