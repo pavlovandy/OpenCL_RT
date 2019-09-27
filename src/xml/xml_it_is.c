@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_it_is.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 19:04:55 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 19:20:25 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	ft_is_obj2(const char *str, t_scene *scene, int *il, t_rt *rt)
 		ft_create_cone(scene, il[0], &rt->filters);
 	else if (ft_strequ(str, "cylin"))
 		ft_create_cylin(scene, il[0], &rt->filters);
-	if (ft_strequ(str, "disk"))
+	else if (ft_strequ(str, "disk"))
 		ft_create_disk(scene, il[0], &rt->filters);
 	else if (ft_strequ(str, "triangle"))
 		ft_create_triangle(scene, il[0], &rt->filters);

@@ -20,8 +20,10 @@
 	<light>
 	</light>
 	<light>
-
+		<type>ambient</type>
+		<intensity>1 1 1</intensity>
 	</light>
+
 	<cam>
 		<position> 0 1 -15 </position>
 	</cam>
