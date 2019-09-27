@@ -6,11 +6,11 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 17:34:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 16:00:55 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:06:22 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rt.h"
+#include "../../includes/rt.h"
 
 int	exit_parse(mxml_node_t *tree, FILE *fp, char *str)
 {

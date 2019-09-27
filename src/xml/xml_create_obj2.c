@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:39:38 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:20:59 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 14:51:08 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	ft_create_rectangle(t_scene *scene, int i, t_filters *filter)
 {
 	scene->obj[i].fig_type = (cl_int)RECTANGLE;
 	scene->obj[i].shape.rectangle.v0 = (cl_double3){{1, 1, 0}};
-	scene->obj[i].shape.rectangle.v1 = (cl_double3){{-1, -1, 0}};
+	scene->obj[i].shape.rectangle.v1 = (cl_double3){{-1, 1, 0}};
 	scene->obj[i].shape.rectangle.v2 = (cl_double3){{-1, -1, 0}};
-	scene->obj[i].shape.rectangle.v3 = (cl_double3){{-1, 1, 0}};
+	scene->obj[i].shape.rectangle.v3 = (cl_double3){{1, -1, 0}};
 	ft_create_all(scene, i, filter);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 20:32:39 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 16:34:13 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int		ft_add_type_light(t_scene *scene, int l, char *str);
 int		ft_add_mmin_mmax(const char *str, t_scene *scene, int i, const char *tag);
 int		ft_add_move_dir(const char *str, t_rt *rt, int i);
 int		ft_add_v(const char *str, t_scene *scene, int i, const char *tag);
-int		ft_add_distance(const char *str, t_scene *scene, int i);
+int		ft_add_distance(const char *str, t_scene *scene, int i, t_filters *filter);
+int		ft_add_rotation(const char *str, t_scene *scene, int i, t_filters *filter);
 
 /*
 **	Add ++ add_param(color, specular, reflection) to figure
@@ -73,7 +74,7 @@ int		ft_check_count(int o, int i, int n, int c);
 */
 
 int		ft_xml_save(char *name_file, t_scene *scene, t_pov pov, t_rt *rt);
-void	ft_write_to_xml(t_fig fig, mxml_node_t *data, t_obj_movement *filter);
+void	ft_write_to_xml(t_scene *scene, mxml_node_t *data, t_obj_movement *filter, int *i);
 void	ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter);
 void	ft_write_3param(cl_double3 param, mxml_node_t *node, const char *name);
 void	ft_write_param(cl_double param, mxml_node_t *node, const char *name);
