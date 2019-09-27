@@ -6,7 +6,7 @@
 /*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 01:10:59 by anri             ###   ########.fr       */
+/*   Updated: 2019/09/28 01:25:30 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		main(int argc, char **argv)
 	}
 	else
 		return (print_usage());
-	rt.scene.obj[0].noise = 0;
+	rt.scene.obj[0].noise = 0;//delete
 	if (init_sdl(&rt.sdl, rt.pov.w, rt.pov.h))
 		return (1);
 	if (init_but(&rt))
