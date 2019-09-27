@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:21:38 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:53:00 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ int	add_position2(const char *str, t_scene *scene, int i, const char *tag)
 		scene->obj[i].shape.disk.cent = (cl_double3)dot;
 	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == ELLIPSE)
 		scene->obj[i].shape.ellipse.cent = (cl_double3)dot;
-	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == RECTANGLE && \
-			scene->obj[i].complex_fig != -1)
-		{
-			scene->cubs[scene->obj[i].complex_fig].cent = (cl_double3)dot;
-			ft_fill_rectangle(scene, scene->obj[i].complex_fig, &scene->obj[i], NULL);
-		}
+	else if (ft_strequ(tag, "centre") && scene->obj[i].fig_type == RECTANGLE \
+			&& scene->obj[i].complex_fig != -1)
+	{
+		scene->cubs[scene->obj[i].complex_fig].cent = (cl_double3)dot;
+		ft_fill_rectangle(scene, scene->obj[i].complex_fig, \
+		&scene->obj[i], NULL);
+	}
 	else
 		return (0);
 	return (1);
@@ -121,7 +122,8 @@ int	ft_add_tanget(const char *str, t_scene *scene, int i)
 
 	if (scene->obj[i].fig_type == CONE && ft_get_3param(1, str, NULL, &one_dot))
 		if (one_dot >= 0.1 && one_dot < 180)
-			scene->obj[i].shape.cone.tangent = (cl_double)one_dot * M_PI / 180.0;
+			scene->obj[i].shape.cone.tangent = (cl_double)one_dot * \
+			M_PI / 180.0;
 		else
 			return (error_message(RED"XML : 0.1˚ < angle < 180˚"COLOR_OFF));
 	else
