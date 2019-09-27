@@ -6,7 +6,7 @@
 #    By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/27 16:21:26 by myuliia          ###   ########.fr        #
+#    Updated: 2019/09/27 17:28:10 by myuliia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ SRC =	main.c init_cl.c init_sdl.c output.c parser.c render.c user_event.c \
 		xml/xml_add_param_help.c xml/xml_add_light.c xml/xml_create_cam.c xml/xml_it_is.c \
 		xml/xml_save.c xml/xml_write_obj.c xml/xml_write_other.c xml/xml_write_param.c \
 		xml/xml_add_param2.c button/init_but.c button/action_but.c \
-		xml/xml_create_obj2.c filter.c xml/xml_add_param3.c xml/create_negative_obj.c\
-		editor/editor_main.c editor/change_colors.c filter_main.c
+		xml/xml_create_obj2.c filter.c xml/xml_add_param3.c \
+		filter_main.c xml/xml_cub.c editor/editor_main.c editor/change_colors.c
 
 HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h functions.h
 

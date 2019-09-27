@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 13:49:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 15:48:15 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:26:06 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int			init_start_params(t_rt *rt)
 		rt->filters.obj_movement[i].move = 0;
 		rt->filters.obj_movement[i].dir = (cl_double3){{0, 0, 0}};
 	}
+	if (read_textures(rt))
+		return (1);
 	return (0);
 }
 

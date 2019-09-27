@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 15:58:26 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:28:45 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,7 +396,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig, t_rt *rt);
+int			ft_edit(t_fig *fig, SDL_Event	ev);
 
 void		add_filter(t_rt *rt);
 void		change_filters(t_rt *rt, SDL_Event ev);

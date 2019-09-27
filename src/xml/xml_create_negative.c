@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.h                                        :+:      :+:    :+:   */
+/*   xml_create_negative.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 23:16:07 by anri              #+#    #+#             */
-/*   Updated: 2019/09/27 15:42:40 by ozhyhadl         ###   ########.fr       */
+/*   Created: 2019/09/27 17:15:16 by ozhyhadl          #+#    #+#             */
+/*   Updated: 2019/09/27 17:20:15 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNCTIONS_H
-# define FUNCTIONS_H
+#include "../../includes/rt.h"
 
-# include "rt.h"
-
-cl_double3		*get_obj_dot(t_fig *fig);
-cl_double3		get_obj_dir(t_fig fig);
-void			ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, t_filters *filter);
-
-#endif
+// void	ft_create_negative_spher(t_scene *scene, t_filters *filter, int *il)
+// {
+// 	scene->neg_obj[il[2]].fig_type = SPHERE;
+// 	scene->neg_obj[il[2]].shape.sphere.cent = {{}}
+// }

@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 16:54:35 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 19:48:58 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:17:17 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,6 @@ SDL_Surface	*load_tex(char *path, Uint32 format)
 	SDL_FreeSurface(temp);
 	return (texture);
 }
-
-/*
-	really bad implamantaion of realloc if new_size is less then current would be seg
-	for improvement follow "man malloc_size" or google for it
-				size_t malloc_size(const void *ptr);
-
-	...also could copy per machine word not a single byte
-*/
 
 void	*ft_realloc(void *p, size_t new_size, size_t prev_size)
 {

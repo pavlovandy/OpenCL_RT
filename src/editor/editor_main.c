@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 15:58:30 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:28:37 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,11 @@ void	sphere_editor(t_fig *fig, const Uint8 *k_s)
 **	I [+/-] - changes ior
 **	U & [1...9] - rotating texture in sphere
 **	N & [1...9] rotating normal/direction and cutting plane if such exists
-**	
+**	C - change colours
+**	mouse wheel - change min/max
 */
 
-int		ft_edit(t_fig *fig, t_rt *rt)
+int		ft_edit(t_fig *fig, SDL_Event	ev)
 {
 	const Uint8	*k_s;
 	
@@ -120,7 +121,7 @@ int		ft_edit(t_fig *fig, t_rt *rt)
 			fig->shape.cylin.dir =
 				normal_direction_rotation(k_s, fig->shape.cylin.dir, 0.2, fig);
 	}
-	else if (k_s[SDL_SCANCODE_KP_PLUS])
+	else if (k_s[SDL_SCANCODE_C])
 		change_colours(fig);
 	else if (fig->fig_type == SPHERE)
 		sphere_editor(fig, k_s);
@@ -132,6 +133,11 @@ int		ft_edit(t_fig *fig, t_rt *rt)
 		else if (k_s[SDL_SCANCODE_R] && k_s[86])
 			fig->shape.cone.tangent =
 				ft_clamp(fig->shape.cone.tangent - 0.05, 0.01, 3.14);
+		else if (ev.type == SDL_MOUSEWHEEL)
+		{
+			fig->shape.cone.mmax = ft_clamp(fig->shape.cone.mmax + (cl_double)ev.wheel.y / 100.0, 0.01, BIG_VALUE);
+			fig->shape.cone.mmin = ft_clamp(fig->shape.cone.mmin - (cl_double)ev.wheel.y / 100.0, -BIG_VALUE, -0.01);
+		}
 	}
 	else if (fig->fig_type == DISK)
 	{
@@ -150,6 +156,11 @@ int		ft_edit(t_fig *fig, t_rt *rt)
 		else if (k_s[SDL_SCANCODE_R] && k_s[86])
 			fig->shape.cylin.radius =
 				ft_clamp(fig->shape.disk.radius - 0.1, 0.01, BIG_VALUE);
+		else if (ev.type == SDL_MOUSEWHEEL)
+		{
+			fig->shape.cylin.mmax = ft_clamp(fig->shape.cylin.mmax + (cl_double)ev.wheel.y / 100.0, 0.01, BIG_VALUE);
+			fig->shape.cylin.mmin = ft_clamp(fig->shape.cylin.mmin - (cl_double)ev.wheel.y / 100.0, -BIG_VALUE, -0.01);
+		}
 	}
 	else
 		return (0);
