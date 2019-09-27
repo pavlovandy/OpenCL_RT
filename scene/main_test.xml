@@ -60,29 +60,10 @@
 		<position> 0 1 -15 </position>
 	</cam>
 	<cube>
-<<<<<<< HEAD
 		<centre> 0 0 2</centre>
 	</cube>
 	<negative_spher>
 		<centre>0 0 1</centre>
 		<radius>1</radius>
 	</negative_spher>
-=======
-		<centre> 0 0 0 </centre>
-		<distance> 2 </distance>
-		<cub_rotation> 1 2 3 </cub_rotation>
-		<transp_map_no> 8 </transp_map_no>
-		<txt_scale> 0.2 0.2 </txt_scale>
-	</cube>
-		<light>
-		<type> point </type>
-		<position> 0 20 -1 </position>
-		<intensity> 4 4 4 </intensity>
-	</light>
-		<light>
-		<type> point </type>
-		<position> 5 -5 -10 </position>
-		<intensity> 4 4 4 </intensity>
-	</light>
->>>>>>> b8476f957002c8eea378620bbefeb44e5fb0fac0
 </RT>
