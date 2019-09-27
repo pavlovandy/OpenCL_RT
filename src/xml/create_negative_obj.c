@@ -6,16 +6,11 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 19:41:54 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 21:32:28 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 16:50:28 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rt.h"
-
-// void	ft_create_neg_spher()
-// {
-	
-// }
+#include "../../includes/rt.h"
 
 void	ft_create_rec_cube(t_scene *scene, int *il, t_filters *filter)
 {
@@ -77,10 +72,8 @@ void rewrite_rectangle_data(t_fig *src, t_fig *dst)
 	src->trans = dst->trans;
 	src->ior = dst->ior;
 	src->noise = dst->noise;
-
 	src->text_no = dst->text_no;
 	src->normal_map_no = dst->normal_map_no;
-
 	src->transparancy_map_no = dst->transparancy_map_no;
 	src->txt_offset = dst->txt_offset;
 	src->txt_scale = dst->txt_scale;
@@ -109,8 +102,6 @@ void	ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, t_filters *filter) /
 			filter->obj_movement[i].dir = (cl_double3){{0, 0, 0}};
 			r++;
 		}
-		// if (r == 6)
-		// 	break ;
 	}
 }
 
@@ -118,7 +109,6 @@ void	ft_create_cube(t_scene *scene, t_filters *filter, int *il)
 {
 	il[3]++;
 	il[0]--;
-	printf("ss\n");
 	scene->cubs[il[3]].cent = (cl_double3){{0, 0, 0}};
 	scene->cubs[il[3]].dist = (cl_double)1;
 	scene->cubs[il[3]].no = il[3];
@@ -127,5 +117,4 @@ void	ft_create_cube(t_scene *scene, t_filters *filter, int *il)
 	build_rotation_matrix_form_angles(scene->cubs[il[3]].rotation);
 	ft_create_rec_cube(scene, il, filter);
 	ft_fill_rectangle(scene, il[3], NULL, filter);
-	printf("s %d\n", il[0]);
 }

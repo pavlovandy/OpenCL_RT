@@ -6,11 +6,11 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 21:03:46 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 16:50:18 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rt.h"
+#include "../../includes/rt.h"
 
 int	ft_check_child(mxml_node_t *node)
 {
@@ -78,14 +78,23 @@ int	ft_is_param2(mxml_node_t *node, t_rt *rt, int i, const char *name)
 		ft_strequ(name, "rotation") || ft_strequ(name, "ior") || \
 		ft_strequ(name, "transp_map_no") || ft_strequ(name, "txt_offset") || \
 		ft_strequ(name, "txt_scale"))
-			return (add_for_all_obj(mxmlGetOpaque(node), rt, i, name));
+		{
+			if (scene->obj[i].fig_type == RECTANGLE && scene->obj[i].complex_fig != -1)
+			{
+				add_for_all_obj(mxmlGetOpaque(node), rt, i, name);
+				ft_fill_rectangle(scene, scene->obj[i].complex_fig, &scene->obj[i], &rt->filters);
+			}
+				return (add_for_all_obj(mxmlGetOpaque(node), rt, i, name));
+		}
 		else if (ft_strequ(name, "move_dir"))
 			return (ft_add_move_dir(mxmlGetOpaque(node), rt, i));
 		else if (ft_strequ(name, "v0") || ft_strequ(name, "v1") || \
 			ft_strequ(name, "v2") || ft_strequ(name, "v3"))
 			return (ft_add_v(mxmlGetOpaque(node), scene, i, name));
 		else if (ft_strequ(name, "distance"))
-			return (ft_add_distance(mxmlGetOpaque(node), scene, i));
+			return (ft_add_distance(mxmlGetOpaque(node), scene, i, &rt->filters));
+		else if (ft_strequ(name, "cub_rotation"))
+			return (ft_add_rotation(mxmlGetOpaque(node), scene, i, &rt->filters));
 		return (0);
 }
 

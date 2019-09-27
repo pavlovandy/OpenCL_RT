@@ -10,12 +10,12 @@
 --
 <RT width = "1200" heigth = "1200">
 
-	<spher>
-		<centre> 0 2 0</centre>
-		<radius>1</radius>
-		<texture>0</texture>
-		<bump>1</bump>
-	</spher>
+		<spher>
+			<centre> 0 2 0</centre>
+			<radius>1</radius>
+			<texture>0</texture>
+			<bump>1</bump>
+		</spher>
 	<light>
 		<type> point </type>
 		<position> 0 1 -4 </position>

@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RT>
 	<cube>
+		<centre>0 1 10</centre>
+		<distance>1</distance>
+		<cub_rotation>1 2 3</cub_rotation>
+		<RGB>44 34 4</RGB>
+		<transparency>0</transparency>
+		<reflective>0</reflective>
+		<specular>-1</specular>
+		<texture>-1</texture>
+		<bump>-1</bump>
+		<cutting>0</cutting>
+		<cut_dot>0 0 0</cut_dot>
+		<cut_normal>0 1 1</cut_normal>
+		<ior>1.000400</ior>
+		<transp_map_no>4</transp_map_no>
+		<txt_offset>0 0</txt_offset>
+		<txt_scale>0.3 0.3</txt_scale>
 	</cube>
-		
 	<light>
 		<type>point</type>
 		<position>1 4 10</position>
@@ -10,22 +25,27 @@
 	</light>
 	<light>
 		<type>point</type>
-		<position>0 1 10</position>
+		<position>3 3 3</position>
 		<intensity>5 5 5</intensity>
 	</light>
 	<light>
 		<type>point</type>
-		<position>10 1 -5</position>
+		<position>-5 0 0</position>
 		<intensity>5 5 5</intensity>
 	</light>
 	<light>
 		<type>point</type>
-		<position>10 10 -5</position>
-		<intensity>5 5 5</intensity>
+		<position>0 0 3</position>
+		<intensity>8 8 8</intensity>
+	</light>
+	<light>
+		<type>point</type>
+		<position>0 0 -3</position>
+		<intensity>8 8 8</intensity>
 	</light>
 	<light>
 		<type>ambient</type>
-		<intensity>0.4 0.4 0.4</intensity>
+		<intensity>0.5 0.5 0.5</intensity>
 	</light>
 	<cam>
 		<position>0 0 -8</position>
