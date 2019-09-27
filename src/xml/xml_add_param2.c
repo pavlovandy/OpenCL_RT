@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 00:50:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:46:20 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 19:11:01 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ int	add_for_all_obj(const char *str, t_rt *rt, int i, const char *tag)
 	if (!ft_get_3param(1, str, NULL, &one_dot))
 		return (0);
 	else if (ft_strequ(tag, "specular") && (one_dot < -1 || one_dot > 1000))
-		return (error_message(RED"XML: -1 <= specular <= 1000"COLOR_OFF));
+		return (!error_message(RED"XML: -1 <= specular <= 1000"COLOR_OFF));
 	else if (ft_strequ(tag, "reflective") && (one_dot < 0 || one_dot > 1))
-		return (error_message(RED"XML: 0 <= reflective <= 1"COLOR_OFF));
+		return (!error_message(RED"XML: 0 <= reflective <= 1"COLOR_OFF));
 	else if (ft_strequ(tag, "transparency") && (one_dot < 0 || one_dot > 1))
-		return (error_message(RED"XML: 0 <= transparency <= 1"COLOR_OFF));
+		return (!error_message(RED"XML: 0 <= transparency <= 1"COLOR_OFF));
 	else if (ft_strequ(tag, "specular"))
 		scene->obj[i].specular = (cl_int)ft_atoi(str);
 	else if (ft_strequ(tag, "reflective"))

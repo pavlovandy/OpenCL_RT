@@ -39,7 +39,7 @@
 	<spher>
 		<centre> 3 2 0</centre>
 		<radius>1</radius>
-		<texture>0</texture>
+		<texture>1</texture>
 		<bump>-1</bump>
 	</spher>
 	<spher>

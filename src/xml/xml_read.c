@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 17:34:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:53:45 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 19:08:21 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ int	exit_parse(mxml_node_t *tree, FILE *fp, char *str)
 
 int		ft_check_count(int o, int i, int n)
 {
-	if (o > MAX_OBJ_COUNT)
+	if (o >= MAX_OBJ_COUNT)
 	{
 		ft_putstr(RED"XML: max obj is "COLOR_OFF);
 		ft_putnbr(MAX_OBJ_COUNT);
 		return(error_message(RED" SORRY !"COLOR_OFF));
 	}
-	if (i > MAX_LIGHTING_COUNT)
+	if (i >= MAX_LIGHTING_COUNT)
 	{
 		ft_putstr(RED"XML: max light is "COLOR_OFF);
 		ft_putnbr(MAX_OBJ_COUNT);
 		return(error_message(RED" SORRY !"COLOR_OFF));
 	}
-	if (n > MAX_NEGATIVE_OBJ_COUNT)
+	if (n >= MAX_NEGATIVE_OBJ_COUNT)
 	{
 		ft_putstr(RED"XML: max neg_obj is "COLOR_OFF);
 		ft_putnbr(MAX_OBJ_COUNT);

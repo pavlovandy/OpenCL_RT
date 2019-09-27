@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 17:27:18 by myuliia           #+#    #+#             */
-/*   Updated: 2019/09/26 18:58:50 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/26 19:40:52 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void		int_to_rgb(t_fil *f, Uint32 pixel)
 
 void	filter1(t_fil *f)
 {
-	// rgb[0] = 255.0 * pow(rgb[0] / 255.0, 2.2);
-	// rgb[1] = 255.0 * pow(rgb[1] / 255.0, 2.2);
-	// rgb[2] = 255.0 * pow(rgb[2] / 255.0, 2.2);
-	f->rgb.r = (f->rgb.r * 0.393) + (f->rgb.g * 0.769) + (f->rgb.b * 0.189);
+	f->rgb.r = (f->rgb.r * 0.544) + (f->rgb.g * 0.765) + (f->rgb.b * 0.764);
 	f->rgb.g = (f->rgb.r * 0.349) + (f->rgb.g * 0.689) + (f->rgb.b * 0.168);
 	f->rgb.b = (f->rgb.r * 0.272) + (f->rgb.g * 0.534) + (f->rgb.b * 0.131);
 	f->rgb.r = (f->rgb.r > 255) ? 255 : f->rgb.r; 
@@ -216,13 +213,14 @@ void		add_filter(t_rt *rt)
 		
 		// hsv = rgb_to_hsv(rgb, hsv);
 		// swap_colors(f);
-		// filter1(f);
 		// remove_red(f);
 		// remove_green(f);
 		// remove_blue(f);
 		// filter_red(f);
 		// filter_green(f);
 		// filter_blue(f);
+
+		// filter1(f);
 		// filter_negative(f);
 		// filter_greyscale(f);
 		// rgb = hsv_to_rgb(hsv, rgb); /**/
