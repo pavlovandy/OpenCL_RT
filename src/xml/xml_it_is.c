@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_it_is.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:40:47 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 15:04:48 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,15 @@ int	ft_is_obj2(const char *str, t_scene *scene, int *il, t_rt *rt)
 		ft_create_rectangle(scene, il[0], &rt->filters);
 	else if (ft_strequ(str, "ellipse"))
 		ft_create_ellipse(scene, il[0], &rt->filters);
+	else if (ft_strequ(str, "cube"))
+		ft_create_cube(scene, &rt->filters, il);
+	// else if (ft_strequ(str, "negative_spher"))
+	// {
+	// 	il[0] -= 1;
+	// 	il[2] += 1;
+	// 	ft_creat_light(scene, il[1]);
+	// 	return (2);
+	// }
 	else
 		return (0);
 	return (1);

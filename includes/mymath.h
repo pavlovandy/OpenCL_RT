@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymath.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:26 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 19:02:47 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 19:51:16 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 cl_double3	rotate_z(cl_double3 v, double angle);
 cl_double3	rotate_x(cl_double3 v, double angle);
 cl_double3	rotate_y(cl_double3 v, double angle);
+cl_double3		rotate_xyz(cl_double3 v, cl_double3 a);
 
 cl_double3	new_basis(cl_double3 point, t_rotation_matrix m);
 cl_double3	transpone_basis(cl_double3 point, t_rotation_matrix m);
@@ -42,6 +43,5 @@ t_rotation_matrix build_rotation_matrix_for_dir(cl_double3 dir);
 cl_double3	ft_normalize(cl_double3 a);
 
 int				check_rectangle_in_plane(t_rectangle_data rectange);
-
 
 #endif

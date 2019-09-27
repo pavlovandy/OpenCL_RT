@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 16:47:05 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 19:41:36 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 15:05:48 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_create_all(t_scene *scene, int i, t_filters *filter)
 	scene->obj[i].transparancy_map_no = -1;
 	scene->obj[i].cutting_plane.dot = (cl_double3){{0, 0, 0}};
 	scene->obj[i].cutting_plane.normal = (cl_double3){{0, 1, 1}};
+	scene->obj[i].complex_fig = -1;
 	filter->obj_movement[i].move = 0;
 	filter->obj_movement[i].dir = (cl_double3){{0, 1, 1}};
 	

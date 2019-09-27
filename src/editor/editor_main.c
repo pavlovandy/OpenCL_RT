@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 14:58:58 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 15:05:45 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,7 @@ int		ft_edit(t_fig *fig, t_rt *rt)
 				normal_direction_rotation(k_s, fig->shape.cylin.dir, 0.2, fig);
 	}
 	else if (k_s[SDL_SCANCODE_KP_PLUS])
-	{
-		printf("HEY, jude\n");
 		change_colours(fig);
-	}
 	else if (fig->fig_type == SPHERE)
 		sphere_editor(fig, k_s);
 	else if (fig->fig_type == CONE)

@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 19:33:35 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 15:03:23 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define MAX_NEGATIVE_OBJ_COUNT 5
+# define MAX_CUB_COUNT 5
 
 __constant		double random[5] = {12341243, 324124, 234123412, 123, 15351};
 __constant double EPSILON = 0.00001;
@@ -205,6 +206,8 @@ typedef struct	s_scene
 	t_light				light[MAX_LIGHTING_COUNT];
 	int					count_neg_obj;
 	t_negative_fig		neg_obj[MAX_NEGATIVE_OBJ_COUNT];
+	t_cube				cubs[MAX_CUB_COUNT];
+	int					count_cubs;
 }				t_scene;
 
 typedef struct	s_txt_params

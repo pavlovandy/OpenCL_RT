@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:40:39 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 20:32:39 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_create_triangle(t_scene *scene, int i, t_filters *filter);
 void	ft_create_rectangle(t_scene *scene, int i, t_filters *filter);
 void	ft_create_ellipse(t_scene *scene, int i, t_filters *filter);
 int		ft_add_cam_dir(const char *str, t_pov *pov);
+void	ft_create_cube(t_scene *scene, t_filters *filter, int *il);
 
 /*
 **	Add ++ add_param(position, radius, normal, dir, tang, type) to figure
@@ -65,6 +66,7 @@ int		ft_get_3param(int i, const char *str, cl_double3 *dot, cl_double *one_dot);
 */
 void	ft_create_cam(t_pov *pov);
 int		ft_add_cam_dot(const char *str, t_pov *pov);
+int		ft_check_count(int o, int i, int n, int c);
 
 /*
 **	Add ++ xml write to xml file
