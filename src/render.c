@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 13:52:27 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 16:51:39 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:34:06 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ void		set_obj_back(t_rt *rt)
 		if (move.move)
 		{
 			dot = get_obj_dot(rt->scene.obj + i);
-			move.dir = increase_double3(move.dir, RENDER_ITARATION);
-			*dot = minus_double3(*dot, move.dir);
+			if (dot)
+			{
+				move.dir = increase_double3(move.dir, RENDER_ITARATION);
+				*dot = minus_double3(*dot, move.dir);
+			}
 		}
 	}
 	ret = clEnqueueWriteBuffer(rt->cl.command_queue, rt->cl.scene_mem, CL_TRUE, 0, sizeof(t_scene), &rt->scene, 0, 0, 0);

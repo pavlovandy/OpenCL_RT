@@ -16,18 +16,26 @@
 	</light>
 	<light>
 		<type> ambient </type>
-		<intensity> 0.1 0.1 0.1 </intensity>
+		<intensity> 0.5 0.5 0.5 </intensity>
 	</light>
 	<cam>
 		<position> 0 1 -9 </position>
 	</cam>
-	<rectangle>
-		<v0> -1 1 0</v0>
-		<v1> -1 -1 0</v1>
-		<v2> 1 -1 0</v2>
-		<v3> 1 1 0 </v3>
-		
-		
-		
-	</rectangle>
+	<cube>
+		<centre> 0 0 0 </centre>
+		<distance> 2 </distance>
+		<cub_rotation> 1 2 3 </cub_rotation>
+		<transp_map_no> 8 </transp_map_no>
+		<txt_scale> 0.2 0.2 </txt_scale>
+	</cube>
+		<light>
+		<type> point </type>
+		<position> 0 20 -1 </position>
+		<intensity> 4 4 4 </intensity>
+	</light>
+		<light>
+		<type> point </type>
+		<position> 5 -5 -10 </position>
+		<intensity> 4 4 4 </intensity>
+	</light>
 </RT>
