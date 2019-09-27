@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 15:03:15 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 16:20:41 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,7 +395,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig, t_rt *rt);
+int			ft_edit(t_fig *fig, t_rt *rt, SDL_Event	ev);
 
 void		add_filter(t_rt *rt);
 
