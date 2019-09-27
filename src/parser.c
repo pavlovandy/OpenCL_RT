@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 16:54:35 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 18:17:28 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 19:27:51 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ void		*ft_realloc(void *p, size_t new_size, size_t prev_size)
 	return ((void*)res);
 }
 
-static void	make_it_simple(t_envi *envi, )
-{
+// static void	make_it_simple(t_envi *envi, )
+// {
 	
-}
+// }
 
 int			read_texture(char *file_name, t_envi *envi)
 {
