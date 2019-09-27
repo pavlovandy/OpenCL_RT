@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RT>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<spher>
 		<centre>-3.-2 -1.-6 0</centre>
 		<radius>1</radius>
@@ -29,8 +30,11 @@
 		<txt_scale>1 1</txt_scale>
 	</ellipse>
 	<negative_spher>
+=======
+	<cube>
+	</cube>
+>>>>>>> 1feefc5d9d4f146722556d2a64dc0efeaef837a6
 		
-	</negative_spher>
 	<light>
 		<type>point</type>
 		<position>1 4 10</position>
@@ -51,7 +55,12 @@
 		<position>10 10 -5</position>
 		<intensity>5 5 5</intensity>
 	</light>
+	<light>
+		<type>ambient</type>
+		<intensity>0.4 0.4 0.4</intensity>
+	</light>
 	<cam>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		<position>0 1 -9</position>
@@ -63,6 +72,10 @@
 		<position>9.8 -3.4 -8.6</position>
 		<dir>0.2 -0.6 -2.4</dir>
 >>>>>>> bce6c8ce493d7ea799f421f0c40ed920861260f1
+=======
+		<position>0 0 -8</position>
+		<dir>0 0 0</dir>
+>>>>>>> 1feefc5d9d4f146722556d2a64dc0efeaef837a6
 	</cam>
 
 </RT>

@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 18:58:13 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 15:15:52 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define MAX_OBJ_COUNT 20
 # define MAX_LIGHTING_COUNT 10
 # define MAX_NEGATIVE_OBJ_COUNT 5
+# define MAX_CUB_COUNT 5
 # define RGB(v) (((int)v[0] << 16) + ((int)v[1] << 8) + (int)v[2])
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
@@ -253,6 +254,8 @@ struct	s_scene
 	t_light			light[MAX_LIGHTING_COUNT];
 	cl_int			count_neg_obj; //default 0	---done
 	t_negative_fig	neg_obj[MAX_NEGATIVE_OBJ_COUNT];
+	t_cube			cubs[MAX_CUB_COUNT];
+	cl_int			count_cubs;
 };
 
 typedef struct	s_cl
@@ -285,16 +288,16 @@ typedef struct	s_cl
 
 typedef struct	s_txt_params
 {
-	cl_ulong		w;
-	cl_ulong		h;
-	cl_ulong		start_pos;
+	cl_int		w;
+	cl_int		h;
+	cl_int		start_pos;
 }				t_txt_params;
 
 typedef struct	s_envi
 {
 	cl_int			txt_count; //number of textures
 	cl_uint			*txt; //could be uint16 : rgb565. to save more space for kernel
-	cl_ulong		textures_size; //the sumary size of all textures
+	cl_int			textures_size; //the sumary size of all textures
 	t_txt_params	txt_par[MAX_TEXTURE_COUNT]; //w, h and start point for each texture in txt array
 }				t_envi;
 
@@ -324,6 +327,7 @@ typedef struct	s_filters
 	cl_uint		*buff;
 	cl_float	*zbuff;
 	t_obj_movement	obj_movement[MAX_OBJ_COUNT];
+	int			index_filter;
 }				t_filters;
 
 
