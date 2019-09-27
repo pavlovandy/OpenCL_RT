@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 17:33:06 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 18:14:22 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,19 @@ void	cone_editor(t_fig *fig, const Uint8 *k_s, SDL_Event ev)
 			ft_clamp(fig->shape.cone.tangent - 0.05, 0.01, 3.14);
 	else if (ev.type == SDL_MOUSEWHEEL)
 	{
-		fig->shape.cone.mmax = ft_clamp(fig->shape.cone.mmax +
-			(cl_double)ev.wheel.y / 100.0, 0.01, BIG_VALUE);
-		fig->shape.cone.mmin = ft_clamp(fig->shape.cone.mmin -
-			(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, -0.01);
+		if (k_s[SDL_SCANCODE_PAGEUP])
+			fig->shape.cone.mmax = ft_clamp(fig->shape.cone.mmax +
+				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, BIG_VALUE);
+		else if (k_s[SDL_SCANCODE_PAGEDOWN])
+			fig->shape.cone.mmin = ft_clamp(fig->shape.cone.mmin +
+				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, BIG_VALUE);
+		else
+		{
+			fig->shape.cone.mmax = ft_clamp(fig->shape.cone.mmax +
+				(cl_double)ev.wheel.y / 100.0, 0.01, BIG_VALUE);
+			fig->shape.cone.mmin = ft_clamp(fig->shape.cone.mmin -
+				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, -0.01);
+		}
 	}
 }
 
