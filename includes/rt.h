@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 19:38:19 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 14:59:23 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct	s_cone_data
 	cl_double	mmin; //add to parser. inf = -BIG_VALUE	---done
 }				t_cone_data;
 
-typedef struct	s_rectangle_data //add to parser
+typedef struct	s_rectangle_data //add to parser	---done
 {
 	cl_double3	v0;
 	cl_double3	v1;
@@ -138,7 +138,7 @@ typedef struct	s_ellipse_data
 	cl_double	radius_sum; // > 0
 }				t_ellipse_data;
 
-typedef struct	s_triangle_data  //add to parser
+typedef struct	s_triangle_data  //add to parser	---done
 {
 	cl_double3	v0;
 	cl_double3	v1;
@@ -392,7 +392,7 @@ int			pres_buttn(t_rt *rt, int x, int y);
 **	Edit
 */
 
-int			ft_edit(t_fig *fig);
+int			ft_edit(t_fig *fig, t_rt *rt);
 
 void		add_filter(t_rt *rt);
 

@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 19:35:51 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 14:58:58 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	sphere_editor(t_fig *fig, const Uint8 *k_s)
 **	
 */
 
-int		ft_edit(t_fig *fig)
+int		ft_edit(t_fig *fig, t_rt *rt)
 {
 	const Uint8	*k_s;
 	
@@ -101,6 +101,7 @@ int		ft_edit(t_fig *fig)
 		fig->ior = ft_clamp(fig->ior + 0.04, MIN_IOR, MAX_IOR);
 	else if (k_s[SDL_SCANCODE_I] && k_s[86])
 		fig->ior = ft_clamp(fig->ior - 0.04, MIN_IOR, MAX_IOR);
+		//place for MYulia's function
 	else if (k_s[SDL_SCANCODE_Y])
 	{	change_texture(fig);
 		printf("text: %d", fig->text_no);

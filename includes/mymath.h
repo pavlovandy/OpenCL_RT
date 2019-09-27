@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mymath.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:26 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 14:38:53 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/26 19:02:47 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "rt.h"
 
-#define ROTATION_SPEED	-0.02	
+#define ROTATION_SPEED	-0.002	
 #define TRANSLATE_SPEED 0.1
 
 cl_double3	rotate_z(cl_double3 v, double angle);
@@ -23,6 +23,9 @@ cl_double3	rotate_x(cl_double3 v, double angle);
 cl_double3	rotate_y(cl_double3 v, double angle);
 
 cl_double3	new_basis(cl_double3 point, t_rotation_matrix m);
+cl_double3	transpone_basis(cl_double3 point, t_rotation_matrix m);
+t_rotation_matrix	rotate_matrix_of_rotation(t_rotation_matrix m, cl_double3 angles);
+cl_double3	find_angles_from_rotation_matrix(t_rotation_matrix rm);
 
 cl_double3	add_double3(cl_double3 a, cl_double3 b);
 cl_double3	minus_double3(cl_double3 a, cl_double3 b);

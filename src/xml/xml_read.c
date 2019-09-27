@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 17:34:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/24 22:20:28 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 19:08:21 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,29 @@ int	exit_parse(mxml_node_t *tree, FILE *fp, char *str)
 	return (1);
 }
 
+int		ft_check_count(int o, int i, int n)
+{
+	if (o >= MAX_OBJ_COUNT)
+	{
+		ft_putstr(RED"XML: max obj is "COLOR_OFF);
+		ft_putnbr(MAX_OBJ_COUNT);
+		return(error_message(RED" SORRY !"COLOR_OFF));
+	}
+	if (i >= MAX_LIGHTING_COUNT)
+	{
+		ft_putstr(RED"XML: max light is "COLOR_OFF);
+		ft_putnbr(MAX_OBJ_COUNT);
+		return(error_message(RED" SORRY !"COLOR_OFF));
+	}
+	if (n >= MAX_NEGATIVE_OBJ_COUNT)
+	{
+		ft_putstr(RED"XML: max neg_obj is "COLOR_OFF);
+		ft_putnbr(MAX_OBJ_COUNT);
+		return(error_message(RED" SORRY !"COLOR_OFF));
+	}
+	return (0);
+}
+
 int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 {
 	int			index[3];
@@ -32,6 +55,8 @@ int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 	index[2] = -1;
 	while (node != NULL)
 	{
+		if (ft_check_count(index[0], index[1], index[2]))
+			return (1);
 		son = mxmlGetFirstChild(node);
 		if (mxmlGetElement(node) != NULL && !(what_is = \
 			ft_is_obj(mxmlGetElement(node), scene, index, rt)))
@@ -44,6 +69,10 @@ int	ft_read_xml(mxml_node_t *node, t_scene *scene, t_pov *pov, t_rt *rt)
 				return (1);
 			son = mxmlGetNextSibling(son);
 		}
+		if (mxmlGetElement(node) != NULL && ft_strequ(mxmlGetElement(node), \
+		"rectangle") && !check_rectangle_in_plane(scene->obj[index[0]].shape.rectangle))
+			
+			return (error_message(RED"XML: bad rectangle"COLOR_OFF));
 		node = mxmlGetNextSibling(node);
 	}
 	scene->count_obj = index[0] + 1;

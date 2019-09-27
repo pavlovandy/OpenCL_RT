@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:14:38 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/12 22:15:37 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:13:12 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	ft_write_cam(t_pov pov, mxml_node_t *data)
 
 	node = mxmlNewElement(data, "cam");
 	ft_write_3param(pov.coord, node, (const char *)"position");
+	ft_write_3param(pov.dir, node, (const char *)"dir");
 }
