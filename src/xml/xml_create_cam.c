@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_create_cam.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 12:22:48 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:16:03 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:15:12 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int		ft_add_cam_dir(const char *str, t_pov *pov)
 	cl_double3 dot;
 
 	if (ft_get_3param(3, str, &dot, NULL))
-		pov->dir = (cl_double3)dot;
+		pov->pov_rm = \
+		build_rotation_matrix_form_angles((pov->dir = (cl_double3)dot));
 	else
 		return (1);
 	return (0);

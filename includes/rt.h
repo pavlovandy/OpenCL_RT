@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:28:45 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 20:10:51 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,8 @@ typedef struct	s_filters
 	cl_float	*zbuff;
 	t_obj_movement	obj_movement[MAX_OBJ_COUNT];
 	int			index_filter;
+	int			info;
+	SDL_Surface	*image;
 }				t_filters;
 
 

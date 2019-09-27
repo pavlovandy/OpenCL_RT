@@ -10,23 +10,51 @@
 --
 <RT width = "1000" heigth = "1000">
 	<plane>
-		<dot>1 -0.5 10</dot>
-		<normal>0 0 1</normal>
-		<RGB> 127 255 212 </RGB>
+		<dot>1 -1 10</dot>
+		<normal>0 1 0</normal>
+		<RGB> 189 183 107 </RGB>
 	</plane>
-	<cube>
-		<RGB> 250 128 114 </RGB>
-		<centre>1 -0.5 0.5</centre>
-		<transparency>0.5</transparency>
-		<transp_map_no>2</transp_map_no>
-		<txt_scale>0.6 0.6</txt_scale>
-		<ior>1.1</ior>
-	</cube>
 	<spher>
-		<RGB> 255 255 255 </RGB>
+		<RGB> 139 0 139 </RGB>
 		<radius>1</radius>
-		<centre>1 -0.5 0.5</centre>
-		<transparency>0.7</transparency>
+		<centre>6.3 -0.1 0.5</centre>
+		<transparency>0.3</transparency>
+		<specular>1000</specular>
+	</spher>
+	<spher>
+		<RGB> 139 0 139 </RGB>
+		<radius>1</radius>
+		<centre>7.9 -0.3 0.5</centre>
+		<transparency>0.3</transparency>
+		<specular>1000</specular>
+	</spher>
+	<spher>
+		<RGB> 139 0 139 </RGB>
+		<radius>1</radius>
+		<centre>5.1 1.1 0.5</centre>
+		<transparency>0.3</transparency>
+		<specular>1000</specular>
+	</spher>
+	<spher>
+		<RGB> 139 0 139 </RGB>
+		<radius>1</radius>
+		<centre>4.4 0 0.5</centre>
+		<transparency>0.3</transparency>
+		<specular>1000</specular>
+	</spher>
+	<spher>
+		<RGB> 139 0 139 </RGB>
+		<radius>1</radius>
+		<centre>2.6 0.1 0.5</centre>
+		<transparency>0.3</transparency>
+		 <specular>1000</specular>
+	</spher>
+	<spher>
+		<RGB> 139 0 139 </RGB>
+		<radius>1</radius>
+		<centre>3.6 1.6 0.5</centre>
+		<transparency>0.3</transparency>
+		 <specular>1000</specular>
 	</spher>
 	<light>
 		<type> point </type>
@@ -40,15 +68,14 @@
 	</light>
 	<light>
 		<type> point </type>
-		<position> -5 0 9 </position>
+		<position> 4.4 2 0.5 </position>
 		<intensity> 2 2 2 </intensity>
 	</light>
 	<light>
 		<type> ambient </type>
-		<intensity> 0.2 0.1 0.1 </intensity>
+		<intensity> 0.4 0.4 0.4 </intensity>
 	</light>
 	<cam>
-		<position>3.9 -1.4 -5.6</position>
-		<dir>-0.4 0.5 0.8</dir>
+		<position> 0 5 -30</position>
 	</cam>
 </RT>

@@ -6,7 +6,7 @@
 /*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 17:29:00 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/27 20:26:48 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,11 @@ int			user_events(t_rt *rt)
 				change_filters(rt, ev);
 				changes++;
 			}
-			
+			if (ev.key.keysym.sym == SDLK_TAB)
+			{
+				rt->filters.info = !rt->filters.info;
+				changes++;
+			}
 			if (ev.key.keysym.sym == SDLK_ESCAPE)
 			{
 				// system("leaks -q RT");

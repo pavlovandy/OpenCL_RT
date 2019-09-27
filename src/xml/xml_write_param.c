@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_write_param.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:13:18 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/26 18:30:43 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:10:27 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@ char	*double_to_char(double nbr)
 	char	*second;
 	char	*tmp;
 
-	if (nbr < 0 && nbr > -1)
+	if (nbr < 0)
 	{
-		first = ft_strjoin("-",(second = ft_itoa((int)nbr)));
 		nbr = -nbr;
+		first = ft_strjoin("-",(second = ft_itoa((int)nbr)));
 		free(second);
 	}else
 		first = ft_itoa((int)nbr);
+
 	if (nbr < 0)
 		nbr = -nbr;
 	nbr -= (long long)nbr;
 	tmp = first;
-	if (nbr != 0)
+	if (nbr != 0.0)
 	{
 		first = ft_strjoin(first, ".");
 		ft_strdel(&tmp);
@@ -40,6 +41,7 @@ char	*double_to_char(double nbr)
 		second = ft_itoa((int)nbr);
 		tmp = first;
 		first = ft_strjoin(first, second);
+	
 		ft_strdel(&tmp);
 		ft_strdel(&second);
 		nbr -= (long long)nbr;
