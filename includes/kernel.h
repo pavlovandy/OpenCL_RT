@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kernel.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 15:41:32 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/27 16:55:34 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/27 21:46:07 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define MAX_NEGATIVE_OBJ_COUNT 5
 # define MAX_CUB_COUNT 5
 
-__constant		double random[5] = {12341243, 324124, 234123412, 123, 15351};
+__constant double random[5] = {12341243, 324124, 234123412, 123, 15351};
 __constant double EPSILON = 0.00001;
 __constant double BIG_VALUE = 9e9;
 __constant double3 BACKGROUND_COLOR =  ((double3)(0.f, 0.f, 0.f));

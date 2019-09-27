@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+         #
+#    By: yruda <yruda@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/27 21:10:08 by apavlov          ###   ########.fr        #
+#    Updated: 2019/09/27 22:03:32 by yruda            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC =	main.c init_cl.c user_events2.c init_sdl.c output.c parser.c render.c user
 		editor/editor_main.c editor/change_colors.c editor/shapes_rotations.c \
 		editor/ft_clamp.c
 
-HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h functions.h filter.h
+HEADERS = rt.h parse.h terminal_colors.h mymath.h editor.h functions.h filter.h structures.h
 
 INC_DIR = ./includes/
 
