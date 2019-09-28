@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 14:15:40 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 00:15:14 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 12:31:13 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int			user_events(t_rt *rt)
 			if (ev.button.button == SDL_BUTTON_LEFT)
 				changes += pres_buttn(rt, ev.button.x, ev.button.y);
 			move = mouse_events(rt, ev.button.button, ev.button.x, ev.button.y);
-			SDL_GetRelativeMouseState(NULL, NULL);
 		}
 		else if (ev.type == SDL_MOUSEBUTTONUP \
 			&& ev.button.button == SDL_BUTTON_LEFT)
