@@ -84,10 +84,10 @@ double2	get_cylin_coords(double3 intersect_point, t_fig data)
 
 	double3		point = intersect_point - data.shape.cone.vertex;
 	point = new_basis(point, data.rotation_martix);
-	st[1] = 0.5 + atan2(point[1], point[0]) / (PI); //what should be first what second?
+	st[1] = 0.5 + atan2(point[1], point[0]) / (PI);
 	if (st[1] < 1)
 		st[1] = 1 + st[1];
-	st[0] = point[2];  //what should be first what second?
+	st[0] = point[2];
 	return (st);
 }
 
@@ -97,10 +97,10 @@ double2	get_cone_coords(double3 intersect_point, t_fig data)
 
 	double3		point = intersect_point - data.shape.sphere.cent;
 	point = new_basis(point, data.rotation_martix);
-	st[1] = atan2(point[1], point[0]) / (PI * 2); //what should be first what second?
+	st[1] = atan2(point[1], point[0]) / (PI * 2);
 	if (st[1] < 1)
 		st[1] = 1 + st[1];
-	st[0] = point[2]; //what should be first what second?
+	st[0] = point[2];
 	st *= data.txt_scale; 
 	return (st);
 }
@@ -146,7 +146,7 @@ double2	get_texture_space_coords(double3 intersect_point, t_fig data)
 			break;
 	}
 	st += data.txt_offset;
-	st[0] = st[0] < 0 ? (abs((int)st[0]) + 1) + st[0] : st[0]; //just take the float part of float
-	st[1] = st[1] < 0 ? (abs((int)st[1]) + 1) + st[1] : st[1]; //just take the float part of float
+	st[0] = st[0] < 0 ? (abs((int)st[0]) + 1) + st[0] : st[0];
+	st[1] = st[1] < 0 ? (abs((int)st[1]) + 1) + st[1] : st[1];
 	return (st);
 }

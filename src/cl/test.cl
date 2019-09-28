@@ -154,25 +154,22 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 			else
 				light_dir = light->v;
 			t_max = (light->type_num == POINT) ? 1 : BIG_VALUE;
-			/*shadow ray*/
 			local_intensity = get_intersity_after_shadow_rays(intersect_point, light_dir, scene, EPSILON, t_max, light);
 			if (length(local_intensity) < MINIMUM_INTENSITY)
 				continue ;
 			light_len = length(light_dir);
-			/*blicks*/
 			if (fig.specular > 0)
 			{						
 				reflect_ray = reflected_ray(new_normal, light_dir);
 				scalar = dot(reflect_ray, dir);
 				if (scalar > 0)
 				{
-					scalar = pow(scalar / (length(-dir) * length(reflect_ray)), fig.specular); //d^2 where d is distance from light to dot
+					scalar = pow(scalar / (length(-dir) * length(reflect_ray)), fig.specular);
 					if (light->type_num == POINT)
 						scalar /= light_len;
 					intensity += local_intensity * scalar;
 				}
 			}
-			/*brightness*/
 			scalar = dot(new_normal, light_dir);
 			if (scalar > 0)
 			{
