@@ -8,7 +8,7 @@
 	light	: type, position, intensity.
 	cam		: position.
 --
-<RT width = "700" heigth = "700">
+<RT width = "1200" heigth = "700">
 	<plane>
 		<dot>0 0 2</dot>
 		<normal>0 0 1</normal>
@@ -49,17 +49,37 @@
 		<txt_scale>1 1</txt_scale>
 	</cone>
 	<plane>
+		<RGB>173 165 135</RGB>
 	</plane>
+	<spher>
+		<RGB>114 114 146 </RGB>
+		<centre>0 0 -5 </centre>
+		<reflective>0.2</reflective>
+		<transparency>0.7</transparency>
+		<cutting>1</cutting>
+		<cut_dot>0 0.8 0</cut_dot>
+		<cut_normal>0 -1 0</cut_normal>
+	</spher>
+	<cylin>
+		<RGB>114 114 146 </RGB>
+		<dot>0 0 -5 </dot>
+		<reflective>0.2</reflective>
+		<transparency>0.7</transparency>
+		<radius>0.6</radius>
+		<dir>0 1 0</dir>
+		<mmin> -10 </mmin>
+		<mmax> 10</mmax>
+	</cylin>
 	<light>
 		<type> point </type>
 		<position> 0 4 -4 </position>
-		<intensity> 1 1 1 </intensity>
+		<intensity> 2 2 2 </intensity>
 	</light>
 	<light>
 		<type> ambient </type>
 		<intensity> 0.1 0.1 0.1 </intensity>
 	</light>
 	<cam>
-		<position> 0 1 -9 </position>
+		<position> 0 1 -15 </position>
 	</cam>
 </RT>

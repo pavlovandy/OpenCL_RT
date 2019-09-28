@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_cub.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 19:41:54 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 19:04:56 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 19:53:49 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_create_rec_cube(t_scene *scene, int *il, t_filters *filter)
 			exit(1);
 		ft_create_rectangle(scene, il[0], filter);
 		scene->obj[il[0]].complex_fig = il[3];
-		scene->obj[il[0]].color = (cl_double3){{255 / 6 * i, 255 - 255 / 6 * i, 0 }};
 	}
 	scene->count_obj = il[0] + 1;
 }
@@ -45,26 +44,11 @@ void	ft_fill_vertex(cl_double3 *vertex, t_cube cube)
 	vertex[7] = (cl_double3){{-a, a, a}};
 	i = -1;
 	while (++i < 8)
-		vertex[i] = add_double3(new_basis(vertex[i], cube.rotation_matrix), cube.cent);
+		vertex[i] = add_double3(new_basis(vertex[i], cube.rotation_matrix)\
+		, cube.cent);
 }
 
-t_rectangle_data	set_rectangles(cl_double3 *v, int r)  //dobavity v functions
-{
-	if (r == 0)
-		return ((t_rectangle_data){v[0], v[1], v[2], v[3]});
-	else if (r == 1)
-		return ((t_rectangle_data){v[0], v[3], v[7], v[4]});
-	else if (r == 2)
-		return ((t_rectangle_data){v[3], v[7], v[6], v[2]});
-	else if (r == 3)
-		return ((t_rectangle_data){v[6], v[2], v[1], v[5]});
-	else if (r == 4)
-		return ((t_rectangle_data){v[7], v[6], v[5], v[4]});
-	else
-		return ((t_rectangle_data){v[0], v[4], v[5], v[1]});
-}
-
-void rewrite_rectangle_data(t_fig *src, t_fig *dst)
+void	rewrite_rectangle_data(t_fig *src, t_fig *dst)
 {
 	src->color = dst->color;
 	src->specular = dst->specular;
@@ -81,10 +65,11 @@ void rewrite_rectangle_data(t_fig *src, t_fig *dst)
 	src->cutting = 0;
 }
 
-void	ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, t_filters *filter) //dobavity v functions
+void	ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, \
+		t_filters *filter)
 {
-	int i;
-	int r;
+	int			i;
+	int			r;
 	cl_double3	v[8];
 
 	i = -1;
@@ -95,8 +80,9 @@ void	ft_fill_rectangle(t_scene *scene, int cub, t_fig *fig, t_filters *filter) /
 		if (scene->obj[i].complex_fig == cub)
 		{
 			scene->obj[i].shape.rectangle = set_rectangles(v, r);
-			scene->obj[i].rotation_martix = build_rotation_matrix_for_rectangles(get_obj_dir(scene->obj[i]),\
-							 scene->obj[i].shape.rectangle);
+			scene->obj[i].rotation_martix = \
+build_rotation_matrix_for_rectangles(get_obj_dir\
+(scene->obj[i]), scene->obj[i].shape.rectangle);
 			if (fig != NULL)
 				rewrite_rectangle_data(scene->obj + i, fig);
 			if (filter != NULL)
@@ -114,7 +100,7 @@ void	ft_create_cube(t_scene *scene, t_filters *filter, int *il)
 	il[3]++;
 	il[0]--;
 	scene->cubs[il[3]].cent = (cl_double3){{0, 0, 0}};
-	scene->cubs[il[3]].dist = (cl_double)1;
+	scene->cubs[il[3]].dist = 1;
 	scene->cubs[il[3]].no = il[3];
 	scene->cubs[il[3]].rotation = (cl_double3){{0, 0, 0}};
 	scene->cubs[il[3]].rotation_matrix = \

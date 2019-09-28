@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 18:59:53 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/27 22:26:22 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ void	cone_editor(t_fig *fig, const Uint8 *k_s, SDL_Event ev)
 	{
 		if (k_s[SDL_SCANCODE_PAGEUP])
 			fig->shape.cone.mmax = ft_clamp(fig->shape.cone.mmax +
-				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, BIG_VALUE);
+				(cl_double)ev.wheel.y / 100.0, fig->shape.cone.mmin + 0.01, BIG_VALUE);
 		else if (k_s[SDL_SCANCODE_PAGEDOWN])
 			fig->shape.cone.mmin = ft_clamp(fig->shape.cone.mmin +
-				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, BIG_VALUE);
+				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, fig->shape.cone.mmax - 0.01);
 		else
 		{
 			fig->shape.cone.mmax = ft_clamp(fig->shape.cone.mmax +
-				(cl_double)ev.wheel.y / 100.0, 0.01, BIG_VALUE);
+				(cl_double)ev.wheel.y / 100.0, 0.0, BIG_VALUE);
 			fig->shape.cone.mmin = ft_clamp(fig->shape.cone.mmin -
-				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, -0.01);
+				(cl_double)ev.wheel.y / 100.0, -BIG_VALUE, 0.0);
 		}
 	}
 }
