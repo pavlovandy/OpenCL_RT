@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+         #
+#    By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/28 13:13:10 by apavlov          ###   ########.fr        #
+#    Updated: 2019/09/28 14:35:39 by ozhyhadl         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,11 +39,11 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 FT = ./libft/
 
-MXML = ./frameworks/mxml-3.0/lib #add folder path ++
+MXML = ./frameworks/mxml-3.0/lib
 
 FT_LIB	= $(addprefix $(FT),libft.a)
 
-LINKS = -L$(FT) -l ft -lm #add link mxml ++
+LINKS = -L$(FT) -l ft -lm
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   action_but.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:02:49 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/28 12:13:31 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/28 14:37:18 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
-#include <time.h>
 
 void	ft_screenshot(t_rt *rt)
 {

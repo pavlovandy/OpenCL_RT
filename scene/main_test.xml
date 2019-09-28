@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 !-- This is a comment
-	RT		: width, heigth.
-	spher	: centre, radius, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
-	plane	: dot, normal, RGB, transparency, reflective, specular, texture, bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
-	cylin	: dot, dir, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior.
-	cone	: vertex, dir, angle, RGB, transparency, reflective, specular, texture, bump, mmin, mmax, cutting, cut_dot, cut_normal, rotation, transp_map_no.
-	light	: type, position, intensity.
-	cam		: position.
+	RT			: width, heigth.
+
+	spher			: centre, radius.
+	plane			: dot, normal.
+	cylin			: dot, dir, radius, mmin, mmax.
+	cone			: vertex, dir, angle, mmin, mmax.
+	rectangle		: v0, v1, v2, v3.
+	triangle		: v0, v1, v2.
+	disk			: centre, normal, radius.
+	ellipse			: centre, dir, distance, radius.
+	cube			: centre, distance, cub_rotation.
+	negative_spher	: centre, radius.
+	for all obj		: RGB, transparency, reflective, specular, texture, move_dir, noise,
+					bump, cutting, cut_dot, cut_normal, rotation, transp_map_no, ior, txt_offset, txt_scale.
+	light			: type(point, ambient, direct), position, intensity.
+	cam				: position, dir.
 --
 <RT width = "1200" heigth = "700">
 	<light>
