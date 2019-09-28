@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:32:14 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 23:31:28 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 13:55:29 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			is_param_ltag(const char *str)
 		ft_strequ(str, "txt_scale") || ft_strequ(str, "move_dir") || \
 		ft_strequ(str, "v0") || ft_strequ(str, "v1") || ft_strequ(str, "v2") \
 		|| ft_strequ(str, "v3") || ft_strequ(str, "distance") || \
-		ft_strequ(str, "cub_rotation"))
+		ft_strequ(str, "cub_rotation") || ft_strequ(str, "noise"))
 		return (1);
 	return (0);
 }
