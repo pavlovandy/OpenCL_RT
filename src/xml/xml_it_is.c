@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_it_is.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 16:48:30 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 19:20:25 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/27 21:55:23 by myuliia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	ft_is_light(mxml_node_t *node, t_scene *scene, int l, int what_is)
 			 return (error_message(RED"XML : intensity >= 0 "COLOR_OFF));
 	else if (ft_strequ(name, "position") && \
 		ft_get_3param(3, mxmlGetOpaque(node), &dot, NULL))
-		scene->light[l].v = (cl_double3)dot;
+			if (scene->light[l].type_num == DIRECT)
+				scene->light[l].v = ft_normalize((cl_double3)dot);
+			else
+				scene->light[l].v = (cl_double3)dot;
 	else
 		return (error_message(RED"XML: invalid tag for light"COLOR_OFF));
 	return (0);
