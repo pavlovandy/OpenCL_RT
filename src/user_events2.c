@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_events2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:20:11 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 12:35:57 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/28 14:51:12 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int			mouse_events(t_rt *rt, Uint8 button, int x, int y)
 	changes = 0;
 	if (button == SDL_BUTTON_LEFT)
 	{
-		changes += pres_buttn(rt, x, y);
 		rt->edi.chosen_obj = get_object_intersection(rt, x, y);
 		SDL_GetRelativeMouseState(NULL, NULL);
 		return (1);
