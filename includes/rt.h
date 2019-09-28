@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 13:16:12 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 14:38:34 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@
 # define MAX_TEXTURE_COUNT 20
 
 # include "structures.h"
-# include <stdio.h>
 # include "terminal_colors.h"
 # include "parse.h"
 # include "mymath.h"
@@ -70,6 +69,7 @@
 # include "editor.h"
 # include "functions.h"
 # include "filter.h"
+# include <time.h>
 
 /*
 **	Init

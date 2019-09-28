@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:09:58 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 23:31:26 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 14:40:53 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ mxml_node_t	*ft_write_cylin(t_cylin_data cylin, mxml_node_t *data)
 	node = mxmlNewElement(data, "cylin");
 	ft_write_3param(cylin.dot, node, (const char *)"dot");
 	ft_write_3param(cylin.dir, node, (const char *)"dir");
+	ft_write_param(cylin.radius, node, (const char *)"radius");
 	ft_write_param(cylin.mmax, node, (const char *)"mmax");
 	ft_write_param(cylin.mmin, node, (const char *)"mmin");
 	return (node);

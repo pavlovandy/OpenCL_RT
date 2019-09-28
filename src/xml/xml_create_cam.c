@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_create_cam.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 12:22:48 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/28 13:03:54 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/28 14:02:31 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ void	ft_add_w_h(t_pov *pov, mxml_node_t *rt)
 	if (mxmlElementGetAttr(rt, "width") != NULL)
 		if (ft_get_3param(1, mxmlElementGetAttr(rt, "width"), NULL, &w))
 		{
-			if (w > 0 && w < 3000)
+			if (w > 100 && w < 5120)
 				pov->w = w;
 			else
-				error_message(RED"0 < width < 3000:now default"COLOR_OFF);
+				error_message(RED"100 < width < 5120:now default"COLOR_OFF);
 		}
 	if (mxmlElementGetAttr(rt, "heigth") != NULL)
 		if (ft_get_3param(1, mxmlElementGetAttr(rt, "heigth"), NULL, &h))
 		{
-			if (h > 0 && h < 3000)
+			if (h > 100 && h < 2880)
 				pov->h = h;
 			else
-				error_message(RED"0 < height < 3000:now default"COLOR_OFF);
+				error_message(RED"100 < height < 2880:now default"COLOR_OFF);
 		}
 }
 
