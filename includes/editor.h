@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:59:59 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 13:39:03 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 14:08:23 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int			get_object_intersection(t_rt *rt, int x, int y);
 void		change_texture(t_fig *fig);
 void		change_colours(t_fig *fig);
-void		change_noise(t_fig *fig, const Uint8 *k_s);
+int			change_noise(t_fig *fig, const Uint8 *k_s);
 
 cl_double3	normal_direction_rotation(const Uint8 *k_s, cl_double3 n,
 			double angle, t_fig *fig);

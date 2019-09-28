@@ -6,13 +6,13 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 18:02:40 by yruda             #+#    #+#             */
-/*   Updated: 2019/09/28 13:49:43 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 14:10:25 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
 
-void	change_noise(t_fig *fig, const Uint8 *k_s)
+int		change_noise(t_fig *fig, const Uint8 *k_s)
 {
 	if (k_s[SDL_SCANCODE_1])
 		fig->noise = 0;
@@ -26,6 +26,9 @@ void	change_noise(t_fig *fig, const Uint8 *k_s)
 		fig->noise = 4;
 	else if (k_s[SDL_SCANCODE_6])
 		fig->noise = -1;
+	else
+		return (0);
+	return (1);
 }
 
 /*

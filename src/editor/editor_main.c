@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/28 13:55:57 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 14:11:31 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int		ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev)
 	const Uint8	*k_s;
 
 	k_s = SDL_GetKeyboardState(0);
+	if (k_s[SDL_SCANCODE_Z] && change_noise(fig, k_s))
+		return (1);
 	if (k_s[SDL_SCANCODE_T] || k_s[SDL_SCANCODE_I] || k_s[SDL_SCANCODE_V])
 		visual_effects_editor(fig, k_s);
 	else if (k_s[SDL_SCANCODE_Y])
@@ -116,8 +118,6 @@ int		ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev)
 		rotate_by_type(k_s, fig, &rt->scene);
 	else if (k_s[SDL_SCANCODE_C])
 		change_colours(fig);
-	else if (k_s[SDL_SCANCODE_Z])
-		change_noise(fig, k_s);
 	else if (fig->fig_type == SPHERE)
 		sphere_editor(fig, k_s);
 	else if (fig->fig_type == CONE)
