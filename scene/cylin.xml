@@ -8,7 +8,7 @@
 	light	: type, position, intensity.
 	cam		: position.
 --
-<RT width = "700" heigth = "700">
+<RT width = "1200" heigth = "700">
 	<plane>
 		<dot>0 0 2</dot>
 		<normal>0.10 0 -0.3</normal>

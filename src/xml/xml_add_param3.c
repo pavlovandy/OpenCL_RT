@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml_add_param3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:55:18 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 19:36:32 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 13:04:04 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,23 @@ int		ft_add_rotation(const char *str, t_scene *scene, int i, \
 	else
 		return (0);
 	return (1);
+}
+
+void	ft_texture_rotation_from_params(t_fig *fig)
+{
+	if (fig->fig_type == PLANE)
+		fig->rotation_martix =
+			build_rotation_matrix_for_dir(fig->shape.plane.normal);
+	else if (fig->fig_type == DISK)
+		fig->rotation_martix =
+			build_rotation_matrix_for_dir(fig->shape.disk.normal);
+	else if (fig->fig_type == CYLIN)
+		fig->rotation_martix =
+			build_rotation_matrix_for_dir(fig->shape.cylin.dir);
+	else if (fig->fig_type == CONE)
+		fig->rotation_martix =
+			build_rotation_matrix_for_dir(fig->shape.cone.dir);
+	else if (fig->fig_type == ELLIPSE)
+		fig->rotation_martix =
+			build_rotation_matrix_for_dir(fig->shape.ellipse.dir);
 }

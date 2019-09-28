@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 17:10:00 by yruda             #+#    #+#             */
-/*   Updated: 2019/09/27 19:02:20 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 12:16:02 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void		rotate_by_type(const Uint8 *k_s, t_fig *fig, t_scene *scene)
 	else if (fig->fig_type == RECTANGLE && fig->complex_fig > -1)
 	{
 		add_angle_rotation(k_s, &scene->cubs[fig->complex_fig].rotation);
-		scene->cubs[fig->complex_fig].rotation_matrix = build_rotation_matrix_form_angles(scene->cubs[fig->complex_fig].rotation);
+		scene->cubs[fig->complex_fig].rotation_matrix =
+			build_rotation_matrix_form_angles(scene->cubs[fig->complex_fig].\
+			rotation);
 	}
 }

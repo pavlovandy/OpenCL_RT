@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 18:11:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/27 22:44:27 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 13:03:38 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,13 @@ int	ft_add_normal_dir(const char *str, t_scene *scene, int i, const char *tag)
 	else
 	{
 		if (ft_strequ(tag, "normal"))
-			ft_putendl(RED\
-				"XML : invalid param(only plane has normal)"COLOR_OFF);
+			ft_putendl(RED "XML : only plane has normal" COLOR_OFF);
 		else
 			ft_putendl(RED\
 				"XML : invalid param(only cone/cylin has dir)"COLOR_OFF);
 		return (1);
 	}
+	ft_texture_rotation_from_params(scene->obj + i);
 	return (0);
 }
 
