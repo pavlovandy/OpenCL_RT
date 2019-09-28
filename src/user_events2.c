@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:20:11 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 12:34:05 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/28 12:35:57 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	cool_little_function(t_rt *rt, cl_double3 *data, cl_double3 dir)
 
 static void	set_up_new_coord(t_rt *rt, int x, int y)
 {
-	cl_double2	g;
+	cl_int2		g;
 	cl_double3	*dot;
 	t_fig		*obj;
 	double		dir_len;

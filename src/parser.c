@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 16:54:35 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 12:27:24 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/28 12:35:28 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ void		*ft_realloc(void *p, size_t new_size, size_t prev_size)
 }
 
 static void	make_it_simple(t_envi *envi, SDL_Surface *surr, \
-	int *new_size, cl_int **tmp)
+	int *new_size, cl_uint **tmp)
 {
 	envi->txt_par[envi->txt_count].w = surr->w;
 	envi->txt_par[envi->txt_count].h = surr->h;
 	envi->txt_par[envi->txt_count].start_pos = envi->textures_size;
-	new_size = envi->textures_size + surr->w * surr->h;
+	*new_size = envi->textures_size + surr->w * surr->h;
 	(*tmp) = (cl_uint*)ft_realloc(envi->txt, \
 		sizeof(cl_uint) * (*new_size), sizeof(cl_uint) * envi->textures_size);
 	if (!(*tmp))
