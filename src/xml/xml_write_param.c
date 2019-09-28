@@ -6,7 +6,7 @@
 /*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:13:18 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/28 00:35:12 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 13:55:01 by ozhyhadl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_write_all(t_fig fig, mxml_node_t *node, t_obj_movement *filter)
 	ft_write_param((cl_double)fig.specular, node, (const char *)"specular");
 	ft_write_param((cl_double)fig.text_no, node, (const char *)"texture");
 	ft_write_param((cl_double)fig.normal_map_no, node, "bump");
+	ft_write_param((cl_double)fig.noise, node, "noise");
 	ft_write_param((cl_double)fig.cutting, node, "cutting");
 	ft_write_3param(fig.cutting_plane.dot, node, "cut_dot");
 	ft_write_3param(fig.cutting_plane.normal, node, "cut_normal");

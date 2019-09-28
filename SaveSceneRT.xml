@@ -8,7 +8,8 @@
 		<reflective>0.1</reflective>
 		<specular>-1</specular>
 		<texture>-1</texture>
-		<bump>2</bump>
+		<bump>-1</bump>
+		<noise>2</noise>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
@@ -26,6 +27,7 @@
 		<specular>1000</specular>
 		<texture>-1</texture>
 		<bump>-1</bump>
+		<noise>2</noise>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
@@ -44,6 +46,7 @@
 		<specular>1000</specular>
 		<texture>-1</texture>
 		<bump>-1</bump>
+		<noise>-1</noise>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
@@ -62,6 +65,7 @@
 		<specular>1000</specular>
 		<texture>-1</texture>
 		<bump>-1</bump>
+		<noise>-1</noise>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
@@ -80,6 +84,7 @@
 		<specular>1000</specular>
 		<texture>-1</texture>
 		<bump>-1</bump>
+		<noise>-1</noise>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
@@ -98,14 +103,16 @@
 		<specular>1000</specular>
 		<texture>-1</texture>
 		<bump>-1</bump>
+		<noise>-1</noise>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
+		<rotation>1.6 0 0</rotation>
 		<ior>1.100000</ior>
 		<transp_map_no>2</transp_map_no>
 		<txt_offset>0 0</txt_offset>
 		<txt_scale>0.6 0.6</txt_scale>
-	</cube>
+	</spher>
 	<spher>
 		<centre>3.8 1.1 0.5</centre>
 		<radius>1</radius>
@@ -115,6 +122,7 @@
 		<specular>1000</specular>
 		<texture>-1</texture>
 		<bump>-1</bump>
+		<noise>-1</noise>
 		<cutting>0</cutting>
 		<cut_dot>0 0 0</cut_dot>
 		<cut_normal>0 1 1</cut_normal>
@@ -130,7 +138,7 @@
 		<intensity>10 10 10</intensity>
 	</light>
 	<cam>
-		<position>3.9 -0.6 -4.4</position>
+		<position>4 -0.5 -2</position>
 		<dir>-0.4 0.5 0.8</dir>
 	</cam>
 

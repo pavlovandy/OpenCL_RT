@@ -6,13 +6,13 @@
 #    By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/28 11:23:08 by apavlov          ###   ########.fr        #
+#    Updated: 2019/09/28 13:13:10 by apavlov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-FLAGS =  -Wall -Wextra -g #-fsanitize=address #-Werror
+FLAGS =  -Wall -Wextra -Werror
 NAME = RT
 
 SRC =	main.c init_cl.c user_events2.c init_sdl.c output.c parser.c render.c user_event.c \
