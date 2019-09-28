@@ -18,61 +18,120 @@
 	cam				: position, dir.
 --
 <RT width = "1200" heigth = "700">
+	<plane>
+		<dot>0 -5 0</dot>
+		<RGB> 123 123 123 </RGB>
+		<normal>0 1 0 </normal>
+	</plane>
+	<plane>
+		<dot>0 6 0</dot>
+		<RGB> 123 123 123 </RGB>
+		<normal>0 -1 0 </normal>
+	</plane>
+	<plane>
+		<dot>0 0 50</dot>
+		<RGB> 60 62 237 </RGB>
+		<normal>0 0 1 </normal>
+	</plane>
+	<cylin>
+		<specular>1000</specular>
+		<dot>-5 0 0</dot>
+		<RGB>163 163 163</RGB>
+		<dir>0 1 0</dir>
+		<radius>1</radius>
+	</cylin>
+	<cylin>
+		<specular>1000</specular>
+		<dot>-5 0 15</dot>
+		<RGB>163 163 163</RGB>
+		<dir>0 1 0</dir>
+		<radius>1</radius>
+	</cylin>
+	<cylin>
+		<specular>1000</specular>
+		<dot>5 0 15</dot>
+		<RGB>163 163 163</RGB>
+		<dir>0 1 0</dir>
+		<radius>1</radius>
+	</cylin>
+	<cylin>
+		<specular>1000</specular>
+		<dot>5 0 0</dot>
+		<RGB>163 163 163</RGB>
+		<dir>0 1 0</dir>
+		<radius>1</radius>
+	</cylin>
+
+	<spher>
+		<specular>1000</specular>
+		<centre>-5 6 0</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>-5 -5 0</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>5 6 0</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>5 -5 0</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>5 6 15</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>5 -5 15</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>-5 6 15</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>-5 -5 15</centre>
+		<RGB>163 163 163</RGB>
+		<radius>2</radius>
+	</spher>
+	<spher>
+		<specular>1000</specular>
+		<centre>0 -3 0</centre>
+		<RGB>163 0 0</RGB>
+		<radius>1</radius>
+	</spher>
+
 	<light>
-		<type> point </type>
-		<position> 0 1 -4 </position>
-		<intensity> 2 2 2 </intensity>
+		<type>point</type>
+		<position>-15 3 -20</position>
+		<intensity>10 10 10</intensity>
 	</light>
 	<light>
-		<type> point </type>
-		<position> 0 1 -4 </position>
-		<intensity> 2 2 2 </intensity>
+		<type>point</type>
+		<position>15 3 -20</position>
+		<intensity>10 10 10</intensity>
 	</light>
 	<light>
-		<type> point </type>
-		<position> 0 1 -4 </position>
-		<intensity> 2 2 2 </intensity>
-	</light>
-	<light>
-		<type> point </type>
-		<position> 2345678 1 -4 </position>
-		<intensity> 2 2 2 </intensity>
-	</light>
-	<light>
-		<type> point </type>
-		<position> 0 0987654 -4 </position>
-		<intensity> 2 2 2 </intensity>
-	</light>
-	<light>
-		<type> point </type>
-		<position> 0 1 -987654 </position>
-		<intensity> 2 2 2 </intensity>
-	</light>
-	<light>
-		<type> point </type>
-		<position> 0 0 -0 </position>
-		<intensity> 2 2 2 </intensity>
-	</light>
-	<light>
-		<type> ambient </type>
-		<intensity> 0.2 0.1 0.1 </intensity>
-	</light>
-	<light>
-		<type> ambient </type>
-		<intensity> 0.2 0.1 0.1 </intensity>
-	</light>
-	<light>
-		<type> ambient </type>
-		<intensity> 0.2 0.1 0.1 </intensity>
+		<type>ambient</type>
+		<intensity>0.2 0.2 0.2</intensity>
 	</light>
 	<cam>
-		<position> 0 1 -15 </position>
+		<position>0 0 -15</position>
 	</cam>
-	<cube>
-		<centre> 0 0 2</centre>
-	</cube>
-	<negative_spher>
-		<centre>0 0 1</centre>
-		<radius>1</radius>
-	</negative_spher>
 </RT>
