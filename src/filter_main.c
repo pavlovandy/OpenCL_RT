@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filter_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myuliia <myuliia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:19:40 by myuliia           #+#    #+#             */
-/*   Updated: 2019/09/27 20:31:51 by myuliia          ###   ########.fr       */
+/*   Updated: 2019/09/28 14:13:45 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ void		int_to_rgb(t_fil *f, Uint32 pixel)
 
 void		change_filters(t_rt *rt, SDL_Event ev)
 {
+	const Uint8	*k_s;
+
+	k_s = SDL_GetKeyboardState(0);
+	if (k_s[SDL_SCANCODE_Z])
+		return ;
 	if (ev.key.keysym.sym == SDLK_1)
 		rt->filters.index_filter = 1;
 	else if (ev.key.keysym.sym == SDLK_2)

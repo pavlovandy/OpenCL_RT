@@ -6,11 +6,30 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 18:02:40 by yruda             #+#    #+#             */
-/*   Updated: 2019/09/27 17:28:07 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 14:10:25 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/rt.h"
+
+int		change_noise(t_fig *fig, const Uint8 *k_s)
+{
+	if (k_s[SDL_SCANCODE_1])
+		fig->noise = 0;
+	else if (k_s[SDL_SCANCODE_2])
+		fig->noise = 1;
+	else if (k_s[SDL_SCANCODE_3])
+		fig->noise = 2;
+	else if (k_s[SDL_SCANCODE_4])
+		fig->noise = 3;
+	else if (k_s[SDL_SCANCODE_5])
+		fig->noise = 4;
+	else if (k_s[SDL_SCANCODE_6])
+		fig->noise = -1;
+	else
+		return (0);
+	return (1);
+}
 
 /*
 **	put in the number of textures that are properly textures

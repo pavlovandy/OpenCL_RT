@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/28 12:15:18 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 14:19:11 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev)
 	else if (fig->fig_type == CYLIN)
 		cylin_editor(fig, k_s, ev);
 	else
-		return (0);
+		return (k_s[SDL_SCANCODE_Z] && change_noise(fig, k_s)) ? 1 : 0;
 	if (fig->fig_type == RECTANGLE && fig->complex_fig > -1)
 		ft_fill_rectangle(&rt->scene, fig->complex_fig, fig, &rt->filters);
 	return (1);
