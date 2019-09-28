@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:16:07 by anri              #+#    #+#             */
-/*   Updated: 2019/09/28 00:16:22 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 12:56:01 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,13 @@ t_rectangle_data	set_rectangles(cl_double3 *v, int r);
 int					translate(t_rt *rt);
 int					rotation(t_rt *rt);
 int					changes_norm(t_rt *rt, int *rotations, int *move);
+int					motion(t_rt *rt, cl_uint *pixels);
+int					static_render(t_rt *rt, cl_uint *pixels);
+void				move_obj_a_little(t_rt *rt);
+void				set_obj_back(t_rt *rt);
+void				add_to_buff_to_array(cl_double3 *arr, \
+							Uint32 *buff, t_rt *rt);
+void				array_to_screen_pixels(Uint32 *pix, \
+						cl_double3 *arr, int div, t_rt *rt);
 
 #endif

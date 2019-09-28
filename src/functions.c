@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:17:16 by anri              #+#    #+#             */
-/*   Updated: 2019/09/28 00:08:55 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 11:22:41 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,23 +103,4 @@ t_rectangle_data	set_rectangles(cl_double3 *v, int r)
 		return ((t_rectangle_data){v[7], v[6], v[5], v[4]});
 	else
 		return ((t_rectangle_data){v[0], v[4], v[5], v[1]});
-}
-
-cl_double3		canvas_to_viewport(int x, int y, t_pov pov)
-{
-	return ((cl_double3){{(double)x * pov.vw / pov.w, \
-								-(double)y * pov.vh / pov.h, (double)pov.d}});
-}
-
-int			changes_norm(t_rt *rt, int *rotations, int *move)
-{
-	int	changes;
-
-	changes = 0;
-	changes += translate(rt);
-	if (*rotations)
-		changes += rotation(rt);
-	else if (*move)
-		changes += move_fig(rt);
-	return (changes);
 }

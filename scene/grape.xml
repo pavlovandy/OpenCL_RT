@@ -12,69 +12,63 @@
 	<plane>
 		<dot>1 -1 10</dot>
 		<normal>0 1 0</normal>
-		<RGB> 189 183 107 </RGB>
+		<RGB> 164 90 82 </RGB>
+		<bump> 2</bump>
+		<reflective>0.1</reflective>
+		<txt_scale>0.5 0.5 </txt_scale>
 	</plane>
 	<spher>
-		<RGB> 139 0 139 </RGB>
+		<RGB> 93 20 81 </RGB>
 		<radius>1</radius>
 		<centre>6.3 -0.1 0.5</centre>
-		<transparency>0.3</transparency>
+		<reflective>0.1</reflective>
 		<specular>1000</specular>
 	</spher>
 	<spher>
-		<RGB> 139 0 139 </RGB>
+		<RGB> 93 20 81 </RGB>
 		<radius>1</radius>
 		<centre>7.9 -0.3 0.5</centre>
-		<transparency>0.3</transparency>
+		<reflective>0.1</reflective>
 		<specular>1000</specular>
 	</spher>
 	<spher>
-		<RGB> 139 0 139 </RGB>
+		<RGB> 93 20 81 </RGB>
 		<radius>1</radius>
 		<centre>5.1 1.1 0.5</centre>
-		<transparency>0.3</transparency>
+		<reflective>0.1</reflective>
 		<specular>1000</specular>
 	</spher>
 	<spher>
-		<RGB> 139 0 139 </RGB>
+		<RGB> 93 20 81 </RGB>
 		<radius>1</radius>
 		<centre>4.4 0 0.5</centre>
-		<transparency>0.3</transparency>
+		<reflective>0.1</reflective>
 		<specular>1000</specular>
 	</spher>
 	<spher>
-		<RGB> 139 0 139 </RGB>
+		<RGB> 93 20 81 </RGB>
 		<radius>1</radius>
 		<centre>2.6 0.1 0.5</centre>
-		<transparency>0.3</transparency>
+		<reflective>0.1</reflective>
 		 <specular>1000</specular>
 	</spher>
 	<spher>
-		<RGB> 139 0 139 </RGB>
+		<RGB> 93 20 81 </RGB>
 		<radius>1</radius>
 		<centre>3.6 1.6 0.5</centre>
-		<transparency>0.3</transparency>
+		<reflective>0.1</reflective>
 		 <specular>1000</specular>
 	</spher>
+
 	<light>
 		<type> point </type>
-		<position> 0 1 -4 </position>
-		<intensity> 2 2 2 </intensity>
+		<position> 2 10 -4 </position>
+		<intensity> 10 10 10 </intensity>
 	</light>
-	<light>
-		<type> point </type>
-		<position> 5 -4 1 </position>
-		<intensity> 2 2 2 </intensity>
-	</light>
-	<light>
-		<type> point </type>
-		<position> 4.4 2 0.5 </position>
-		<intensity> 2 2 2 </intensity>
-	</light>
-	<light>
-		<type> ambient </type>
-		<intensity> 0.4 0.4 0.4 </intensity>
-	</light>
+
+
+
+
 	<cam>
 		<position> 0 5 -30</position>
 	</cam>

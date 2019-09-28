@@ -5,21 +5,6 @@ double3	reflected_ray(double3 normal, double3 prim_ray)
 	return (prim_ray - 2 * dot(normal, prim_ray) * normal);
 }
 
-// double3	reflected_ray(double3 normal, double3 prim_ray)
-// {
-// 	return (2 * dot(normal, prim_ray) * normal - prim_ray);
-// }
-
-/*
-	Seems like i dont know how to insert this feature here.
-	If someones wants to add he will need to calculate the \
-	distance of how much it is in medium and multiply "somewheres" \
-	color by this value.
-	Some usefull links :
-	https://blog.demofox.org/2017/01/09/raytracing-reflection-refraction-fresnel-total-internal-reflection-and-beers-law/
-	https://graphicscompendium.com/raytracing/11-fresnel-beer
-*/
-
 double3	beers_law(double distance, double3 obj_absorb)
 {
 	return (exp(obj_absorb * (-distance)));
@@ -37,7 +22,6 @@ double fresnel(double3 prim_ray, double3 normal, double n1)
 	{
 		double n = n1 / n2;
 		double sinT2 = n * n * (1.0 - cosX * cosX);
-		// Total internal reflection
 		if (sinT2 > 1.0)
 			return 1.0;
 		cosX = sqrt(1.0 - sinT2);
@@ -92,96 +76,7 @@ double3	get_intersity_after_shadow_rays(double3 intersect_point, double3 light_d
 			break ;
 	}
 	return (local_intensity);
-}
-
-double3	ft_noise1 (double2 coords)
-{
-	double3 color;
-	double z;
-
-	z = floor(sin(coords[0] * 2 * M_PI) + sin(coords[1] * 2 * M_PI ));
-	color = (double3){((int)z >> 16) & 0xFF, ((int)z >> 8) & 0xFF, ((int)z & 0xFF)};
-	return (color);
-}
-
-double cos_interpole(double a, double b, double x)
-{
-	double	ft = x * 3.1415927;
-	double	f = (1 - cos(ft)) * 0.5;
-	return (a * (1 - f) + b * f);
-}
-
-double noise(int x, int y)
-{
-	int n = x + y * 57;
-	return (random[n % 100]);
-}
-
-double	intrapolate_noise(double2 coords)
-{
-	int int_x = (int)coords[0];
-	double f_x = coords[0] - int_x;
-	int int_y = (int)coords[1];
-	double f_y = coords[1] - int_y;
-	double v1 = noise(int_x, int_y);
-	double v2 = noise(int_x + 1, int_y);
-	double v3 = noise(int_x, int_y + 1);
-	double v4 = noise(int_x + 1, int_y + 1);
-	double i1 = cos_interpole(v1 , v2 , f_x);
-	double i2 = cos_interpole(v3 , v4 , f_x);
-	return (cos_interpole(i1 , i2 , f_y));
-}
-
-double3 ft_noise(double2 coords)
-{
-	double	total = 0;
-	double	p = 20;
-	int		i;
-	int		num_of_octaves = 5;
-	double frequency;
-	double amplitute;
-	
-	i = -1;
-	while (++i < num_of_octaves)
-	{
-		frequency = 2 * i;
-		amplitute = p * i;
-		total = total + intrapolate_noise(coords * frequency) * amplitute;
-	}
-	return (total);
-}			 
-
-    // x = (x<<13) ^ x;
-    // return ( 1.0 - ( (x * (x * x * 15731 + 789221) + 1376312589) & 7fffffff) / 1073741824.0);   
-
-// double3	ft_noise (double3 eye, double2 dir)
-// {
-
-// 	double3		color;
-// 	double3		oc = eye;
-// 	uint			u;
-// 	int			v;
-	
-// 	// if (dir[0])
-// 	// 	dir[0] = dir[0] ;
-// 	// oc[0] = random[get_global_id(0) % 5] + (get_global_id(0) << 4 >> 6);
-// 	// oc[1] = get_global_id(0) * random[get_global_id(0) % 5];
-// 	// u = ((sin(oc[0] * 2 * M_PI * 5) + 1) * 10000000) * 4;
-// 	// v = ((cos(oc[1] * 2 * M_PI * 5) + 1) * 10000000) * 4;
-// 	// if (v)
-// 	// 	u *= v;
-
-// 	uint seed = random[get_global_id(0) % 5] + get_global_id(0);
-// 	uint t = seed ^ (seed << 11);  
-// 	uint result = (int)random[get_global_id(0) % 5] ^ ((int)random[get_global_id(0) % 5] >> 19) ^ (t ^ (t >> 8));
-
-// 	u = result;
-// 	color = (double3){(u >> 16) & 0xFF, (u >> 8) & 0xFF, (u & 0xFF)};
-// 	color[2] = (color[0] + color[1] + color[2]) / 3.0;
-// 	color[1] = color[2];
-// 	color[0] = color[1];
-// 	return (color);
-// }
+}		
 
 double3	calculate_light(__global t_scene *scene, double3 eye, \
 						double3 dir, double3 normal, double3 intersect_point, \
@@ -209,6 +104,17 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 		double3 dv = normal_from_map[1] / 255 * 2 - 1;
 		new_normal = normalize(normal - du * t + dv * b);
 	}
+	else if (fig.noise == 4)
+	{
+		double3	A = (double3)(1, 0, 0);
+		double3	t = normalize(cross(A, normal));
+		double3 b = normalize(cross(normal, t));
+		double3	noise = ft_noise2(texture_space_coords);
+		noise = (double3)(fabs(150 - noise[0]), 140 * (sin(noise[1] / 255 * 2 * M_PI) + 1), 100 * (cos(noise[2] / 255 * 2 * M_PI) + 1));
+		double3 du = noise[0] / 255 * 2 - 1;
+		double3 dv = noise[1] / 255 * 2 - 1;
+		new_normal = normalize(normal - du * t + dv * b);
+	}
 	else
 		new_normal = normal;
 	
@@ -221,8 +127,16 @@ double3	calculate_light(__global t_scene *scene, double3 eye, \
 		pix_color = (double3)(fabs(150 - pix_color[0]), 140 * (sin(pix_color[1] / 255 * 2 * M_PI) + 1), 100 * (cos(pix_color[2] / 255 * 2 * M_PI) + 1));
 	}
 	else if (fig.noise == 1)
-	{
 		pix_color = ft_noise1(texture_space_coords);
+	else if (fig.noise == 2)
+	{
+		pix_color = ft_noise2(texture_space_coords);
+		pix_color = (double3)(fabs(50 - pix_color[0]), 40 * (sin(pix_color[1] / 255 * 2 * M_PI) + 1), 255 * (cos(pix_color[2] / 255 * 2 * M_PI) + 1));
+	}
+	else if (fig.noise == 3)
+	{
+		pix_color = ft_noise3(texture_space_coords);
+		pix_color = (double3)(fabs(150 - pix_color[0]), 255 * (sin(pix_color[1] / 255 * 2 * M_PI) + 1), 40 * (cos(pix_color[2] / 255 * 2 * M_PI) + 1));
 	}
 	else
 		pix_color = fig.color;
@@ -315,17 +229,12 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 				trans = uint_to_double3(get_texture_pixel(texture_space_coords, texture, txt_params[fig.transparancy_map_no], fig.transparancy_map_no))[0];
 				trans = 1 - trans / 255;
 			}
-			//normal calculations
 			normal = calculate_normal(fig, intersect_point, curr_node);
-			//--------------------
 
-			//get local color value
 			local_color = calculate_light(scene, curr_node.start, curr_node.dir, normal, intersect_point, fig, texture, txt_params, texture_space_coords);
-
-			//mix color and go deeper
 			local_color *= curr_node.part_of_primary_ray;
 			double fren = 0;
-			fren = fresnel(curr_node.dir, normal, fig.ior); //prart of reflected ray
+			fren = fresnel(curr_node.dir, normal, fig.ior);
 			if (trans > 0 && count < tree_nodes)
 			{
 				tree[count].part_of_primary_ray = curr_node.part_of_primary_ray * (1 - fren) * trans;
@@ -363,7 +272,7 @@ double3		ray_trace(double3 eye, double3 dir, __global t_scene *scene, double min
 			if (curr == 0)
 				*zbuff = BIG_VALUE;
 			curr++;
-			continue ; //what a hell
+			continue ;
 		}
 	}
 	return (color);
