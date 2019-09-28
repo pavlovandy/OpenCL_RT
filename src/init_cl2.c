@@ -6,7 +6,7 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 11:52:52 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/26 13:37:47 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/28 13:03:52 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			build_program(t_cl *cl)
 	cl_int	ret;
 
 	ret = clBuildProgram(cl->program, 1, \
-			&cl->device_id, "-I includes", NULL, NULL);
+			&cl->device_id, "-I src/cl/", NULL, NULL);
 	if (ret == CL_BUILD_PROGRAM_FAILURE)
 		print_compiles_errors(cl);
 	else if (ret != CL_SUCCESS)
