@@ -6,7 +6,7 @@
 /*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:05:09 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/28 12:15:18 by yruda            ###   ########.fr       */
+/*   Updated: 2019/09/28 13:55:57 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int		ft_edit(t_fig *fig, t_rt *rt, SDL_Event ev)
 		rotate_by_type(k_s, fig, &rt->scene);
 	else if (k_s[SDL_SCANCODE_C])
 		change_colours(fig);
+	else if (k_s[SDL_SCANCODE_Z])
+		change_noise(fig, k_s);
 	else if (fig->fig_type == SPHERE)
 		sphere_editor(fig, k_s);
 	else if (fig->fig_type == CONE)
