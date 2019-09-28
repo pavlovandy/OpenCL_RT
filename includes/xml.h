@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xml.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yruda <yruda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/12 22:50:17 by ozhyhadl          #+#    #+#             */
-/*   Updated: 2019/09/28 00:39:07 by ozhyhadl         ###   ########.fr       */
+/*   Updated: 2019/09/28 13:03:36 by yruda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int			ft_is_negative(mxml_node_t *node, t_scene *scene, int i, \
 int			ft_add_rotation(const char *str, t_scene *scene, int i,
 			t_filters *filter);
 void		ft_write_neg(t_negative_fig neg, mxml_node_t *data);
+void		ft_texture_rotation_from_params(t_fig *fig);
 
 /*
 **	Add ++ add_param(color, specular, reflection) to figure

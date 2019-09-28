@@ -18,7 +18,7 @@
 		<RGB> 250 128 114 </RGB>
 		<centre>1 -0.5 0.5</centre>
 		<transparency>0.5</transparency>
-		<transp_map_no>2</transp_map_no>
+		<transp_map_no>8</transp_map_no>
 		<txt_scale>0.6 0.6</txt_scale>
 		<ior>1.1</ior>
 	</cube>
