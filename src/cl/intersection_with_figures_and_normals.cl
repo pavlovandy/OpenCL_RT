@@ -1,4 +1,4 @@
-#include "kernel.h"
+#include "kernel.hh"
 
 double2	intersect_triangle(double3 eye, double3 dir, t_triangle_data triangle)
 {

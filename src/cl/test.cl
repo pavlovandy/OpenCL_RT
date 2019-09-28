@@ -1,4 +1,4 @@
-#include "kernel.h"
+#include "kernel.hh"
 
 double3	reflected_ray(double3 normal, double3 prim_ray)
 {

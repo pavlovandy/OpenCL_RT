@@ -1,4 +1,4 @@
-#include "kernel.h"
+#include "kernel.hh"
 
 double3	new_basis(double3 point, t_rotation_matrix m)
 {

@@ -1,4 +1,4 @@
-#include "kernel.h"
+#include "kernel.hh"
 
 void	swap(double* a, double*b)
 {

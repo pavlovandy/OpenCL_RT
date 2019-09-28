@@ -1,4 +1,4 @@
-#include "kernel.h"
+#include "kernel.hh"
 
 __kernel void	click_kernel(__global t_scene *scene,
 							int	x,
