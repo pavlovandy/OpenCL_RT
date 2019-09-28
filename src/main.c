@@ -6,14 +6,11 @@
 /*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:40:05 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 12:07:56 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/09/28 12:15:18 by apavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rt.h"
-	#include <time.h>
-#include <stdlib.h>
-
 
 int		main(int argc, char **argv)
 {
