@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ozhyhadl <ozhyhadl@student.42.fr>          +#+  +:+       +#+         #
+#    By: anri <anri@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/02 15:43:48 by apavlov           #+#    #+#              #
-#    Updated: 2019/09/28 14:35:39 by ozhyhadl         ###   ########.fr        #
+#    Updated: 2019/10/21 22:55:46 by anri             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-FLAGS =  -Wall -Wextra -Werror
+FLAGS =  -Wall -Wextra #-Werror
 NAME = RT
 
 SRC =	main.c init_cl.c user_events2.c init_sdl.c output.c parser.c render.c user_event.c \

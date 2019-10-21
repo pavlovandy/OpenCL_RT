@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlov <apavlov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anri <anri@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 13:39:54 by apavlov           #+#    #+#             */
-/*   Updated: 2019/09/28 15:37:38 by apavlov          ###   ########.fr       */
+/*   Updated: 2019/10/21 22:57:37 by anri             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@
 #  include <mxml.h>
 # endif
 
-# define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
+# ifdef __APPLE__
+#  define DEVICE_TYPE	CL_DEVICE_TYPE_CPU
+# else
+#  define DEVICE_TYPE	CL_DEVICE_TYPE_GPU
+# endif
 # ifdef __APPLE__
 #  define WIN_WIDTH		800
 #  define WIN_HEIGHT	600
